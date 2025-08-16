@@ -1,43 +1,71 @@
+'use client';
+
+import { signup } from "@/actions/auth.action";
 import Logo from "@/components/Logo";
+import { SignupFormData } from "@/types";
+import { Loader2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useForm } from "react-hook-form";
+
 
 export default function Signup() {
+  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<SignupFormData>();
+
+  // Function to handle form submission
+  const onSubmit = async (data: SignupFormData) => {
+    const result = await signup(data);
+
+    if (result.success) {
+      alert(result.message);
+    } else {
+      alert(`Error: ${result.error}`);
+    }
+  };
+  
   return (
     <div className="min-h-screen text-white flex flex-col items-center justify-center p-4 sm:p-8">
       <div className="bg-gray-900 p-6 sm:p-8 rounded-lg shadow-xl max-w-md w-full">
         <Logo/>
-        <h2 className="text-center text-gray-500 mb-8">Create your account and enjoy the experience</h2>
-        <form className="flex flex-col gap-4">
+        <h2 className="text-center text-gray-500 mb-8 mt-6">Create your account and enjoy the experience</h2>
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
           <div>
-            <label className="block text-gray-300 text-sm font-semibold mb-2" htmlFor="email">
-              Email Address
-            </label>
+            <input
+              className="w-full px-3 py-2 border border-gray-700 rounded-md bg-gray-900 text-white focus:outline-none focus:border-green-500"
+              type="text"
+              id="name"
+              placeholder="Username"
+              {...register("name", { required: "Username is required"})}
+            />
+            {errors.name?.message && <p className="text-red-500 text-sm">{String(errors.name.message)}</p>}
+          </div>
+
+          <div>
             <input
               className="w-full px-3 py-2 border border-gray-700 rounded-md bg-gray-900 text-white focus:outline-none focus:border-green-500"
               type="email"
               id="email"
-              placeholder="you@example.com"
-              required
+              placeholder="Email address"
+              {...register("email", { required: "Email is required"})}
             />
+            {errors.email?.message && <p className="text-red-500 text-sm">{String(errors.email.message)}</p>}
           </div>
+
           <div>
-            <label className="block text-gray-300 text-sm font-semibold mb-2" htmlFor="password">
-              Password
-            </label>
             <input
               className="w-full px-3 py-2 border border-gray-700 rounded-md bg-gray-900 text-white focus:outline-none focus:border-green-500"
               type="password"
               id="password"
-              placeholder="********"
-              required
+              placeholder="Password"
+              {...register("password", { required: "Password is required" })}
             />
           </div>
           <button
             type="submit"
-            className="w-full bg-green-500 text-white py-2 rounded-md text-lg font-semibold hover:bg-green-600 transition duration-300"
+            className="w-full py-2 font-semibold"
+            disabled={isSubmitting}
           >
-            Sign Up
+            {isSubmitting ? <span className="flex items-center gap-4 justify-center"><Loader2 className="animate-spin w-[18px]"/> Processing...</span> : "Create Account"}
           </button>
         </form>
         <div className="mt-6 text-center text-gray-400">

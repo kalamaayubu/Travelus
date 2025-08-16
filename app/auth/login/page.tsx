@@ -1,75 +1,79 @@
-'use client'
+'use client';
 
 import Logo from '@/components/Logo';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { Loader2 } from 'lucide-react';
+import { login } from '@/actions/auth.action'; // same style as signup
+import { LoginFormData } from '@/types';
+import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const router = useRouter();
+  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<LoginFormData>();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setError('');
+  // Function to handle login submission
+  const onSubmit = async (data: LoginFormData) => {
+    const result = await login(data);
 
-    if (!email || !password) {
-      setError('Please enter both email and password.');
-      return;
+    if (result.success && result.redirectUrl) {
+      alert(result.redirectUrl)
+      router.push(result.redirectUrl);
+    } else {
+      alert(`Error: ${result.error}`);
     }
-
-    // Handle login logic here
-    console.log('Login attempt with:', { email, password });
-    // On successful login, redirect or update state
   };
 
   return (
     <div className="min-h-screen text-gray-300 flex items-center justify-center p-4">
       <div className="bg-gray-900 p-8 rounded-lg shadow-lg w-full max-w-md">
-        
         <Logo/>
 
-        {/* Small Sentence */}
-        <p className="text-center text-gray-400 mb-8">Enter your credentials to log in.</p>
+        <p className="text-center text-gray-400 mb-8 mt-4">Enter your credentials to log in.</p>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+          {/* Email */}
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-400">Email</label>
             <input
               type="email"
               id="email"
-              value={email}
-              placeholder='example@gmail.com'
-              onChange={(e) => setEmail(e.target.value)}
-              className="mt-1 block w-full p-2 border border-gray-600 rounded-md shadow-sm bg-gray-700 text-white focus:outline-none focus:ring-green-500 focus:border-green-500"
-              required
+              placeholder="example@gmail.com"
+              {...register("email", { required: "Email is required" })}
+              className="w-full px-3 py-2 border border-gray-700 rounded-md bg-gray-900 text-white focus:outline-none focus:border-green-500"
             />
+            {errors.email?.message && <p className="text-red-500 text-sm">{String(errors.email.message)}</p>}
           </div>
+
+          {/* Password */}
           <div>
             <label htmlFor="password" className="block text-sm font-medium text-gray-400">Password</label>
             <input
               type="password"
               id="password"
-              value={password}
-              placeholder='********'
-              onChange={(e) => setPassword(e.target.value)}
-              className="mt-1 block w-full p-2 border border-gray-600 rounded-md shadow-sm bg-gray-700 text-white focus:outline-none focus:ring-green-500 focus:border-green-500"
-              required
+              placeholder="********"
+              {...register("password", { required: "Password is required" })}
+              className="w-full px-3 py-2 border border-gray-700 rounded-md bg-gray-900 text-white focus:outline-none focus:border-green-500"
             />
+            {errors.password?.message && <p className="text-red-500 text-sm">{String(errors.password.message)}</p>}
           </div>
 
-          {error && <p className="text-red-500 text-sm">{error}</p>}
-
+          {/* Submit */}
           <button
             type="submit"
-            className="w-full bg-green-500 text-white p-2 rounded-md font-semibold hover:bg-green-600 transition duration-300 mt-4"
+            className="w-full font-semibold mt-4 py-2"
+            disabled={isSubmitting}
           >
-            Login
+            {isSubmitting ? (
+              <span className="flex items-center gap-4 justify-center">
+                <Loader2 className="animate-spin w-[18px]" /> Logging in...
+              </span>
+            ) : "Login"}
           </button>
         </form>
 
         <p className="text-center text-sm text-gray-400 mt-6">
-          Dont have an account?{' '}
+          Don’t have an account?{' '}
           <Link href="/auth/signup" className="text-green-500 hover:underline">
             Sign Up
           </Link>
