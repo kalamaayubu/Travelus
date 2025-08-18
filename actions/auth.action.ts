@@ -3,6 +3,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { LoginFormData, SignupFormData } from "@/types";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 // Signup action for user registration
 export async function signup(data: SignupFormData) {
@@ -117,4 +118,31 @@ export async function login(formData: LoginFormData) {
     redirectUrl,
     message: "Successfully logged in",
   }
+}
+
+
+// Logout action to clear session and cookies
+export async function logout() {
+  const supabase = await createClient();
+
+  // Sign out the user
+  const { error } = await supabase.auth.signOut();
+
+  if (error) {
+    console.error("Error logging out:", error.message);
+    return { success: false, error: "Failed to log out." };
+  }
+
+  // Clear manual cookies
+  const cookieStore = await cookies();
+  cookieStore.delete("authState");
+
+  return { success: true, message: "Successfully logged out." };
+}
+
+// Function to check if the user is authenticated
+export async function getSession() {
+  const supabase = await createClient();
+  const { data: { session } } = await supabase.auth.getSession();
+  return session;
 }

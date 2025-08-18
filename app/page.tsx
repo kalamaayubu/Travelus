@@ -14,11 +14,9 @@ export default function HomePage() {
     <a className="rounded-full bg-green-500 text-white px-8 py-3 text-lg font-semibold hover:bg-green-600 transition duration-300" href="#">
       Get Started
     </a>
-    <a className="rounded-full border border-solid border-green-500 text-green-500 px-8 py-3 text-lg font-semibold hover:bg-green-500 hover:text-white transition duration-300" href="#how-it-works" target="_blank"
-            rel="noopener noreferrer"
-          >
+    <button className="" >
     Learn More
- </a>
+ </button>
  </div>
  </div>
 </main>

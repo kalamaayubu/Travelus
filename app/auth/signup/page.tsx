@@ -1,7 +1,6 @@
 'use client';
 
 import { signup } from "@/actions/auth.action";
-import Logo from "@/components/Logo";
 import { SignupFormData } from "@/types";
 import { Loader2 } from "lucide-react";
 import Image from "next/image";
@@ -24,10 +23,19 @@ export default function Signup() {
   };
   
   return (
-    <div className="min-h-screen text-white flex flex-col items-center justify-center p-4 sm:p-8">
-      <div className="bg-gray-900 p-6 sm:p-8 rounded-lg shadow-xl max-w-md w-full">
-        <Logo/>
-        <h2 className="text-center text-gray-500 mb-8 mt-6">Create your account and enjoy the experience</h2>
+    <>
+        <p className="text-center text-gray-400 mb-8">Create your account and enjoy the experience</p>
+
+        <button className="w-full mt-4 bg-gray-800 text-white py-[10px] text-md font-semibold flex items-center justify-center gap-4 hover:bg-gray-700">
+          <Image src="/assets/googleLogo.png" alt="Google logo" width={24} height={24} />
+          Continue with Google
+        </button>
+        <div className='flex items-center gap-4 mt-2 mb-4'>
+          <div className='h-[1px] w-full bg-gray-700'/>
+          <span>or</span>
+          <div className='h-[1px] w-full bg-gray-700'/>
+        </div>
+
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
           <div>
             <input
@@ -68,20 +76,13 @@ export default function Signup() {
             {isSubmitting ? <span className="flex items-center gap-4 justify-center"><Loader2 className="animate-spin w-[18px]"/> Processing...</span> : "Create Account"}
           </button>
         </form>
-        <div className="mt-6 text-center text-gray-400">
-          <p>or</p>
-        </div>
-        <button className="w-full mt-4 bg-gray-800 text-white py-[10px] rounded-md text-md font-semibold flex items-center justify-center gap-4 hover:bg-gray-700 transition duration-300">
-          <Image src="/assets/googleLogo.png" alt="Google logo" width={24} height={24} />
-          Continue with Google
-        </button>
+    
         <p className="mt-6 text-center text-gray-300 text-sm">
           Already have an account?{" "}
           <Link href="/auth/login" className="text-green-500 hover:underline">
             Login
           </Link>
         </p>
-      </div>
-    </div>
+    </>
   );
 }
