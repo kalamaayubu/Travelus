@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 const Footer = () => {
   const pathname = usePathname();
   
-      if (pathname === "/auth/signup" || pathname === "/auth/login") {
+      if (pathname.startsWith('/auth') || pathname === "/driver/post-ride") {
           return null; // Hide NavBar on auth pages
       }
   return (

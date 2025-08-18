@@ -26,7 +26,6 @@ export default function LoginPage() {
   return (
     <>
         <p className="text-center text-gray-400 mb-8">Enter your credentials to log in.</p>
-
         <button className="w-full mt-4 bg-gray-800 text-white py-[10px] text-md font-semibold flex items-center justify-center gap-4 hover:bg-gray-700">
           <Image src="/assets/googleLogo.png" alt="Google logo" width={24} height={24} />
           Continue with Google

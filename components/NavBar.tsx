@@ -8,7 +8,7 @@ import LogInOutBtn from "./LogInOutBtn";
 const NavBar = () => {
   const pathname = usePathname();
 
-  if (pathname.startsWith('/auth')) {
+  if (pathname.startsWith('/auth') || pathname === "/driver/post-ride") {
     return null; // Hide NavBar on auth pages
   }
 
