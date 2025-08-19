@@ -28,7 +28,7 @@ export type PostRideFormData = {
   destinationLocation: string;
   seatsAvailable: number;
   pricePerSeat: number;
-  driverPhone: string;
+  driverPhone?: string;
   departureTime: Date;
-  nationalId: string;
+  nationalId?: string;
 };

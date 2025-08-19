@@ -1,10 +1,13 @@
 'use client';
 
+import { postRide } from '@/actions/driver.action';
 import ReusableDialog from '@/components/reusable/dialog';
 import { Button } from '@/components/ui/button';
 import { PostRideFormData } from '@/types';
+import { Loader2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 
 export default function PostRidePage() {
   const [open, setOpen] = useState(false)
@@ -16,15 +19,6 @@ export default function PostRidePage() {
     formState: { errors, isSubmitting, isValid }, 
     trigger 
   } = useForm<PostRideFormData>({ mode: 'onChange' });
-
-
-
-  // Handle final submission
-  const onSubmit = async (data: PostRideFormData) => {
-    console.log("Final form submitted:", data);
-    // TODO: Save ride to DB (Supabase)
-  }
-
 
   // Open dialog on page load
   useEffect(() => {
@@ -39,6 +33,19 @@ export default function PostRidePage() {
 
   const prevStep = () => setStep(prev => prev - 1);
 
+  // Handle final submission
+  const onSubmit = async (data: PostRideFormData) => {
+    try {
+      const res = await postRide(data);
+      if (!res.success) {
+        toast.error('Error posting ride: ' + res.error);
+        return
+      }
+      toast.success(res.message || 'Ride posted successfully!');
+    } finally {
+    }
+  }
+
   return (
     <div className='bg-green-950'>
        <form onSubmit={handleSubmit(onSubmit)}>
@@ -51,9 +58,6 @@ export default function PostRidePage() {
           description="Provide key ride information"
           closable={false}
           contentClassName="bg-gray-900 border-1 border-gray-600"
-          footer={
-            <Button onClick={nextStep} className='primary-btn' disabled={!isValid}>Proceed</Button>
-          }
         >
           <input
             type="text"
@@ -78,9 +82,13 @@ export default function PostRidePage() {
               minLength: { value: 3, message: "Must be at least 3 characters" }
             })}
           />
-          {errors.departureLocation && (
-            <p className="text-red-500 text-sm -translate-y-3">{errors.departureLocation.message}</p>
+          {errors.destinationLocation && (
+            <p className="text-red-500 text-sm -translate-y-3">{errors.destinationLocation.message}</p>
           )}
+
+          <div className="flex justify-end mt-4">
+            <Button onClick={nextStep} className='primary-btn' disabled={!isValid}>Proceed</Button>
+          </div>
         </ReusableDialog>
       )}
 
@@ -94,12 +102,6 @@ export default function PostRidePage() {
           description="Enter the travel route"
           closable={false}
           contentClassName="bg-gray-900 border-gray-700"
-          footer={
-            <>
-              <Button className='secondary-btn' onClick={prevStep}>Back</Button>
-              <Button onClick={nextStep} className='primary-btn'>Proceed</Button>
-            </>
-          }
         >
           <input
             type="number"
@@ -128,6 +130,11 @@ export default function PostRidePage() {
           {errors.pricePerSeat && (
             <p className="text-red-500 text-sm -translate-y-3">{errors.pricePerSeat.message}</p>
           )}
+
+          <div className='flex flex-col gap-2 sm:flex-row sm:justify-end mt-4'>
+            <Button className='secondary-btn' onClick={prevStep}>Back</Button>
+            <Button onClick={nextStep} className='primary-btn'>Proceed</Button>
+          </div>
         </ReusableDialog>
       )}
 
@@ -141,12 +148,6 @@ export default function PostRidePage() {
           description="Enter M-Pesa phone number and departure time"
           closable={false}
           contentClassName="bg-gray-900 border-gray-700"
-          footer={
-            <>
-              <Button onClick={prevStep} className='secondary-btn'>Back</Button>
-              <Button onClick={nextStep} className='primary-btn'>Proceed</Button>
-            </>
-          }
         >
           <input
             type="tel"
@@ -176,6 +177,11 @@ export default function PostRidePage() {
           {errors.departureTime && (
             <p className="text-red-500 text-sm -translate-y-2">{errors.departureTime.message}</p>
           )}
+
+          <div className='flex flex-col gap-2 sm:flex-row sm:justify-end mt-4'>
+            <Button className='secondary-btn' onClick={prevStep}>Back</Button>
+            <Button onClick={nextStep} className='primary-btn'>Proceed</Button>
+          </div>
         </ReusableDialog>
       )}
 
@@ -189,12 +195,6 @@ export default function PostRidePage() {
           description="Review and confirm your ride"
           closable={false}
           contentClassName="bg-gray-900 border-gray-700"
-          footer={
-            <>
-              <Button className='secondary-btn' onClick={prevStep}>Back</Button>
-              <Button className='primary-btn' type="submit">Submit Ride</Button>
-            </>
-          }
         >
           <input
             type='number'
@@ -216,11 +216,23 @@ export default function PostRidePage() {
             type="text"
             placeholder="Driver Phone Number"
             disabled
-            className="input"
+            className="bg-gray-700 opacity-60"
             {...register('driverPhone', { required: 'Phone is required' })}
           />
           <p className='text-[12px] text-gray-400 -translate-y-3'>You will receive your payments through this number</p>
           <p className="text-sm text-gray-300">✅ All details entered. Confirm and submit.</p>
+
+          <div className='flex flex-col gap-2 sm:flex-row sm:justify-end mt-4'>
+            <Button type='button' disabled={isSubmitting} className={`secondary-btn ${isSubmitting ? 'cursor-not-allowed ' : ''}`} onClick={prevStep}>Back</Button>
+            <Button 
+              disabled={isSubmitting || !isValid}
+              className={`primary-btn ${isSubmitting ? 'cursor-not-allowed ' : ''}`}
+              type="submit"
+              onClick={handleSubmit(onSubmit)}
+            >
+              {isSubmitting ? <span className='flex items-center gap-4'><Loader2 className='animate-spin w-5'/>Submitting ride...</span> : 'Submit Ride'}
+            </Button>
+          </div>
         </ReusableDialog>
       )}
     </form>
