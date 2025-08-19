@@ -5,6 +5,7 @@ import ReusableDialog from '@/components/reusable/dialog';
 import { Button } from '@/components/ui/button';
 import { PostRideFormData } from '@/types';
 import { Loader2 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
@@ -12,6 +13,7 @@ import { toast } from 'sonner';
 export default function PostRidePage() {
   const [open, setOpen] = useState(false)
   const [step, setStep] = useState(1); // Track which dialog step
+  const router = useRouter();
 
   const { 
     register, 
@@ -42,6 +44,8 @@ export default function PostRidePage() {
         return
       }
       toast.success(res.message || 'Ride posted successfully!');
+      // Redirect to driver/rides page
+      router.push('/driver/rides')
     } finally {
     }
   }

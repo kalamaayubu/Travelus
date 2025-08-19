@@ -142,4 +142,10 @@
 .secondary-btn {
   @apply bg-gray-900 border-[1px] border-gray-600 text-gray-200 hover:border-gray-600 hover:bg-gray-800;
 }
+.destructive-btn {
+  @apply bg-red-600 text-white p-2 px-6 rounded-md opacity-60 hover:bg-red-500 transition duration-300;
+}
 
+.ride-card {
+  @apply bg-gray-900 rounded-lg p-4 transition duration-300
+}

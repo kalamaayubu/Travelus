@@ -32,3 +32,22 @@ export type PostRideFormData = {
   departureTime: Date;
   nationalId?: string;
 };
+
+export type Ride = {
+  id?: string;
+  departureLocation: string;
+  destinationLocation: string;
+  departureTime: string; // stored as ISO string in DB
+  pricePerSeat: number;
+  seatsAvailable?: number;
+  driverId?: string;
+  vehicle?: string;
+  status?: "Active" | "Completed" | "Cancelled";
+  createdAt?: string;
+};
+
+export type RideCardProps = {
+  ride: Ride;
+  onEdit: () => void;
+  onCancel: () => void;
+};
