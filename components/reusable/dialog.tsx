@@ -4,12 +4,13 @@ import {
   DialogDescription,
   DialogFooter,
   DialogHeader,
+  DialogOverlay,
   DialogTitle,
   DialogTrigger,
+  DialogClose
 } from "@/components/ui/dialog"
 import { ReusableDialogProps } from "@/types";
-import { DialogClose } from "@radix-ui/react-dialog";
-import { Button } from "../ui/button";
+import { X } from "lucide-react";
 
 export default function ReusableDialog({ 
     trigger, 
@@ -25,10 +26,13 @@ export default function ReusableDialog({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       {trigger && <DialogTrigger asChild>{trigger}</DialogTrigger>}
+      <DialogOverlay className="fixed inset-0 bg-gray-800/5 backdrop-blur-sm" />
+
 
       <DialogContent
         showCloseButton={closable}
-        className={contentClassName}
+        className={`sm:max-w-md rounded-xl border border-gray-700 bg-gray-900 text-gray-200 shadow-lg ${contentClassName ?? ""}`}
+
         // Prevent closing on outside click or escape key if closable is false
         onInteractOutside={(e) => {
             if (!closable) e.preventDefault()
@@ -37,6 +41,15 @@ export default function ReusableDialog({
             if (!closable) e.preventDefault()
         }}
       >
+        {/* Custom Close Button */}
+        {closable && (
+          <DialogClose asChild>
+            <button className="absolute right-4 top-4 text-gray-500 hover:text-gray-300 bg-transparent outline-none">
+              <X className="h-5 w-5" />
+            </button>
+          </DialogClose>
+        )}
+
         <DialogHeader>
           <DialogTitle className="text-gray-300">{title}</DialogTitle>
           {description && (

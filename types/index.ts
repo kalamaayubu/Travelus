@@ -14,11 +14,11 @@ export type LoginFormData = {
 export interface ReusableDialogProps {
   trigger?: ReactNode
   children: ReactNode
-  title: string
+  title?: string
   description?: string // optional if you don’t always pass one
   open?: boolean
   onOpenChange?: (open: boolean) => void
-  closable: boolean
+  closable?: boolean
   contentClassName?: string 
   footer?: React.ReactNode
 }
@@ -50,4 +50,27 @@ export type RideCardProps = {
   ride: Ride;
   onEdit: () => void;
   onCancel: () => void;
+};
+
+export type PublicRideCardProps = {
+  departure: string;
+  destination: string;
+  date: string;
+  vehicle: string;
+  availableSeats: number;
+  price: number;
+  onBook: () => void;
+};
+
+export type AvailableRidesListProps = {
+  rides: {
+    id: string;
+    departureLocation: string;
+    destinationLocation: string;
+    departureTime: string;
+    vehicle?: string;
+    availableSeats: number;
+    pricePerSeat: number;
+    status?: string;
+  }[];
 };

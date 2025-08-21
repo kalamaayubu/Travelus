@@ -18,7 +18,7 @@ export default function RideList({ rides }: RideListProps) {
             {
               departureLocation: ride.departureLocation,
               destinationLocation: ride.destinationLocation,
-              departureTime: new Date(ride.departureTime).toLocaleString(),
+              departureTime: ride.departureTime,
               vehicle: ride.vehicle || "Unspecified Vehicle",
               pricePerSeat: ride.pricePerSeat,
               status: ride.status || "Active",

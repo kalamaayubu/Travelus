@@ -119,6 +119,12 @@
   body {
     @apply bg-background text-foreground;
   }
+  h1 {
+    @apply text-5xl font-bold text-gray-200 mb-4;
+  }
+  h2 {
+    @apply text-3xl font-bold text-gray-300;
+  }
   button {
     @apply cursor-pointer opacity-80 bg-green-600 active:scale-95 text-white p-[6px] px-6 rounded-md hover:bg-green-500 transition duration-300;
   }
@@ -136,7 +142,7 @@
   }
 }
 .primary-btn {
-  @apply cursor-pointer bg-green-600 active:scale-95 text-white p-2 px-6 rounded-md hover:bg-green-500 transition duration-300;
+  @apply cursor-pointer opacity-80 bg-green-600 active:scale-95 text-white p-2 px-6 rounded-md hover:bg-green-500 transition duration-300;
 }
 
 .secondary-btn {

@@ -18,7 +18,7 @@ export default async function DriverRidesPage() {
     <>
       <div className='flex flex-col min-h-screen text-gray-300 p-6 sm:p-8 md:p-10 lg:p-12 xl:p-14'>
         <div className='float-left'>
-          <Link href="/driver/post-ride" className="px-4 py-2 rounded bg-blue-600 hover:bg-blue-700">
+          <Link href="/driver/post-ride" className="primary-btn no-underline">
             Add a ride
           </Link>
         </div>

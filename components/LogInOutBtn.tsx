@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { getSession, logout } from '@/actions/auth.action';  // Import Server Action
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 export default function LogInOutBtn() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -22,7 +23,7 @@ export default function LogInOutBtn() {
   const handleLogout = async () => {
     const res = await logout();
     if (res.error) {
-      alert(res.error);
+      toast.error(res.error);
       return;
     }
 
@@ -32,7 +33,7 @@ export default function LogInOutBtn() {
 
     // Redirect to home page after logout
     router.replace('/');  // Redirect to the homepage
-    alert(res.message);
+    toast.success(res.message);
   };
 
   if (isLoggedIn) {

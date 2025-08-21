@@ -13,7 +13,7 @@ const NavBar = () => {
   }
 
   return (
-    <header className="bg-gray-900 text-white py-4 px-6">
+    <header className="text-white py-4 px-6">
       <nav className="flex items-center justify-between space-x-6">
         <Logo />
         <ul className="flex space-x-4">
