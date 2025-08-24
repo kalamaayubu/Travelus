@@ -9,7 +9,7 @@ const Footer = () => {
           return null; // Hide NavBar on auth pages
       }
   return (
-    <footer className="bg-gray-900 text-white py-6 px-6 text-center">
+    <footer className="bg-gray-900 mt-8 text-white py-6 px-6 text-center">
         <p>&copy; {new Date().getFullYear()} Travelus. All rights reserved.</p>
     </footer>
   )
