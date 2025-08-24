@@ -56,10 +56,10 @@ export type PublicRideCardProps = {
   departure: string;
   destination: string;
   date: string;
-  vehicle: string;
+  vehicle: string; // Just the vehicle type_name
   availableSeats: number;
   price: number;
-  onBook: () => void;
+  onViewDetails: () => void;
 };
 
 export type AvailableRidesListProps = {
@@ -73,4 +73,38 @@ export type AvailableRidesListProps = {
     pricePerSeat: number;
     status?: string;
   }[];
+};
+
+export type Booking = {
+  id: string;
+  seatNumber: string;
+  userId: string;
+}
+
+export type Vehicle = {
+  id: string;
+  type_name: string;
+  capacity: number;
+  seat_layout: SeatLayout;
+}
+
+export type RideDetailsProps = {
+  id: string;
+  departureLocation: string;
+  destinationLocation: string;
+  departureTime: string;
+  pricePerSeat: number;
+  vehicle: Vehicle | null;
+  bookings: Booking[]
+  availableSeats: number;
+  status: string
+}
+
+export type SeatRow = {
+  row: number;
+  seats: (number | "Aisle" | "DoorGap" | "Driver" | null)[];
+};
+
+export type SeatsLayout = {
+  layout: SeatRow[];
 };

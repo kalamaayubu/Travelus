@@ -2,31 +2,23 @@
 
 import { AvailableRidesListProps } from "@/types";
 import PublicRideCard from "./PublicRideCard";
-import { getUser } from "@/utils/getUser";
 import ReusableDialog from "./reusable/dialog";
-import { useState } from "react";
+// import { useState } from "react";
 import { X } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 
 export default function AvailableRidesList({ rides }: AvailableRidesListProps) {
-    const [showLoginDialog, setShowLoginDialog] = useState(false);
+  const router = useRouter();
 
   if (!rides || rides.length === 0) {
     return <p className="text-gray-400 p-8">No rides available at the moment.</p>;
   }
 
 
-  // Handle ride booking logic
+  // Redirect to ride details page
   const handleViewDetails = async (rideId: string) => {
-    // Check if user is logged in
-    const user = await getUser();
-    if (!user) {
-      setShowLoginDialog(true);
-      return;
-    }
-
-    // Implement booking logic here
-    console.log(`Booking ride with ID: ${rideId}`);
+    router.push(`/available-rides/${rideId}`);
   };
 
   return (
@@ -44,14 +36,14 @@ export default function AvailableRidesList({ rides }: AvailableRidesListProps) {
               vehicle={ride.vehicle || "Unspecified Vehicle"}
               availableSeats={ride.availableSeats}
               price={ride.pricePerSeat}
-              onBook={() => handleViewDetails(ride.id)}
+              onViewDetails={() => handleViewDetails(ride.id)}
             />
           ))}
         </div>
       </div>
 
       {/* ReusableDialog for login */}
-      <ReusableDialog
+      {/* <ReusableDialog
         open={showLoginDialog}
         onOpenChange={setShowLoginDialog}
         closable={false}
@@ -67,7 +59,7 @@ export default function AvailableRidesList({ rides }: AvailableRidesListProps) {
         <button className="primary-btn py-5 mt-4" onClick={() => (window.location.href = '/auth/login')}>
             Login
           </button>
-      </ReusableDialog>
+      </ReusableDialog> */}
     </>
   );
 }
