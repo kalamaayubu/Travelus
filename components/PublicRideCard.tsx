@@ -52,7 +52,7 @@ export default function PublicRideCard({
         </div>
 
         {/* CTA buttons */}
-        <div className="flex opacity-30 group-hover:opacity-90 transition-all duration-500 items-center justify-end gap-4 mt-8 text-sm">
+        <div className="flex transition-all duration-500 items-center justify-end gap-4 mt-8 text-sm">
           <button onClick={onViewDetails} className="primary-btn px-4">
             View Details
           </button>

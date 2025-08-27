@@ -7,6 +7,7 @@ import { login } from '@/actions/auth.action'; // same style as signup
 import { LoginFormData } from '@/types';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import { toast } from 'sonner';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -18,6 +19,7 @@ export default function LoginPage() {
 
     if (result.success && result.redirectUrl) {
       router.push(result.redirectUrl);
+      toast.success(result.message)
     } else {
       alert(`Error: ${result.error}`);
     }

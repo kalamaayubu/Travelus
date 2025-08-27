@@ -2,28 +2,80 @@
 
 import { usePathname } from "next/navigation";
 import Logo from "./Logo";
-import Link from "next/link";
 import LogInOutBtn from "./LogInOutBtn";
+import { Menu, X } from "lucide-react";
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import Link from "next/link";
 
 const NavBar = () => {
   const pathname = usePathname();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  if (pathname.startsWith('/auth') || pathname === "/driver/post-ride") {
-    return null; // Hide NavBar on auth pages
-  }
+  // Hide navbar on these routes
+  if (pathname.startsWith("/auth") || pathname === "/driver/post-ride") return null;
 
   return (
-    <header className="text-white py-4 px-6">
-      <nav className="flex items-center justify-between space-x-6">
+    <header className="text-white p-6">
+      {/* Desktop */}
+      <nav className="md:flex hidden items-center justify-between space-x-6">
         <Logo />
-        <ul className="flex space-x-4">
-          <li><Link href="/auth/signup" className="hover:text-green-400">Sign Up</Link></li>
-          <li><LogInOutBtn /></li>  {/* This is where the session is passed to the client */}
-          {/* Consider adding a mobile menu for smaller screens */}
+        <ul className="space-x-4 flex">
+          <li><LogInOutBtn /></li>
         </ul>
       </nav>
+
+      {/* Mobile */}
+      <div className="md:hidden relative">
+        <nav className="flex flex-col relative">
+          {/* Top bar (logo + toggle) */}
+          <div className="flex items-center justify-between">
+            <Logo />
+            {isMenuOpen ? (
+              <X onClick={() => setIsMenuOpen(false)} className="cursor-pointer" />
+            ) : (
+              <Menu onClick={() => setIsMenuOpen(true)} className="cursor-pointer" />
+            )}
+          </div>
+        </nav>
+
+        {/* Overlay menu */}
+        <AnimatePresence>
+          {isMenuOpen && (
+            <motion.div
+              key="mobile-menu"
+              className="fixed inset-0 z-50 bg-gray-900 flex flex-col p-6"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+            >
+              {/* Top bar inside overlay */}
+              <div className="flex items-center justify-between mb-8">
+                <Logo />
+                <X
+                  onClick={() => setIsMenuOpen(false)}
+                  className="cursor-pointer"
+                />
+              </div>
+
+              {/* Menu content */}
+              <ul className="flex flex-col gap-4 mt-10 text-center">
+                <Link onClick={() => setIsMenuOpen(false)} href={'/'} className="bg-gray-800 p-2 rounded-md w-full">Home</Link>
+                <LogInOutBtn />
+                <Link 
+                  className="primary-btn w-full" 
+                  href={"/available-rides"}
+                >
+                  Available rides
+                </Link>
+              </ul>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     </header>
   );
-}
+};
 
 export default NavBar;

@@ -38,14 +38,14 @@ export default function LogInOutBtn() {
 
   if (isLoggedIn) {
     return (
-      <span onClick={handleLogout} className="hover:text-green-400 cursor-pointer">
-        Log Out
-      </span>
+      <button onClick={handleLogout} className="secondary-btn">
+        Log out
+      </button>
     );
   }
 
   return (
-    <Link href="/auth/login" className="btn btn-primary">
+    <Link href="/auth/login" className="primary-btn w-full text-center text-white">
       Login
     </Link>
   );

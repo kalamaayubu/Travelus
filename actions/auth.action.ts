@@ -85,7 +85,7 @@ export async function login(formData: LoginFormData) {
   // Role based redirection
   const role = profileData.role
   let redirectUrl: string = "/";
-  if (role === "rider") redirectUrl = "/rider/available-rides"
+  if (role === "rider") redirectUrl = "/available-rides"
   if (role === "driver") redirectUrl = "/driver/rides"
   if (role === "admin") redirectUrl = "/admin/dashboard"
 
@@ -125,6 +125,11 @@ export async function login(formData: LoginFormData) {
 export async function logout() {
   const supabase = await createClient();
 
+  
+  // Clear manual cookies
+  const cookieStore = await cookies();
+  cookieStore.delete("authState");
+
   // Sign out the user
   const { error } = await supabase.auth.signOut();
 
@@ -132,10 +137,6 @@ export async function logout() {
     console.error("Error logging out:", error.message);
     return { success: false, error: "Failed to log out." };
   }
-
-  // Clear manual cookies
-  const cookieStore = await cookies();
-  cookieStore.delete("authState");
 
   return { success: true, message: "Successfully logged out." };
 }

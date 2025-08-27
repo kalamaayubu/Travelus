@@ -1,23 +1,17 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function HomePage() {
  return (
- <div className="font-sans flex flex-col items-center justify-items-center min-h-screen p-4 pb-10 sm:p-8 sm:pb-16 md:p-12 md:pb-20 gap-10 sm:gap-16">
- {/* Header (Placeholder - Ideally in layout.tsx) */}
-      {/* Hero Section - Modern and Intuitive */}
+ <div className="font-sans flex flex-col items-center justify-items-center min-h-screen p-6">
       <main className="flex flex-col md:flex-row gap-16 items-center justify-center row-start-2 text-center md:text-left min-h-[60vh]">
  <div className="flex flex-col gap-4 sm:gap-8 max-w-2xl">
   <h1 className="text-4xl opacity-70 sm:text-5xl md:text-6xl font-bold text-green-500 leading-tight">Ride the Future of Transport in <span className="text-red-500">Kenya</span></h1>
   <p className="text-lg sm:text-xl md:text-2xl text-gray-300">Safe, reliable, and affordable rides at your fingertips. Connect with drivers across Kenya for your daily commute or next adventure.</p>
 
   <div className="flex gap-4 sm:gap-6 items-center flex-col sm:flex-row mt-4">
-    <a className="rounded-full bg-green-500 text-white px-8 py-3 text-lg font-semibold hover:bg-green-600 transition duration-300" href="#">
-      Get Started
-    </a>
-    <button className="" >
-    Learn More
- </button>
- </div>
+    <Link className="primary-btn" href={'/available-rides'}>Check available rides</Link>
+  </div>
  </div>
 </main>
  {/* Placeholder for subtle animation or 3D graphics */} {/* You would integrate a library like Three.js or a CSS animation here */} 

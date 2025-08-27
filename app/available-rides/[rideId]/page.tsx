@@ -7,13 +7,16 @@ import { Card, CardContent } from "@/components/ui/card";
 import { RideDetailsProps, SeatsLayout, SeatRow } from "@/types";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import { Armchair, Calendar, MapPin } from "lucide-react";
+import { Armchair, Calendar, MapPin, X } from "lucide-react";
+import { getUser } from "@/utils/getUser";
+import ReusableDialog from "@/components/reusable/dialog";
 
 const RideDetailsPage = () => {
     const [ride, setRide] = useState<RideDetailsProps | null>(null);
     const [loading, setLoading] = useState(true);
     const { rideId } = useParams<{ rideId: string }>()
     const [selectedSeats, setSelectedSeats] = useState<string[]>([])
+    const [showLoginDialog, setShowLoginDialog] = useState(false)
 
     // Fetch the ride details including the seats layout
     useEffect(() => {
@@ -41,6 +44,15 @@ const RideDetailsPage = () => {
       })
     }
 
+    // Function to proceed booking
+    const handleProceedBooking = async () => {
+      // Check if user is authenticated
+      const user = await getUser()
+      if (!user) {
+        setShowLoginDialog(true)
+      }
+    }
+
     if (loading || !ride) return <p className="p-6">Loading ride details...</p>;
 
     const { 
@@ -61,6 +73,7 @@ const bookedSeats = bookings
     console.log('BOOKED SEATS:', bookedSeats)
 
   return (
+    <>
     <div className="p-4 space-y-6 bg-gray-950 flex flex-col items-center">
       {/* Seat Map */}
       {seatsLayout ? (
@@ -150,6 +163,7 @@ const bookedSeats = bookings
                   }
                 </div>
                 <button
+                  onClick={handleProceedBooking}
                   disabled={selectedSeats.length === 0}
                   className={cn(
                     "px-4 py-2 rounded-lg font-semibold transition-all mt-8",
@@ -167,6 +181,26 @@ const bookedSeats = bookings
         <p>No seat layout available</p>
       )}
     </div>
+
+    
+    <ReusableDialog
+      open={showLoginDialog}
+      onOpenChange={setShowLoginDialog}
+      closable={false}
+      contentClassName="bg-gray-900 border-1 border-gray-800"
+    >
+      <button onClick={() => setShowLoginDialog(false)} className="relative mx-auto justify-center p-10 flex flex-col cursor-pointer opacity-80 items-center bg-gray-800 hover:opacity-100 hover:border hover:border-gray-600 rounded-full">
+        <X className="font-bold text-red-600 opacity-100"/>
+      </button>
+      <p className="text-center text-xl font-bold">Login Required</p>
+      <p className="text-sm text-center text-gray-400">
+        Please log in to continue with your booking.
+      </p>
+      <button className="primary-btn py-5 mt-4" onClick={() => (window.location.href = '/auth/login')}>
+          Login
+      </button>
+    </ReusableDialog>
+    </>
   );
 }
 

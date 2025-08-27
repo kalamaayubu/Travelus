@@ -85,7 +85,7 @@ export type Vehicle = {
   id: string;
   type_name: string;
   capacity: number;
-  seat_layout: SeatLayout;
+  seat_layout: SeatsLayout;
 }
 
 export type RideDetailsProps = {

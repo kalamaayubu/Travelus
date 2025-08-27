@@ -60,7 +60,7 @@ export async function updateSession(request: NextRequest) {
 
     // Role-based redirection
     if (pathname.startsWith('/rider') && role !== 'rider') {
-        return NextResponse.redirect(new URL(`/${role}/dashboard`, request.url))
+        return NextResponse.redirect(new URL(`/available-rides`, request.url))
     }
     if (pathname.startsWith('/driver') && role !== 'driver') {
         return NextResponse.redirect(new URL(`${role}/dashboard`, request.url))

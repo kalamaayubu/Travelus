@@ -6,7 +6,7 @@
 >
   <g transform="rotate(180 12 12)">
     <!-- Outer rim -->
-    <circle cx="12" cy="12" r="10" stroke="#d3d3d3" stroke-width="2.5" fill="none"/>
+    <circle cx="12" cy="12" r="10" stroke="#D1D5DB" stroke-width="2.5" fill="none"/>
 
     <!-- Three reversed river-like spokes -->
     <path
@@ -21,10 +21,10 @@
          M12 12
          C14 13, 18 13, 20 12
          C18 11, 14 11, 12 12Z"
-      fill="#d3d3d3"
+      fill="#D1D5DB"
     />
 
     <!-- Center hub (round junction, thicker meeting point) -->
-    <circle cx="12" cy="12" r="2" fill="#d3d3d3"/>
+    <circle cx="12" cy="12" r="2" fill="#D1D5DB"/>
   </g>
 </svg>
