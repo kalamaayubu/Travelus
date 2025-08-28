@@ -57,3 +57,21 @@ export async function fetchDriverRides() {
 
     return { success: true, rides };
 }
+
+
+// Function to fetch vehicle types
+export async function getVehicleTypes() {
+    const supabase = await createClient()
+
+    const { data, error } = await supabase
+        .from('vehicle_types')
+        .select('id, type_name')
+
+    if (error) {
+        console.log('Error fetching vehicle types:', error.message)
+        return []
+    }
+
+    console.log('Vehicle types fetched:', data)
+    return data
+}

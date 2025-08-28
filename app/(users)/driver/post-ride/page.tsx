@@ -1,30 +1,37 @@
 'use client';
 
 import { postRide } from '@/actions/driver.action';
+import ComboBox from '@/components/reusable/ComboBox';
 import ReusableDialog from '@/components/reusable/dialog';
 import { Button } from '@/components/ui/button';
 import { PostRideFormData } from '@/types';
 import { Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
 import { toast } from 'sonner';
+import type { RootState } from '@/redux/store';
 
 export default function PostRidePage() {
   const [open, setOpen] = useState(false)
   const [step, setStep] = useState(1); // Track which dialog step
+  const vehicleTypes = useSelector((state: RootState) => state.vehicleTypes.value)
+
   const router = useRouter();
 
+
   const { 
-    register, 
+    register,
+    control, 
     handleSubmit, 
     formState: { errors, isSubmitting, isValid }, 
     trigger 
   } = useForm<PostRideFormData>({ mode: 'onChange' });
 
-  // Open dialog on page load
+  // On page load, open dialog and parse vehicle types
   useEffect(() => {
-    setOpen(true)
+    setOpen(true);    
   }, []);
 
   // Proceed to next step with validation
@@ -46,19 +53,20 @@ export default function PostRidePage() {
       toast.success(res.message || 'Ride posted successfully!');
       // Redirect to driver/rides page
       router.push('/driver/rides')
-    } finally {
+    } catch (error) {
+      console.log('Error posting ride:', error)
     }
   }
 
   return (
-    <div className='bg-green-950'>
+    <div className='bg-gray-950 p-4 sm:p-6 md:p-8 lg:p-10'>
        <form onSubmit={handleSubmit(onSubmit)}>
       {/* Step 1 */}
       {step === 1 && (
         <ReusableDialog
           open={open}
           onOpenChange={setOpen}
-          title="Step 1: Basic Ride Details"
+          title="Step 1: Route Info"
           description="Provide key ride information"
           closable={false}
           contentClassName="bg-gray-900 border-1 border-gray-600"
@@ -102,24 +110,29 @@ export default function PostRidePage() {
         <ReusableDialog
           open={open}
           onOpenChange={setOpen}
-          title="Step 2: Route Info"
+          title="Step 2: Basic ride details"
           description="Enter the travel route"
           closable={false}
           contentClassName="bg-gray-900 border-gray-700"
         >
-          <input
-            type="number"
-            placeholder="Number of Seats"
-            className="input"
-            {...register('seatsAvailable', { 
-              required: "Enter number of seats available",
-              valueAsNumber: true,
-              validate: (value) => value > 0 || "Must be greater than 0",
-              min: { value: 1, message: "At least 1 seat is required"} 
-            })}
+          <Controller
+            name='vehicleType'
+            control={control}
+            rules={{ required: 'Vehicle type is required'}}
+            render={({ field }) => (
+              <ComboBox
+                items={vehicleTypes.map(vehicleType => ({
+                  id: vehicleType.id,
+                  label: vehicleType.name,
+                }))}
+                placeholder='Specify your vehicle type'
+                classsName='w-full bg-gray-800'
+                onChange={field.onChange}
+              />
+            )}
           />
-          {errors.seatsAvailable && (
-            <p className="text-red-500 text-sm -translate-y-3">{errors.seatsAvailable.message}</p>
+          {errors.vehicleType && (
+            <p className="text-red-500 text-sm -translate-y-3">{errors.vehicleType.message}</p>
           )}
           
           <input

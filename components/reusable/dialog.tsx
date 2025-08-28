@@ -31,7 +31,7 @@ export default function ReusableDialog({
 
       <DialogContent
         showCloseButton={closable}
-        className={`sm:max-w-md rounded-xl border border-gray-700 bg-gray-900 text-gray-200 shadow-lg ${contentClassName ?? ""}`}
+        className={`sm:max-w-md z-50 rounded-xl border border-gray-700 bg-gray-900 text-gray-200 shadow-lg ${contentClassName ?? ""}`}
 
         // Prevent closing on outside click or escape key if closable is false
         onInteractOutside={(e) => {

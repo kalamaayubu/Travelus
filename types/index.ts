@@ -26,7 +26,7 @@ export interface ReusableDialogProps {
 export type PostRideFormData = {
   departureLocation: string;
   destinationLocation: string;
-  seatsAvailable: number;
+  vehicleType?: string;
   pricePerSeat: number;
   driverPhone?: string;
   departureTime: Date;
@@ -108,3 +108,12 @@ export type SeatRow = {
 export type SeatsLayout = {
   layout: SeatRow[];
 };
+
+export interface VehicleType {
+    id: string;
+    name: string;
+}
+
+export interface VehicleTypesState {
+    value: VehicleType[]
+}

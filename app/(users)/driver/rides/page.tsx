@@ -1,8 +1,8 @@
 
 import { fetchDriverRides } from '@/actions/driver.action';
+import AddRideButton from '@/components/driver/AddRideButton';
 import RideList from '@/components/driver/RideList';
 import { Ride } from '@/types';
-import Link from 'next/link';
 
 export default async function DriverRidesPage() {
   const res = await fetchDriverRides();
@@ -12,15 +12,12 @@ export default async function DriverRidesPage() {
   }
 
   const rides: Ride[] = res.rides ?? [];
-  console.log("Fetched rides:", rides);
 
   return (
     <>
       <div className='flex flex-col min-h-screen text-gray-300 p-6 sm:p-8 md:p-10 lg:p-12 xl:p-14'>
         <div className='float-left'>
-          <Link href="/driver/post-ride" className="primary-btn no-underline">
-            Add a ride
-          </Link>
+          <AddRideButton/>
         </div>
 
         <div className='mt-10'>

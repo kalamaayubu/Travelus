@@ -3,7 +3,7 @@ import "./globals.css";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 import { Toaster } from "sonner";
-// import ReduxProvider from "@/components/providers/ReduxProvider";
+import ReduxProvider from "@/components/providers/ReduxProvider";
 
 export const metadata: Metadata = {
   title: "Travelus",
@@ -20,12 +20,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className="dark">
       <body className={`antialiased bg-gray-950 text-gray-400`}>
-        {/* <ReduxProvider> */}
+        <ReduxProvider>
           <NavBar />
           {children}
           <Toaster richColors position="top-right"/>
           <Footer />
-        {/* </ReduxProvider> */}
+        </ReduxProvider>
       </body>
     </html>
   );
