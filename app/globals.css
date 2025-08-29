@@ -155,3 +155,6 @@
 .ride-card {
   @apply bg-gray-900 rounded-lg p-4 transition duration-300
 }
+.text-gradient {
+  @apply bg-gradient-to-br from-white to-gray-400 bg-clip-text text-transparent
+}

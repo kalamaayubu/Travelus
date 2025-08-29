@@ -19,7 +19,7 @@ export async function postRide(data: PostRideFormData) {
         .insert({
             departureLocation: data.departureLocation,
             destinationLocation: data.destinationLocation,
-            seatsAvailable: data.seatsAvailable,
+            vehicleType: data.vehicleType,
             pricePerSeat: data.pricePerSeat,
             departureTime: data.departureTime,
             createdBy: user.id,
@@ -47,7 +47,13 @@ export async function fetchDriverRides() {
 
     const { data: rides, error } = await supabase
         .from('ride_posts')
-        .select('*')
+        .select(`
+            id, departureTime, departureLocation, 
+            destinationLocation, pricePerSeat, status,
+            vehicle_types (
+                type_name
+            )
+        `)
         .eq('createdBy', user.id);
 
     if (error) {
@@ -55,6 +61,7 @@ export async function fetchDriverRides() {
         return { success: false, error: error.message };
     }
 
+    console.log('DRIVER RIDES DATA:', rides)
     return { success: true, rides };
 }
 

@@ -123,3 +123,6 @@ export async function getRideDetails(rideId: string) {
 //   console.log('LAYOUT:', transformedData.vehicle.seats_layout.layout)
   return transformedData;
 }
+
+
+// Book selected seats

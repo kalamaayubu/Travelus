@@ -1,4 +1,3 @@
-// RideList.tsx
 "use client";
 
 import { Ride } from "@/types";
@@ -19,7 +18,7 @@ export default function RideList({ rides }: RideListProps) {
               departureLocation: ride.departureLocation,
               destinationLocation: ride.destinationLocation,
               departureTime: ride.departureTime,
-              vehicle: ride.vehicle || "Unspecified Vehicle",
+              vehicle: ride?.vehicle_types?.type_name || "Unspecified Vehicle",
               pricePerSeat: ride.pricePerSeat,
               status: ride.status || "Active",
             }

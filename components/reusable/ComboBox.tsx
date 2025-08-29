@@ -1,92 +1,98 @@
-'use client'
+'use client';
 
-import { useState } from "react";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
-import { cn } from "@/lib/utils";
-import { CheckIcon, ChevronsUpDownIcon } from "lucide-react";
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "../ui/command";
+import { useState, useRef, useEffect } from "react";
+import { FieldError } from "react-hook-form";
 
-export interface ComboBoxItem {
-    value: string;
-    label: string;
-}
+export type Option = { label: string; value: string };
 
-export interface ComboBoxProps {
-    items: ComboBoxItem[];
-    placeholder?: string;
-    searchPlaceholder?: string;
-    emptyMessage?: string;
-    classsName?: string;
-    onChange?: (value: string) => void
-}
-const ComboBox = ({
-    items = [],
-    placeholder = 'Select an option...',
-    searchPlaceholder = 'Search...',
-    emptyMessage = 'No item found',
-    classsName,
-    onChange,
-}: ComboBoxProps) => {
-    const [open, setOpen] = useState(false)
-    const [value, setValue] = useState('')
+type ComboBoxProps = {
+  options: Option[];
+  value?: string; // controlled
+  onChange?: (value: string) => void;
+  placeholder?: string;
+  className?: string;
+  defaultValue?: string;
+  error?: FieldError; // for RHF error display
+};
 
-    // Look up the label of the currently selected item
-    const selectedLabel = items.find(item => item.value === value)?.label
+export default function ComboBox({
+  options,
+  value,
+  onChange,
+  placeholder = "Select...",
+  className = "",
+  defaultValue,
+  error,
+}: ComboBoxProps) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [search, setSearch] = useState("");
+  const [uncontrolled, setUncontrolled] = useState(defaultValue ?? "");
+  const containerRef = useRef<HTMLDivElement>(null);
 
-    const handleSelect = (currentValue: string) => {
-        // If item is already selected, deselect it when clicked(kind of toggle)
-        const newValue = currentValue === value ? '' : currentValue
-        setValue(newValue)
-        setOpen(false)
-        onChange?.(newValue)
-    }
+  const selectedValue = value ?? uncontrolled;
+  const selectedOption = options.find((o) => o.value === selectedValue);
 
-    console.log('ITEMS',items?.map(i => i.value))
+  const filteredOptions = options.filter((o) =>
+    o.label.toLowerCase().includes(search.toLowerCase())
+  );
+
+  // Close dropdown if clicked outside
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (!containerRef.current?.contains(e.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleSelect = (val: string) => {
+    if (value === undefined) setUncontrolled(val);
+    onChange?.(val);
+    setIsOpen(false);
+    setSearch("");
+  };
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger asChild>
-            <button 
-                role="combobox"
-                aria-expanded={open}
-                aria-controls="combo-listbox"
-                className={cn("flex justify-between items-center border", classsName)}
-            >
-                <span className="text-gray-300">{selectedLabel || placeholder}</span>
-                <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-            </button>
-        </PopoverTrigger>
-        <PopoverContent className="bg-gray-800 p-0 pb-2 z-50">
-            <Command className="bg-gray-800">
-                <CommandInput placeholder={searchPlaceholder} className="h-9 border-none"/>
-                <CommandList className="mt-4">
-                    <CommandEmpty>{emptyMessage}</CommandEmpty>
-                    <CommandGroup className="">
-                        {items.map(item => (
-                            <CommandItem
-                                key={item.value}
-                                value={item.value}
-                                onSelect={() => handleSelect(item.value)}
-                            >
-                                <CheckIcon
-                                    className={cn(
-                                        "mr-2 h-4 w-4",
-                                        value === item.value ? "opacity-100" : "opacity-0"
-                                    )}
-                                />
-                                {item.label}
-                            </CommandItem>
-                        ))}
-                    </CommandGroup>
-                </CommandList>
-            </Command>
-        </PopoverContent>
-    </Popover>
-  )
-}
+    <div ref={containerRef} className={`relative w-full ${className}`}>
+      <input
+        type="text"
+        placeholder={placeholder}
+        value={isOpen ? search : selectedOption?.label || ""}
+        onChange={(e) => {
+          setSearch(e.target.value);
+          setIsOpen(true);
+        }}
+        onClick={() => setIsOpen((o) => !o)}
+        className={`w-full px-3 py-2 rounded-lg border ${
+          error ? "border-red-500" : "border-gray-600"
+        } bg-gray-800 text-gray-100 placeholder-gray-400 focus:outline-none`}
+      />
 
-export default ComboBox
+      {isOpen && filteredOptions.length > 0 && (
+        <ul className="absolute z-50 w-full bg-gray-800 border border-gray-600 rounded-lg mt-1 max-h-48 overflow-auto">
+          {filteredOptions.map((opt) => (
+            <li
+              key={opt.value}
+              className={`px-3 py-2 cursor-pointer hover:bg-gray-700 ${
+                selectedValue === opt.value ? "bg-gray-700 font-medium" : ""
+              }`}
+              onClick={() => handleSelect(opt.value)}
+            >
+              {opt.label}
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {isOpen && filteredOptions.length === 0 && (
+        <div className="absolute z-50 w-full bg-gray-800 border border-gray-600 rounded-lg mt-1 px-3 py-2 text-gray-400">
+          No results
+        </div>
+      )}
+
+      {error && <p className="mt-1 text-red-500 text-sm">{error.message}</p>}
+    </div>
+  );
+}

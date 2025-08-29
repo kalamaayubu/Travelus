@@ -39,7 +39,9 @@ export type Ride = {
   destinationLocation: string;
   departureTime: string; // stored as ISO string in DB
   pricePerSeat: number;
-  seatsAvailable?: number;
+  vehicle_types?: {
+    type_name: string;
+  };
   driverId?: string;
   vehicle?: string;
   status?: "Active" | "Completed" | "Cancelled";

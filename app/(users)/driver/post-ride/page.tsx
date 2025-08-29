@@ -5,7 +5,7 @@ import ComboBox from '@/components/reusable/ComboBox';
 import ReusableDialog from '@/components/reusable/dialog';
 import { Button } from '@/components/ui/button';
 import { PostRideFormData } from '@/types';
-import { Loader2 } from 'lucide-react';
+import { Check, Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -15,8 +15,9 @@ import type { RootState } from '@/redux/store';
 
 export default function PostRidePage() {
   const [open, setOpen] = useState(false)
-  const [step, setStep] = useState(1); // Track which dialog step
+  const [step, setStep] = useState(1); // Track dialog steps
   const vehicleTypes = useSelector((state: RootState) => state.vehicleTypes.value)
+
 
   const router = useRouter();
 
@@ -44,6 +45,7 @@ export default function PostRidePage() {
 
   // Handle final submission
   const onSubmit = async (data: PostRideFormData) => {
+    console.log('DATA TO BE SUBMITTED:', data)
     try {
       const res = await postRide(data);
       if (!res.success) {
@@ -98,6 +100,19 @@ export default function PostRidePage() {
             <p className="text-red-500 text-sm -translate-y-3">{errors.destinationLocation.message}</p>
           )}
 
+          <input
+            type='datetime-local'
+            id='departureTime'
+            placeholder="Departure time"
+            {...register('departureTime', { 
+              required: "Departure time is required",
+              validate: (value) => new Date(value) > new Date() || "Departure time must be in the future",
+            })}
+          />
+          {errors.departureTime && (
+            <p className="text-red-500 text-sm -translate-y-2">{errors.departureTime.message}</p>
+          )}
+
           <div className="flex justify-end mt-4">
             <Button onClick={nextStep} className='primary-btn' disabled={!isValid}>Proceed</Button>
           </div>
@@ -111,26 +126,27 @@ export default function PostRidePage() {
           open={open}
           onOpenChange={setOpen}
           title="Step 2: Basic ride details"
-          description="Enter the travel route"
+          description="Enter basic ride details"
           closable={false}
           contentClassName="bg-gray-900 border-gray-700"
         >
           <Controller
-            name='vehicleType'
-            control={control}
-            rules={{ required: 'Vehicle type is required'}}
-            render={({ field }) => (
-              <ComboBox
-                items={vehicleTypes.map(vehicleType => ({
-                  id: vehicleType.id,
-                  label: vehicleType.name,
-                }))}
-                placeholder='Specify your vehicle type'
-                classsName='w-full bg-gray-800'
-                onChange={field.onChange}
-              />
-            )}
+        name="vehicleType"
+        control={control}
+        rules={{ required: "Vehicle type is required" }}
+        render={({ field, fieldState }) => (
+          <ComboBox
+            options={vehicleTypes.map(vt => ({
+              label: vt.name,
+              value: vt.id
+            }))}
+            value={field.value}
+            onChange={field.onChange}
+            placeholder="Select vehicle type"
+            error={fieldState.error}
           />
+        )}
+      />
           {errors.vehicleType && (
             <p className="text-red-500 text-sm -translate-y-3">{errors.vehicleType.message}</p>
           )}
@@ -161,8 +177,8 @@ export default function PostRidePage() {
         <ReusableDialog
           open={open}
           onOpenChange={setOpen}
-          title="Step 3: Contact & Departure"
-          description="Enter M-Pesa phone number and departure time"
+          title="Step 3: Personal information"
+          description="Enter your M-Pesa number and national ID"
           closable={false}
           contentClassName="bg-gray-900 border-gray-700"
         >
@@ -181,20 +197,23 @@ export default function PostRidePage() {
           {errors.driverPhone && (
             <p className="text-red-500 text-sm -translate-y-2">{errors.driverPhone.message}</p>
           )}
-          
+
           <input
-            type='datetime-local'
-            id='departureTime'
-            placeholder="Departure time"
-            {...register('departureTime', { 
-              required: "Departure time is required",
-              validate: (value) => new Date(value) > new Date() || "Departure time must be in the future",
+            type='number'
+            placeholder='National ID number'
+            className='input'
+            {...register('nationalId', { 
+              required: 'National ID is required',
+              pattern: {
+                value: /^\d{8,10}$/,
+                message: 'Enter a valid National ID number'
+              }
             })}
           />
-          {errors.departureTime && (
-            <p className="text-red-500 text-sm -translate-y-2">{errors.departureTime.message}</p>
+          {errors.nationalId && (
+            <p className="text-red-500 text-sm -translate-y-2">{errors.nationalId.message}</p>
           )}
-
+          
           <div className='flex flex-col gap-2 sm:flex-row sm:justify-end mt-4'>
             <Button className='secondary-btn' onClick={prevStep}>Back</Button>
             <Button onClick={nextStep} className='primary-btn'>Proceed</Button>
@@ -213,21 +232,7 @@ export default function PostRidePage() {
           closable={false}
           contentClassName="bg-gray-900 border-gray-700"
         >
-          <input
-            type='number'
-            placeholder='National ID number'
-            className='input'
-            {...register('nationalId', { 
-              required: 'National ID is required',
-              pattern: {
-                value: /^\d{8,10}$/,
-                message: 'Enter a valid National ID number'
-              }
-            })}
-          />
-          {errors.nationalId && (
-            <p className="text-red-500 text-sm -translate-y-2">{errors.nationalId.message}</p>
-          )}
+          
 
           <input
             type="text"
@@ -236,8 +241,9 @@ export default function PostRidePage() {
             className="bg-gray-700 opacity-60"
             {...register('driverPhone', { required: 'Phone is required' })}
           />
-          <p className='text-[12px] text-gray-400 -translate-y-3'>You will receive your payments through this number</p>
-          <p className="text-sm text-gray-300">✅ All details entered. Confirm and submit.</p>
+          <p className='text-[12px] text-gray-400 -translate-y-3'>You will receive your payments through this number. You can go back and change it.</p>
+          <p>Fell free to go back and change or confirm that all information is correct before submission.</p>
+          <p className="text-sm text-gray-400 flex items-center gap-3 mt-2"><span className='bg-green-600 text-white rounded-full p-1'><Check/></span> If all details are correct, submit ride below</p>
 
           <div className='flex flex-col gap-2 sm:flex-row sm:justify-end mt-4'>
             <Button type='button' disabled={isSubmitting} className={`secondary-btn ${isSubmitting ? 'cursor-not-allowed ' : ''}`} onClick={prevStep}>Back</Button>

@@ -65,6 +65,7 @@ const NavBar = () => {
                 <LogInOutBtn />
                 <Link 
                   className="primary-btn w-full" 
+                  onClick={() => setIsMenuOpen(false)}
                   href={"/available-rides"}
                 >
                   Available rides

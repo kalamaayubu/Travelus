@@ -7,16 +7,18 @@ import { Card, CardContent } from "@/components/ui/card";
 import { RideDetailsProps, SeatsLayout, SeatRow } from "@/types";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import { Armchair, Calendar, MapPin, X } from "lucide-react";
+import { Armchair, Calendar, Check, Loader2, MapPin, X } from "lucide-react";
 import { getUser } from "@/utils/getUser";
 import ReusableDialog from "@/components/reusable/dialog";
 
 const RideDetailsPage = () => {
     const [ride, setRide] = useState<RideDetailsProps | null>(null);
     const [loading, setLoading] = useState(true);
+    const [isProceeding, setIsProceeding] = useState(false)
     const { rideId } = useParams<{ rideId: string }>()
     const [selectedSeats, setSelectedSeats] = useState<string[]>([])
     const [showLoginDialog, setShowLoginDialog] = useState(false)
+    const [showRiderFormDialog, setShowRiderFormDialog] = useState(false)
 
     // Fetch the ride details including the seats layout
     useEffect(() => {
@@ -46,11 +48,19 @@ const RideDetailsPage = () => {
 
     // Function to proceed booking
     const handleProceedBooking = async () => {
+      setIsProceeding(true)
+
       // Check if user is authenticated
       const user = await getUser()
       if (!user) {
+        setIsProceeding(false)
         setShowLoginDialog(true)
+        return
       }
+
+      // Collect user information(phone number)
+      setIsProceeding(false)
+      setShowRiderFormDialog(true)
     }
 
     if (loading || !ride) return <p className="p-6">Loading ride details...</p>;
@@ -171,7 +181,10 @@ const bookedSeats = bookings
                       ? "bg-gray-600 cursor-not-allowed opacity-50 active:scale-100"
                       :  ""
                   )}>
-                  Proceed
+                  { isProceeding 
+                    ? <span className="flex items-center justify-center gap-4"><Loader2 className="w-4 animate-spin"/>Proceeding...</span> 
+                    : 'Proceed'
+                  }
                 </button>
               </div>
             </div>
@@ -182,7 +195,7 @@ const bookedSeats = bookings
       )}
     </div>
 
-    
+    {/* Login prompt incase user is not authenticated */}
     <ReusableDialog
       open={showLoginDialog}
       onOpenChange={setShowLoginDialog}
@@ -200,6 +213,39 @@ const bookedSeats = bookings
           Login
       </button>
     </ReusableDialog>
+
+    {/* Rider information collection dialog */}
+    <ReusableDialog
+      open={showRiderFormDialog}
+      onOpenChange={setShowRiderFormDialog}
+      title="Enter your phone number"
+      // description="This phone number will be used to make the booking payments"
+      closable={true}
+      contentClassName="bg-gray-900 border-1 border-gray-800"
+    >
+      <form>
+        <input
+          type="number"
+          name="phone_number"
+          placeholder="Phone number here..."
+          className="mt-4"
+        />
+        <p className="text-sm text-gray-400">This number will be used to make your payments</p>
+        <p className="flex items-center gap-2 mt-6">
+          <span className="text-white bg-green-600 p-2 rounded-full"><Check/></span>
+          <span>If the number is correct, proceed to pay.</span>
+        </p>
+        <button
+          className="mt-8 w-full"
+        >
+          { isProceeding 
+            ? <span className="flex items-center justify-center gap-4"><Loader2 className="w-4 animate-spin"/>Just a moment...</span> 
+            : 'Proceed to pay'
+          }
+        </button>
+      </form>
+    </ReusableDialog>
+
     </>
   );
 }

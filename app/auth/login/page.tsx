@@ -21,7 +21,7 @@ export default function LoginPage() {
       router.push(result.redirectUrl);
       toast.success(result.message)
     } else {
-      alert(`Error: ${result.error}`);
+      toast.error(`${result.error}`);
     }
   };
 

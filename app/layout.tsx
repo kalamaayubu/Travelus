@@ -23,7 +23,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ReduxProvider>
           <NavBar />
           {children}
-          <Toaster richColors position="top-right"/>
+          <Toaster 
+            richColors 
+            position="top-right"
+            duration={6000}
+          />
           <Footer />
         </ReduxProvider>
       </body>
