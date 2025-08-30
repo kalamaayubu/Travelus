@@ -10,19 +10,19 @@ import Testimonials from "@/components/landing/Testimonials";
 import FAQSection from "@/components/landing/FAQSection";
 import FeedbackSection from "@/components/landing/FeedbackSection";
 import CTA from "@/components/landing/CTA";
-import Footer from "@/components/landing/Footer";
+import Footer from "@/components/Footer";
 
 
 export default function LandingPage() {
   return (
     <div className="bg-gray-950 text-white min-h-screen w-full overflow-x-hidden">
       <HeroSection/>
-      <FeaturesSection/>
+      {/* <FeaturesSection/> */}
 
       {/* How it Works */}
       <HowItWorks/>
 
-      <div className="p-8 flex flex-col bg-gradient-to-br text-center md:text-start from-gray-950 to-gray-900">
+      <div className="p-8 py-40 flex flex-col bg-gradient-to-br text-center md:text-start from-gray-950 to-gray-900">
         <Heading title="How Travelus Works"/>
         <div className="flex flex-col md:flex-row items-center justify-between">
           <FlowDiagram />
@@ -55,7 +55,6 @@ export default function LandingPage() {
 
       {/* Call to action */}
       <CTA/>
-      <Footer/>
     </div>
   );
 }

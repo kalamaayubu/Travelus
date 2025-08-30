@@ -21,7 +21,7 @@ const steps = [
 
 const HowItWorks = () => {
   return (
-    <section className="relative py-20 px-6 bg-gradient-to-l ">
+    <section className="relative py-20 px-6">
       <div className="max-w-5xl mx-auto text-center">
         {/* Heading */}
         <Heading title="How it works" />
@@ -32,8 +32,8 @@ const HowItWorks = () => {
             <div
               key={idx}
               className="relative flex flex-col items-center text-center max-w-xs p-6 rounded-2xl 
-                         bg-white/5 border border-white/20 backdrop-blur-xl shadow-lg hover:scale-105 
-                         transition-transform duration-300"
+                         bg-white/5 border border-white/10 backdrop-blur-xl shadow-lg hover:scale-105 
+                         transition-transform duration-300 "
             >
               {/* Icon bubble */}
               <div className="flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-tr from-green-400/20 to-purple-500/20 border border-white/20 mb-4">
@@ -44,8 +44,10 @@ const HowItWorks = () => {
               <p className="text-sm text-gray-400 mt-2">{step.description}</p>
 
               {/* Connecting line for desktop */}
-              {idx < steps.length - 1 && (
-                <div className="hidden md:block absolute top-1/2 right-[-6rem] w-24 h-[2px] bg-gradient-to-r from-green-400 to-purple-500"></div>
+              {idx < steps.length && (
+                <>
+                  <div className="rotate-90 translate-y-[118px] -translate-x-1/2 left-1/2 z-0  md:block absolute top-1/2 right-[-6rem] w-12 h-[2px] bg-gradient-to-r from-green-400 to-blue-600"></div>
+                </>
               )}
             </div>
           ))}

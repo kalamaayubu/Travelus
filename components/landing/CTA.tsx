@@ -1,9 +1,8 @@
-import Link from "next/link";
 import Heading from "../Heading";
 
 export default function CTA() {
   return (
-    <section className="relative py-24 bg-gradient-to-br from-indigo-600/20 from-5% via-gray-950/10 via-40% to-green-600/10 to-100%">
+    <section className="relative py-20 bg-gradient-to-br from-indigo-600/20 from-5% via-gray-950/10 via-40% to-green-600/10 to-100%">
       {/* Background glow effects */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-purple-600/30 rounded-full blur-3xl animate-pulse" />

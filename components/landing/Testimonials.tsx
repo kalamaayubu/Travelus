@@ -41,7 +41,7 @@ export default function Testimonials() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.2, duration: 0.6 }}
-              className="bg-gray-500/10 border border-white/10 rounded-2xl p-6 shadow-md backdrop-blur-lg hover:shadow-green-800/10 hover:scale-[1.02] transition-transform"
+              className="bg-white/5 border border-white/10 rounded-2xl p-6 shadow-md backdrop-blur-lg hover:shadow-green-800/10 hover:scale-[1.02] transition-transform"
             >
               <Image
                 src={t.image}
