@@ -13,7 +13,7 @@ export default function CTA() {
         <Heading title="Here we go!"/>
         <p className="text-lg md:text-xl text-gray-500 mb-10 mt-6">
           Be part of the movement that’s reshaping how people move.  
-          Your journey with <span className="font-semibold text-orange-400">Travelus</span> starts today.
+          Your journey with <span className="font-semibold text-indigo-500">Travelus</span> starts today.
         </p>
 
         {/* CTA Button */}

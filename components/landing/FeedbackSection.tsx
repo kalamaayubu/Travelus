@@ -39,8 +39,8 @@ export default function FeedbackSection() {
                 className="transition-transform transform hover:scale-110 bg-transparent"
               >
                 <Star
-                  className={`w-8 h-8 ${
-                    starValue <= (hover || rating) ? "fill-purple-500 text-purple-500" : "text-gray-500"
+                  className={`w-4 h-4 ${
+                    starValue <= (hover || rating) ? "fill-indigo-600 text-indigo-600" : "text-gray-500"
                   }`}
                 />
               </button>
@@ -75,7 +75,7 @@ export default function FeedbackSection() {
           />
 
           <motion.button
-            whileHover={{ scale: 1.05, boxShadow: "0 0 20px #a855f7" }}
+            whileHover={{ scale: 1.02, boxShadow: "0 0 20px #6366f1" }}
             whileTap={{ scale: 0.95 }}
             type="submit"
             className="w-full py-3 bg-green-600 rounded-lg font-semibold shadow-lg"

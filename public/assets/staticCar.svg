@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="300" height="132" viewBox="0 0 500 220" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Travelus car body gradient (green → indigo) -->
+    <linearGradient id="travelusBody" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#16a34a; stop-opacity:1" /> <!-- green -->
+      <stop offset="100%" style="stop-color:#4338ca; stop-opacity:1" /> <!-- Indigo -->
+    </linearGradient>
+
+    <!-- Window gradient -->
+    <linearGradient id="travelusWindow" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#a7f3d0; stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#c7d2fe; stop-opacity:0.9" />
+    </linearGradient>
+
+    <!-- Headlight glow -->
+    <radialGradient id="travelusHeadlight" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#fef08a; stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#facc15; stop-opacity:0" />
+    </radialGradient>
+
+     <!-- Headlight gradient (from bright to transparent) -->
+    <linearGradient id="headlightBeam" x1="100%" y1="50%" x2="0%">
+      <stop offset="0%" stop-color="#c2edc9" stop-opacity="1" />
+      <stop offset="25%" stop-color="#c2edc9" stop-opacity="0.5" />
+      <stop offset="100%" stop-color="#c2edc9" stop-opacity="0" />
+    </linearGradient>
+  </defs>
+
+  <!-- Car body -->
+  <rect x="70" y="90" rx="25" ry="25" width="360" height="80" fill="url(#travelusBody)" />
+
+  <!-- Roof -->
+  <polygon points="130,90 210,50 330,50 390,90" fill="url(#travelusBody)" />
+
+  <!-- Windows -->
+  <polygon points="150,90 220,60 310,60 360,90" fill="url(#travelusWindow)" stroke="#1e3a8a" stroke-width="2"/>
+
+  <!-- Headlights -->
+  <circle cx="425" cy="115" r="6" fill="#f9bf00ff">
+    <animate
+      attributeName="opacity"
+      values="1;0;1"
+      dur='0.8s'
+      repeatCount="indefinite"
+    />
+  </circle>
+  <circle cx="438" cy="115" r="40" fill="url(#travelusHeadlight)" opacity="0.5" />
+
+  <!-- Front Headlights(Front lamp) -->
+  <circle cx="76" cy="115" r="8" fill="#c2edc9ff">
+    <animate attributeName="opacity" values="1;0.2;1" dur="1s" repeatCount="indefinite"/>
+  </circle>
+  <!-- Light beam (cone shape, also blinking in sync) -->
+  <polygon points="80,110 -200,10 -200,300 80,120" fill="url(#headlightBeam)">
+    <animate attributeName="opacity" values="1;0.2;1" dur="1s" repeatCount="indefinite"/>
+  </polygon>
+
+  <!-- Door line -->
+  <line x1="230" y1="90" x2="230" y2="170" stroke="#1e3a8a" stroke-width="2"/>
+
+  <!-- Branding (Travelus logo/name) -->
+  <text x="260" y="130" font-family="Verdana, sans-serif" font-size="18" font-weight="bold" fill="white">
+    Travelus
+  </text>
+
+  <!-- Wheels -->
+  <g>
+  <!-- Left wheel -->
+  <circle cx="150" cy="170" r="30" fill="#111827" />
+  <g>
+    <circle cx="150" cy="170" r="14" fill="#e5e7eb" />
+    <!-- Spokes -->
+    <line x1="150" y1="170" x2="150" y2="156" stroke="#111827" stroke-width="2"/>
+    <line x1="150" y1="170" x2="164" y2="170" stroke="#111827" stroke-width="2"/>
+    <line x1="150" y1="170" x2="150" y2="184" stroke="#111827" stroke-width="2"/>
+    <line x1="150" y1="170" x2="136" y2="170" stroke="#111827" stroke-width="2"/>
+  </g>
+
+  <!-- Right wheel -->
+  <circle cx="330" cy="170" r="30" fill="#111827" />
+  <g>
+    <circle cx="330" cy="170" r="14" fill="#e5e7eb" />
+    <!-- Spokes -->
+    <line x1="330" y1="170" x2="330" y2="156" stroke="#111827" stroke-width="2"/>
+    <line x1="330" y1="170" x2="344" y2="170" stroke="#111827" stroke-width="2"/>
+    <line x1="330" y1="170" x2="330" y2="184" stroke="#111827" stroke-width="2"/>
+    <line x1="330" y1="170" x2="316" y2="170" stroke="#111827" stroke-width="2"/>
+  </g>
+</g>
+
+<!-- Road -->
+<rect x="0" y="190" width="500" height="40" fill="#374151" /> <!-- Dark asphalt -->
+
+<!-- Lane markings (animated) -->
+<g>
+  <rect x="0" y="208" width="40" height="4" fill="#f9fafb">
+  </rect>
+  <rect x="120" y="208" width="40" height="4" fill="#f9fafb">
+  </rect>
+  <rect x="240" y="208" width="40" height="4" fill="#f9fafb">
+  </rect>
+</g>
+</svg>
