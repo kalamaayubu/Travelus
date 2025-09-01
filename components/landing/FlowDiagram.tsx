@@ -128,13 +128,13 @@ const FlowDiagram = () => {
         </animateMotion>
       </circle>
 
-      <circle r="2" fill="#4f46e5">
+      <circle r="2" fill="#ec4899">
         <animateMotion dur="2.4s" begin="1.2s" repeatCount="indefinite">
           <mpath href="#p-driver-up-right" />
         </animateMotion>
       </circle>
 
-      <circle r="2" fill="#4f46e5">
+      <circle r="2" fill="#ec4899">
         <animateMotion dur="2.4s" begin="1.2s" repeatCount="indefinite">
           <mpath href="#p-t-up-left" />
         </animateMotion>

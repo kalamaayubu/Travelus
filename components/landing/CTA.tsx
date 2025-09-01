@@ -19,7 +19,7 @@ export default function CTA() {
         {/* CTA Button */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <button
-            className="py-3 px-10 rounded-lg"
+            className="py-3 px-12 rounded-lg"
           >
             Try Travelus Now
           </button>

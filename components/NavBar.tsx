@@ -21,7 +21,8 @@ const NavBar = () => {
       <nav className="md:flex hidden items-center justify-between space-x-6">
         <Logo />
         <ul className="space-x-4 flex">
-          <li><LogInOutBtn /></li>
+          {/* <li><LogInOutBtn /></li> */}
+          <Link onClick={() => setIsMenuOpen(false)} href={'/'} className="mx-4">Home</Link>
         </ul>
       </nav>
 
@@ -62,14 +63,14 @@ const NavBar = () => {
               {/* Menu content */}
               <ul className="flex flex-col gap-4 mt-10 text-center">
                 <Link onClick={() => setIsMenuOpen(false)} href={'/'} className="bg-gray-800 p-2 rounded-md w-full">Home</Link>
-                <LogInOutBtn />
+                {/* <LogInOutBtn />
                 <Link 
                   className="primary-btn w-full" 
                   onClick={() => setIsMenuOpen(false)}
                   href={"/available-rides"}
                 >
                   Available rides
-                </Link>
+                </Link> */}
               </ul>
             </motion.div>
           )}

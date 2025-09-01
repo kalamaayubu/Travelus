@@ -110,6 +110,8 @@ export async function login(formData: LoginFormData) {
     maxAge: 60 * 60 * 24 * 7, // 7 days
   })
 
+  console.log('USER:', data.user)
+
   // Response object to the client
   return {
     success: true,

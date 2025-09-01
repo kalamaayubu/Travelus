@@ -3,13 +3,21 @@
 import { AvailableRidesListProps } from "@/types";
 import PublicRideCard from "./PublicRideCard";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 
 export default function AvailableRidesList({ rides }: AvailableRidesListProps) {
   const router = useRouter();
 
   if (!rides || rides.length === 0) {
-    return <p className="text-gray-400 p-8">No rides available at the moment.</p>;
+    return (
+      <div className="text-gray-400 m-auto flex flex-col gap-4 items-center justify-center p-8 h-svh">
+        <p className="sm:text-xl md:text-2xl lg:text-3xl text-center">No rides available at the moment.</p>
+        <Link href={'/'} className="primary-btn">
+          Go home
+        </Link>
+      </div>
+    ) 
   }
 
   return (

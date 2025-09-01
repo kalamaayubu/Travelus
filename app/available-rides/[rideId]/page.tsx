@@ -8,8 +8,10 @@ import { RideDetailsProps, SeatsLayout, SeatRow } from "@/types";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { Armchair, Calendar, Check, Loader2, MapPin, X } from "lucide-react";
-import { getUser } from "@/utils/getUser";
 import ReusableDialog from "@/components/reusable/dialog";
+import CustomLoader from "@/components/CustomLoader";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 const RideDetailsPage = () => {
     const [ride, setRide] = useState<RideDetailsProps | null>(null);
@@ -19,6 +21,8 @@ const RideDetailsPage = () => {
     const [selectedSeats, setSelectedSeats] = useState<string[]>([])
     const [showLoginDialog, setShowLoginDialog] = useState(false)
     const [showRiderFormDialog, setShowRiderFormDialog] = useState(false)
+    const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated)
+
 
     // Fetch the ride details including the seats layout
     useEffect(() => {
@@ -51,8 +55,7 @@ const RideDetailsPage = () => {
       setIsProceeding(true)
 
       // Check if user is authenticated
-      const user = await getUser()
-      if (!user) {
+      if (!isAuthenticated) {
         setIsProceeding(false)
         setShowLoginDialog(true)
         return
@@ -63,7 +66,11 @@ const RideDetailsPage = () => {
       setShowRiderFormDialog(true)
     }
 
-    if (loading || !ride) return <p className="p-6">Loading ride details...</p>;
+    if (loading || !ride) 
+      return (
+        <CustomLoader message="Loading trip details"/>
+      );
+      
 
     const { 
         departureLocation, 

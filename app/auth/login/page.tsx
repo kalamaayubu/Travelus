@@ -8,16 +8,21 @@ import { LoginFormData } from '@/types';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { toast } from 'sonner';
+import { useDispatch } from 'react-redux';
+import { setUser } from '@/redux/slices/authSlice';
 
 export default function LoginPage() {
   const router = useRouter();
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<LoginFormData>();
+  const dispatch = useDispatch()
 
   // Function to handle login submission
   const onSubmit = async (data: LoginFormData) => {
     const result = await login(data);
 
     if (result.success && result.redirectUrl) {
+      // Save auth state to redux
+      dispatch(setUser(result.user))
       router.push(result.redirectUrl);
       toast.success(result.message)
     } else {

@@ -5,34 +5,25 @@ import { getSession, logout } from '@/actions/auth.action';  // Import Server Ac
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
+import { clearUser } from '@/redux/slices/authSlice';
 
 export default function LogInOutBtn() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const dispatch = useDispatch()
   const router = useRouter();
-
-  useEffect(() => {
-    // Fetch session from server action
-    const fetchSession = async () => {
-      const session = await getSession();  // Call Server Action to get session
-      setIsLoggedIn(!!session);  // Update the state based on session presence
-    };
-
-    fetchSession();
-  }, []);  // This effect runs once when the component is mounted
+  const isLoggedIn = useSelector((state: RootState) => state.auth.isAuthenticated)
 
   const handleLogout = async () => {
     const res = await logout();
     if (res.error) {
-      toast.error(res.error);
+      toast.error("Oops! something went wrong.");
       return;
     }
 
-    // After logout, refetch session and update the UI
-    const session = await getSession();  // Re-fetch the session after logout
-    setIsLoggedIn(!!session);  // Update the state to reflect the logout state
-
-    // Redirect to home page after logout
-    router.replace('/');  // Redirect to the homepage
+    // Clear auth from store and redirect
+    dispatch(clearUser())
+    router.replace('/');
     toast.success(res.message);
   };
 

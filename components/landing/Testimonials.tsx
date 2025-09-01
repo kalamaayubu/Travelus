@@ -26,7 +26,7 @@ const testimonials = [
 
 export default function Testimonials() {
   return (
-    <section className="relative py-20 bg-gray-950">
+    <section id="testimonials" className="relative py-20 bg-gray-950">
       <div className="relative z-10 max-w-6xl mx-auto px-6 text-center">
         <Heading title="What they say about Travelus"/>
         <p className="text-gray-400 max-w-2xl mx-auto mb-12 mt-6">

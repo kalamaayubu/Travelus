@@ -10,7 +10,7 @@ export default function FeedbackSection() {
   const [hover, setHover] = useState(0);
 
   return (
-    <section className="py-20 px-6 bg-gray-950 text-white">
+    <section id="feedback" className="py-20 px-6 bg-gray-950 text-white">
       <div className="max-w-3xl mx-auto text-center mb-12">
         <Heading title="We Value Your Feedback"/>
         <p className="text-gray-400 mt-2">
@@ -23,10 +23,10 @@ export default function FeedbackSection() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="max-w-xl mx-auto rounded-2xl p-8 bg-gray-500/10 backdrop-blur-xl border border-white/10 shadow-xl"
+        className="max-w-xl mx-auto rounded-2xl p-8 bg-white/5 backdrop-blur-xl border border-white/10 shadow-xl"
       >
         {/* Rating */}
-        <div className="flex justify-center mb-6">
+        {/* <div className="flex justify-center mb-6">
           {[...Array(5)].map((_, index) => {
             const starValue = index + 1;
             return (
@@ -46,7 +46,7 @@ export default function FeedbackSection() {
               </button>
             );
           })}
-        </div>
+        </div> */}
 
         {/* Feedback Form */}
         <form className="space-y-6">

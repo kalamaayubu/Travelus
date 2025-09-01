@@ -6,25 +6,32 @@ import Heading from "../Heading";
 
 const faqs = [
   {
-    question: "What is Travelus?",
-    answer:
-      "Travelus is a smart, seamless ride-booking platform designed to make intercity travel smooth, affordable, and reliable. Think of it as your trusted travel companion.",
-  },
-  {
     question: "How is Travelus different from normal bus booking?",
     answer:
-      "Unlike traditional booking, Travelus lets you discover routes, book seats instantly, track rides in real-time, and enjoy secure digital payments—all in one app.",
+      `Normal booking systems are built for big bus companies — expensive, complex, and unnecessary if you just have one or two vehicles.
+      Travelus changes that: with only your phone, you can post a ride, connect with passengers, and earn. 
+      Simple, flexible, and made for everyone — not just big bus companies.
+      `
   },
   {
-    question: "Can I book for multiple passengers?",
+    question: "What if a fake driver tries to scam me?",
     answer:
-      "Yes, you can reserve multiple seats in a single booking. Just choose the number of seats you need before confirming.",
+      "Impossible. Since drivers don’t get paid until you confirm you’ve boarded, no one can claim your money without delivering the ride.",
   },
   {
-    question: "Is Travelus safe?",
+    question: "How is the payment handled?",
     answer:
-      "Absolutely. All drivers and vehicles go through verification checks, and we provide real-time ride tracking plus support channels for your safety.",
+      "Funds are held securely until the ride is confirmed. Once you verify, the money is instantly transferred to the driver’s registered account."
   },
+  {
+    question: "When do drivers get paid?",
+    answer:
+    "Drivers only receive payment after passengers confirm they’ve actually joined the ride. This keeps everything fair and prevents fraud."
+  },
+  {
+    question: "I have a different question",
+    answer: "Drop it in the Feedback section below and we’ll get back to you with an answer as soon as possible."
+  }
 ];
 
 export default function FAQSection() {
@@ -35,7 +42,7 @@ export default function FAQSection() {
   };
 
   return (
-    <section className="py-20 px-6 bg-gradient-to-bl from-gray-950 to-gray-900 text-white">
+    <section id="faqs" className="py-20 px-6 bg-gradient-to-bl from-gray-950 to-gray-900 text-white">
       <div className="max-w-3xl mx-auto">
         <Heading title="Frequently Asked Questions"/>
         <div className="space-y-4 mt-10">
@@ -57,7 +64,7 @@ export default function FAQSection() {
               </button>
               {openIndex === index && (
                 <div className="p-5 pt-0 flex items-center text-gray-500/10 relative">
-                  <div className="border-l-4 border-gray-400/20 pl-4 py-1">
+                  <div className="border-l-4 border-gray-400/20 pl-4 mt-1">
                     <p className="text-gray-500">{faq.answer}</p>
                   </div>
                 </div>

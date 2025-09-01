@@ -61,7 +61,7 @@
 
   <!-- Branding (Travelus logo/name) -->
   <text x="260" y="130" font-family="Verdana, sans-serif" font-size="18" font-weight="bold" fill="white">
-    Travelus
+    Loading...
   </text>
 
   <!-- Wheels -->
@@ -90,15 +90,16 @@
 </g>
 
 <!-- Road -->
-<rect x="0" y="190" width="500" height="40" fill="#374151" /> <!-- Dark asphalt -->
+<!-- <rect x="0" y="190" width="500" height="40" fill="#374151" /> Dark asphalt -->
 
 <!-- Lane markings (animated) -->
-<g>
+<!-- <g>
   <rect x="0" y="208" width="40" height="4" fill="#f9fafb">
   </rect>
   <rect x="120" y="208" width="40" height="4" fill="#f9fafb">
   </rect>
   <rect x="240" y="208" width="40" height="4" fill="#f9fafb">
   </rect>
-</g>
+</g> -->
+
 </svg>

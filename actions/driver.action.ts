@@ -2,7 +2,7 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { PostRideFormData } from "@/types";
-import { getUser } from "@/utils/getUser";
+import { getUser } from "@/utils/getServerUser";
 
 // This function handles the logic for posting a ride
 export async function postRide(data: PostRideFormData) {

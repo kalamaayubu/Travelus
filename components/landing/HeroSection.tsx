@@ -28,7 +28,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative flex flex-col items-center justify-center text-center pt-32 pb-24 px-6 bg-gray-950 overflow-hidden">
+    <section id="hero" className="relative flex flex-col items-center justify-center text-center pt-32 pb-24 px-6 bg-gray-950 overflow-hidden">
       {/* Torch Light Cone (SVG) */}
       <svg
         className="pointer-events-none absolute animate-pulse top-0 left-1/2 -translate-x-1/2"
@@ -77,23 +77,24 @@ export default function Hero() {
       <Image
         ref={imgRef}
         src="/assets/vehicle1.png"
-        alt="Vehicle model"
+        alt=""
         className="w-80 sm:w-[500px] md:w-[600px] h-auto drop-shadow-2xl relative z-10"
         width={1000}
         height={1000}
+        priority
       />
 
       <div className="">
         {/* Tag/brief catch description of what travelus is */}
-        <p className="mt-6 max-w-xl text-gray-400 text-lg md:text-xl lg:text-2xl relative z-10">
-            <span className="">Seamless connection </span>
+        <p className="mt-6 max-w-xl text-gray-500 text-lg md:text-xl relative z-10">
+            Seamless<span className="green-indigo_text-gradient font-bold italic"> connection </span>
             between drivers/vehicle owners and passengers in real time, making daily travels
             faster and more reliable.
         </p>
 
         <button
             ref={btnRef}
-            className="mt-6 px-12 py-3 md:px-16 md:text-lg rounded-lg relative z-10"
+            className="mt-6 py-3 px-12 rounded-lg active:scale-95 transition-all duration-300"
         >
             Try Travelus Now
         </button>
