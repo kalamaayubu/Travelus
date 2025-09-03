@@ -117,7 +117,7 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground scroll-smooth;
   }
   h1 {
     @apply text-5xl font-bold text-gray-200 mb-4;
@@ -129,7 +129,7 @@
     @apply cursor-pointer opacity-80 bg-green-600 active:scale-95 text-white p-[6px] px-6 rounded-md hover:bg-green-500 transition duration-300;
   }
   button:disabled {
-    @apply cursor-not-allowed opacity-60;
+    @apply cursor-not-allowed opacity-60 active:scale-100;
   }
   a {
     @apply text-green-500 hover:text-indigo-500 w-fit
@@ -157,4 +157,7 @@
 }
 .green-indigo_text-gradient {
   @apply bg-gradient-to-br from-indigo-600 to-green-600 bg-clip-text text-transparent
+}
+.gray-gradient {
+  @apply bg-gradient-to-tr from-gray-900 to-gray-950
 }

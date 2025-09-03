@@ -35,9 +35,10 @@ export default function LandingPage() {
               Through Travelus, passengers explore rides already posted by drivers and simply pick the one that fits their journey. The platform keeps them updated with timely notifications, ensuring they never miss their trip and every journey runs on time. It’s seamless, transparent, and built for peace of mind.
             </p>
             <button
-              className="mt-6 px-12 py-3 rounded-lg"
+              onClick={() => document.getElementById("waitlist")?.scrollIntoView({ behavior: "smooth" })}
+              className="px-10 py-3 mt-6 rounded-lg font-semibold animate-pulse hover:animate-none transition-all duration-300 text-white hover:shadow-[0_0_40px_rgba(22,163,74,0.9)] shadow-[0_0_30px_rgba(22,163,74,0.8)]"
             >
-              Try Travelus Now
+              Join the Waitlist
             </button>
           </div>
         </div>

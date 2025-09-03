@@ -22,7 +22,11 @@ const NavBar = () => {
         <Logo />
         <ul className="space-x-4 flex">
           {/* <li><LogInOutBtn /></li> */}
-          <Link onClick={() => setIsMenuOpen(false)} href={'/'} className="mx-4">Home</Link>
+          {/* <Link onClick={() => setIsMenuOpen(false)} href={'/'} className="mx-4">Home</Link> */}
+          <Link onClick={() => setIsMenuOpen(false)} href={'/#faqs'} className="mx-4 text-gray-300 hover:text-green-600">FAQs</Link>
+          <Link onClick={() => setIsMenuOpen(false)} href={'/#about'} className="mx-4 text-gray-300 hover:text-green-600">About Us</Link>
+          <Link onClick={() => setIsMenuOpen(false)} href={'/#feedback'} className="mx-4 text-gray-300 hover:text-green-600">Feedback</Link>
+          <Link onClick={() => setIsMenuOpen(false)} href={'/#waitlist'} className="mx-4 text-gray-300 hover:text-green-600">Join waitlist</Link>
         </ul>
       </nav>
 
@@ -61,8 +65,12 @@ const NavBar = () => {
               </div>
 
               {/* Menu content */}
-              <ul className="flex flex-col gap-4 mt-10 text-center">
-                <Link onClick={() => setIsMenuOpen(false)} href={'/'} className="bg-gray-800 p-2 rounded-md w-full">Home</Link>
+              <ul className="flex flex-col gap-4 mt-10 text-gray-300">
+                <Link onClick={() => setIsMenuOpen(false)} href={'/'} className="">Home</Link>
+                <Link onClick={() => setIsMenuOpen(false)} href={'/#faqs'}>FAQs</Link>
+                <Link onClick={() => setIsMenuOpen(false)} href={'/#about'}>About us</Link>
+                <Link onClick={() => setIsMenuOpen(false)} href={'/#feedback'}>Feedback</Link>
+                <Link onClick={() => setIsMenuOpen(false)} href={'/#waitlist'} className="">Join waitlist</Link>
                 {/* <LogInOutBtn />
                 <Link 
                   className="primary-btn w-full" 

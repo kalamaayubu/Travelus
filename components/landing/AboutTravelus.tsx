@@ -31,7 +31,7 @@ const steps = [
 
 const AboutTravelus = () => {
   return (
-    <section className="relative py-20 pb-36 px-6">
+    <section id="about" className="relative py-20 pb-36 px-6">
       <div className="max-w-5xl mx-auto text-center">
         {/* Heading */}
         <Heading title="More About Travelus" />

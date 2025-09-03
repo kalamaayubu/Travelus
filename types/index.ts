@@ -119,3 +119,13 @@ export interface VehicleType {
 export interface VehicleTypesState {
     value: VehicleType[]
 }
+
+export interface WaitlistFormData {
+  email: string;
+}
+
+export interface FeedbackFormData {
+  name: string;
+  email: string;
+  content: string;
+}

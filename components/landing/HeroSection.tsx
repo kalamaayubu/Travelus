@@ -78,7 +78,7 @@ export default function Hero() {
         ref={imgRef}
         src="/assets/vehicle1.png"
         alt=""
-        className="w-80 sm:w-[500px] md:w-[600px] h-auto drop-shadow-2xl relative z-10"
+        className="w-80 sm:w-[500px] md:w-[600px] h-auto drop-shadow-2xl animate-pulse relative z-10"
         width={1000}
         height={1000}
         priority
@@ -94,9 +94,10 @@ export default function Hero() {
 
         <button
             ref={btnRef}
-            className="mt-6 py-3 px-12 rounded-lg active:scale-95 transition-all duration-300"
+            onClick={() => document.getElementById("waitlist")?.scrollIntoView({ behavior: "smooth" })}
+            className="px-10 py-3 mt-6 rounded-lg font-semibold animate-pulse hover:animate-none transition-all duration-300 text-white hover:shadow-[0_0_40px_rgba(22,163,74,0.9)] shadow-[0_0_30px_rgba(22,163,74,0.8)]"
         >
-            Try Travelus Now
+            Be Part of the Network
         </button>
       </div>
     </section>
