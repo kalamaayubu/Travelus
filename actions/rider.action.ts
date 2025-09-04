@@ -66,6 +66,7 @@ export async function getRideDetails(rideId: string) {
         .from("ride_posts")
         .select(`
             id,
+            createdBy,
             departureLocation,
             destinationLocation,
             departureTime,
@@ -80,7 +81,8 @@ export async function getRideDetails(rideId: string) {
             bookings (
                 id,
                 count,
-                seatNumber
+                seatNumber,
+                status
             )
         `)
         .eq("id", rideId)
@@ -106,6 +108,7 @@ export async function getRideDetails(rideId: string) {
   // transform object
   const transformedData = {
     id: data.id || "",
+    createdBy: data.createdBy,
     departureLocation: data.departureLocation,
     destinationLocation: data.destinationLocation,
     departureTime: data.departureTime,
@@ -125,4 +128,22 @@ export async function getRideDetails(rideId: string) {
 }
 
 
-// Book selected seats
+// Collect passanger's phone number(to be used for payments)
+export async function collectRiderPhoneNumber(data: { phoneNumber: string, userId: string }) {
+    console.log('PHONE:', data.phoneNumber)
+    console.log('User:', data.userId)
+
+    const supabase = await createClient()
+
+    const { error } = await supabase
+        .from('profiles')
+        .update([{ phone: data.phoneNumber}])
+        .eq('id', data.userId)
+
+    if (error) {
+        console.log('Error recording phone number:', error.message)
+        return { success: false, error: error.message }
+    }
+
+    return { success: true, message: 'Phone number recorder successfully.'}
+}

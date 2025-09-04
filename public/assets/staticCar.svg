@@ -60,8 +60,8 @@
   <line x1="230" y1="90" x2="230" y2="170" stroke="#1e3a8a" stroke-width="2"/>
 
   <!-- Branding (Travelus logo/name) -->
-  <text x="260" y="130" font-family="Verdana, sans-serif" font-size="18" font-weight="bold" fill="white">
-    Loading...
+  <text x="150" y="130" font-family="Verdana, sans-serif" font-size="18" font-weight="bold" fill="white">
+    Travelus Loading...
   </text>
 
   <!-- Wheels -->

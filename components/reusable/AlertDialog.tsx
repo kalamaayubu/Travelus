@@ -1,7 +1,7 @@
 "use client"
 
-import { Check, X } from "lucide-react"
 import ReusableDialog from "./dialog"
+import { ReactNode } from "react"
 
 type AlertDialogProps = {
   open: boolean
@@ -9,36 +9,29 @@ type AlertDialogProps = {
   type?: "success" | "error" | "info"
   title: string
   description?: string
-  actionLabel?: string
+  actionLabel?: ReactNode
   onAction?: () => void
-  closable?: boolean
-}
-
-const iconMap = {
-  success: <Check className="text-green-500 w-8 h-8" />,
-  error: <X className="text-red-500 w-8 h-8" />,
-  info: <span className="text-blue-500 text-2xl">ℹ️</span>,
+  icon?: ReactNode;
 }
 
 export default function AlertDialog({
   open,
   onOpenChange,
-  type = "info",
   title,
   description,
   actionLabel = "OK",
   onAction,
-  closable = false,
+  icon,
 }: AlertDialogProps) {
   return (
     <ReusableDialog
       open={open}
       onOpenChange={onOpenChange}
-      closable={closable}
+      closable={false}
       contentClassName="bg-gray-900 border border-gray-800"
     >
       <div className="flex flex-col items-center gap-4 p-6">
-        <div className="p-8 bg-gray-800 rounded-full">{iconMap[type]}</div>
+        {icon && <div className="p-8 bg-gray-800 rounded-full">{icon}</div>}
         <h2 className="text-xl font-bold text-center">{title}</h2>
         {description && (
           <p className="text-sm text-gray-400 text-center">{description}</p>

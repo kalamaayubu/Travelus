@@ -71,14 +71,14 @@ const NavBar = () => {
                 <Link onClick={() => setIsMenuOpen(false)} href={'/#about'}>About us</Link>
                 <Link onClick={() => setIsMenuOpen(false)} href={'/#feedback'}>Feedback</Link>
                 <Link onClick={() => setIsMenuOpen(false)} href={'/#waitlist'} className="">Join waitlist</Link>
-                {/* <LogInOutBtn />
+                <LogInOutBtn />
                 <Link 
                   className="primary-btn w-full" 
                   onClick={() => setIsMenuOpen(false)}
                   href={"/available-rides"}
                 >
                   Available rides
-                </Link> */}
+                </Link>
               </ul>
             </motion.div>
           )}

@@ -92,6 +92,7 @@ export type Vehicle = {
 
 export type RideDetailsProps = {
   id: string;
+  createdBy: string;
   departureLocation: string;
   destinationLocation: string;
   departureTime: string;
@@ -129,3 +130,13 @@ export interface FeedbackFormData {
   email: string;
   content: string;
 }
+
+export interface BookingInfoProps {
+  selectedSeats: string[]
+  totalCost: number;
+  passangerId: string;
+  driverId: string;
+  passangerPhone: string
+}
+
+export type SeatStatus = "AVAILABLE" | "SELECTED" | "RESERVED" | "BOOKED" | "BLOCKED";
