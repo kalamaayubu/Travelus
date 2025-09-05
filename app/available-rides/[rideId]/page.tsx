@@ -1,7 +1,7 @@
 "use client";
 
 import { getRideDetails } from "@/actions/rider.action";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import CustomLoader from "@/components/CustomLoader";
 import { RideDetailsProps, SeatsLayout } from "@/types";
@@ -10,6 +10,8 @@ import { RootState } from "@/redux/store";
 import SeatMap from "@/components/SeatMap";
 import BookingSummary from "@/components/BookingSummary";
 import RiderDialogs from "@/components/RiderDialogs";
+import { createClient } from "@/lib/supabase/client";
+import { toast } from "sonner";
 
 // 1. Booking type
 interface Booking {
@@ -44,6 +46,9 @@ const RideDetailsPage = () => {
     (state: RootState) => state.auth.isAuthenticated
   );
 
+  const supabase = createClient()
+  const router = useRouter()
+
   // Fetch ride details
   useEffect(() => {
     const fetchRideDetails = async () => {
@@ -56,6 +61,35 @@ const RideDetailsPage = () => {
     window.scrollTo(0, 0); // Scroll to top of the page even if the data is not ready
     fetchRideDetails();
   }, [rideId]);
+
+  // 🔥 Real-time subscription for seats status updates
+  useEffect(() => {
+    if (!rideId) return;
+
+    // Subscribe to changes on bookings table for this rideId
+    const channel = supabase
+      .channel(`bookings-realtime-${rideId}`) // scoped channel
+      .on(
+        'postgres_changes',
+        { 
+          event: '*', // INSERT | UPDATE | DELETE
+          schema: 'public', 
+          table: 'bookings', 
+          filter: `rideId=eq.${rideId}` // ✅ only this ride
+        },
+        (payload) => {
+          console.log("Realtime payload:", payload);
+          toast.info("Seats updated, refreshing...");
+          window.location.reload(); // refresh ride + seats
+        }
+      )
+      .subscribe();
+
+      return () => {
+        supabase.removeChannel(channel);
+      };
+  }, [router, rideId, supabase])
+
 
   if (loading) {
     return <CustomLoader message="Loading trip details" />;

@@ -9,7 +9,6 @@ import { reserveSeats } from "@/actions/rider.action";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { setBookingInfo } from "@/redux/slices/bookingInfoSlice";
-import { useRouter } from "next/navigation";
 
 interface RiderDialogsProps {
   showLoginDialog: boolean;
@@ -42,7 +41,6 @@ const RiderDialogs = ({
   const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm();
   const user = useSelector((state: RootState) => state.auth.user);
   const dispatch = useDispatch();
-  const router = useRouter()
 
   // Handle phone number submission
   const onSubmit = async (data: { phoneNumber: string }) => {
@@ -70,9 +68,6 @@ const RiderDialogs = ({
     // Open payment dialog
     setShowRiderFormDialog(false);
     setShowPaymentInitializationDialog(true);
-
-    // ✅ Force UI to fetch fresh data (reflect RESERVED seat)
-    window.location.reload()
   };
 
   return (

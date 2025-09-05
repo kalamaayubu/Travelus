@@ -126,8 +126,8 @@ export interface WaitlistFormData {
 }
 
 export interface FeedbackFormData {
-  name: string;
-  email: string;
+  name?: string;
+  email?: string;
   content: string;
 }
 

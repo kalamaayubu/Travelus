@@ -19,7 +19,8 @@ export default function LandingPage() {
       {/* About section */}
       <AboutTravelus/>
 
-      <div className="p-8 py-20 flex flex-col bg-gradient-to-br text-center md:text-start from-gray-950 to-gray-900">
+      {/* How it works */}
+      <div className="p-8 py-20 flex flex-col text-center md:text-start bg-gradient-to-tl from-gray-950 to-gray-900">
         <Heading title="How Travelus Works"/>
         <div className="flex flex-col md:flex-row items-center justify-between">
           <FlowDiagram />

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Star } from "lucide-react";
+import { Check } from "lucide-react";
 import Heading from "../Heading";
 import { useForm } from "react-hook-form";
 import { FeedbackFormData } from "@/types";
@@ -30,7 +30,7 @@ export default function FeedbackSection() {
 
   return (
     <>
-      <section id="feedback" className="py-20 px-6 bg-gray-950 text-white">
+      <section id="feedback" className="py-20 px-6 bg-gradient-to-tl from-gray-950 to-gray-900 text-white">
         <div className="max-w-3xl mx-auto text-center mb-12">
           <Heading title="We Value Your Feedback"/>
           <p className="text-gray-400 mt-2">
@@ -70,11 +70,11 @@ export default function FeedbackSection() {
 
           {/* Feedback Form */}
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-            <motion.input
+            {/* <motion.input
               whileFocus={{ scale: 1.02, borderColor: "#22c55e", boxShadow: "0 0 10px #22c55e" }}
               transition={{ type: "spring", stiffness: 300 }}
               type="text"
-              placeholder="Your Name"
+              placeholder="Your Name (optional)"
               className={`w-full rounded-lg p-3 bg-gray-700/5 border border-white/10 text-white placeholder-gray-400 focus:outline-none`}
               {...register('name', {
                 required: "Name is required",
@@ -83,16 +83,16 @@ export default function FeedbackSection() {
             />
             { errors?.name?.message && (
               <p className="text-sm text-red-500 -translate-y-5">{errors?.name?.message}</p>
-            )}
+            )} */}
 
             <motion.input
               whileFocus={{ scale: 1.02, borderColor: "#22c55e", boxShadow: "0 0 10px #22c55e" }}
               transition={{ type: "spring", stiffness: 300 }}
               type="email"
-              placeholder="Your Email"
+              placeholder="Enter your email (optional)"
               className="w-full rounded-lg p-3 bg-gray-700/5 border border-white/10 text-white placeholder-gray-400 focus:outline-none"
               {...register('email', {
-                required: "Email is required",
+                // required: "Email is required",
                 pattern: {
                   value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
                   message: "Enter a valid email address"
@@ -106,7 +106,7 @@ export default function FeedbackSection() {
             <motion.textarea
               whileFocus={{ scale: 1.02, borderColor: "#22c55e", boxShadow: "0 0 10px #22c55e" }}
               transition={{ type: "spring", stiffness: 300 }}
-              placeholder="Share your thoughts..."
+              placeholder="Your thoughts here..."
               rows={4}
               className="w-full rounded-lg p-3 bg-gray-700/5 border border-white/10 text-white placeholder-gray-400 focus:outline-none"
               {...register('content', {
@@ -137,7 +137,7 @@ export default function FeedbackSection() {
       <AlertDialog
         open={showAlertDialog}
         onOpenChange={setShowAlertDialog}
-        type={"success"}
+        icon={<Check  className="w-6 h-6 text-green-500" />}
         title="We Appreciate You!"
         description="Thanks for sharing your thoughts — we really appreciate it."
         onAction={() => setShowAlertDialog(false)}

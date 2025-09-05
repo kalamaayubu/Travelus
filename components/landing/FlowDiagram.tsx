@@ -56,7 +56,7 @@ const FlowDiagram = () => {
         fill="#E6E6E6"
         fontFamily="sans-serif"
       >
-        Rider
+        Passanger
       </text>
 
       {/* Static guide curves */}

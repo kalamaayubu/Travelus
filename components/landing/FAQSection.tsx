@@ -42,7 +42,7 @@ export default function FAQSection() {
   };
 
   return (
-    <section id="faqs" className="py-20 px-6 bg-gradient-to-bl from-gray-950 to-gray-900 text-white">
+    <section id="faqs" className="py-20 px-6 bg-gray-950 text-white">
       <div className="max-w-3xl mx-auto">
         <Heading title="Frequently Asked Questions"/>
         <div className="space-y-4 mt-10">

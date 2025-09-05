@@ -22,7 +22,6 @@ const NavBar = () => {
         <Logo />
         <ul className="space-x-4 flex">
           {/* <li><LogInOutBtn /></li> */}
-          {/* <Link onClick={() => setIsMenuOpen(false)} href={'/'} className="mx-4">Home</Link> */}
           <Link onClick={() => setIsMenuOpen(false)} href={'/#faqs'} className="mx-4 text-gray-300 hover:text-green-600">FAQs</Link>
           <Link onClick={() => setIsMenuOpen(false)} href={'/#about'} className="mx-4 text-gray-300 hover:text-green-600">About Us</Link>
           <Link onClick={() => setIsMenuOpen(false)} href={'/#feedback'} className="mx-4 text-gray-300 hover:text-green-600">Feedback</Link>
@@ -71,14 +70,14 @@ const NavBar = () => {
                 <Link onClick={() => setIsMenuOpen(false)} href={'/#about'}>About us</Link>
                 <Link onClick={() => setIsMenuOpen(false)} href={'/#feedback'}>Feedback</Link>
                 <Link onClick={() => setIsMenuOpen(false)} href={'/#waitlist'} className="">Join waitlist</Link>
-                <LogInOutBtn />
+                {/* <LogInOutBtn />
                 <Link 
                   className="primary-btn w-full" 
                   onClick={() => setIsMenuOpen(false)}
                   href={"/available-rides"}
                 >
                   Available rides
-                </Link>
+                </Link> */}
               </ul>
             </motion.div>
           )}

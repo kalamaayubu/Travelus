@@ -48,8 +48,8 @@ export default function Footer() {
           <div>
             <h4 className="text-lg font-semibold text-gray-300 mb-4">Quick Links</h4>
             <ul className="space-y-3 text-gray-400 text-sm">
-              <li><a href="#about" className="hover:text-indigo-600 transition">Features</a></li>
-              <li><a href="#faqs" className="hover:text-indigo-600 transition">FAQs</a></li>
+              <li><a href="/#about" className="hover:text-indigo-600 transition">Features</a></li>
+              <li><a href="/#faqs" className="hover:text-indigo-600 transition">FAQs</a></li>
             </ul>
           </div>
 
@@ -131,7 +131,7 @@ export default function Footer() {
       <AlertDialog
         open={showLoginDialog}
         onOpenChange={setShowLoginDialog}
-        type={"success"}
+        icon={<Check  className="w-6 h-6 text-green-500" />}
         actionLabel="Got it"
         title="Welcome to Travelus 🤗"
         description="Thanks for joining the Travelus waitlist. We will notify you as soon as we launch."
