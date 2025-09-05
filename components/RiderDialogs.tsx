@@ -5,10 +5,11 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import AlertDialog from "@/components/reusable/AlertDialog";
 import ReusableDialog from "@/components/reusable/dialog";
-import { collectRiderPhoneNumber } from "@/actions/rider.action";
+import { reserveSeats } from "@/actions/rider.action";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { setBookingInfo } from "@/redux/slices/bookingInfoSlice";
+import { useRouter } from "next/navigation";
 
 interface RiderDialogsProps {
   showLoginDialog: boolean;
@@ -21,6 +22,7 @@ interface RiderDialogsProps {
   selectedSeats: string[];
   pricePerSeat: number;
   createdBy: string;
+  rideId: string
 }
 
 const RiderDialogs = ({
@@ -33,21 +35,28 @@ const RiderDialogs = ({
   isInitializingPush,
   selectedSeats,
   pricePerSeat,
-  createdBy
+  createdBy,
+  rideId
 }: RiderDialogsProps) => {
 
   const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm();
   const user = useSelector((state: RootState) => state.auth.user);
   const dispatch = useDispatch();
+  const router = useRouter()
 
   // Handle phone number submission
   const onSubmit = async (data: { phoneNumber: string }) => {
-    const payload = {
-      phoneNumber: data.phoneNumber,
-      userId: user.id
+
+    const bookingInfoPayload = {
+      rideId: rideId,
+      selectedSeats,
+      totalCost: selectedSeats.length * pricePerSeat,
+      passangerId: user.id,
+      driverId: createdBy,
+      passangerPhone: data.phoneNumber
     };
 
-    const res = await collectRiderPhoneNumber(payload);
+    const res = await reserveSeats(bookingInfoPayload);
     if (!res.success) {
       toast.error(res.error);
       return;
@@ -55,20 +64,15 @@ const RiderDialogs = ({
 
 
     // Save booking info in Redux
-    const bookingInfoPayload = {
-      selectedSeats,
-      totalCost: selectedSeats.length * pricePerSeat,
-      passangerId: user.id,
-      driverId: createdBy,
-      passangerPhone: data.phoneNumber
-    };
-    
     dispatch(setBookingInfo(bookingInfoPayload));
     reset();
 
     // Open payment dialog
-    setShowPaymentInitializationDialog(true);
     setShowRiderFormDialog(false);
+    setShowPaymentInitializationDialog(true);
+
+    // ✅ Force UI to fetch fresh data (reflect RESERVED seat)
+    window.location.reload()
   };
 
   return (

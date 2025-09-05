@@ -36,8 +36,7 @@ const RideDetailsPage = () => {
 
   const [showLoginDialog, setShowLoginDialog] = useState(false);
   const [showRiderFormDialog, setShowRiderFormDialog] = useState(false);
-  const [showPaymentInitializationDialog, setShowPaymentInitializationDialog] =
-    useState(false);
+  const [showPaymentInitializationDialog, setShowPaymentInitializationDialog] = useState(false);
   const [isInitializingPush, setIsInitializingPush] = useState(false);
 
   const { rideId } = useParams<{ rideId: string }>();
@@ -54,6 +53,7 @@ const RideDetailsPage = () => {
       setLoading(false);
     };
 
+    window.scrollTo(0, 0); // Scroll to top of the page even if the data is not ready
     fetchRideDetails();
   }, [rideId]);
 
@@ -106,6 +106,7 @@ const RideDetailsPage = () => {
   const handleProceedBooking = () => {
     setIsProceeding(true);
 
+    // Ensure user is loged in
     if (!isAuthenticated) {
       setIsProceeding(false);
       setShowLoginDialog(true);
@@ -117,6 +118,7 @@ const RideDetailsPage = () => {
   };
 
   const {
+    id,
     createdBy,
     departureLocation,
     destinationLocation,
@@ -161,13 +163,12 @@ const RideDetailsPage = () => {
         showRiderFormDialog={showRiderFormDialog}
         setShowRiderFormDialog={setShowRiderFormDialog}
         showPaymentInitializationDialog={showPaymentInitializationDialog}
-        setShowPaymentInitializationDialog={
-          setShowPaymentInitializationDialog
-        }
+        setShowPaymentInitializationDialog={setShowPaymentInitializationDialog}
         isInitializingPush={isInitializingPush}
         selectedSeats={selectedSeats}
         pricePerSeat={pricePerSeat}
         createdBy={createdBy}
+        rideId={id}
       />
     </div>
   );

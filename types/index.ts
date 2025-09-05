@@ -132,6 +132,7 @@ export interface FeedbackFormData {
 }
 
 export interface BookingInfoProps {
+  rideId: string,
   selectedSeats: string[]
   totalCost: number;
   passangerId: string;

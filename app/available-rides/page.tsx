@@ -3,6 +3,11 @@ import { getPublicRides } from "@/actions/rider.action";
 import AvailableRidesList from "@/components/AvailableRidesList";
 import dayjs from "dayjs";
 
+
+// ✅ The scroll helper
+import ScrollToTopOnMount from "@/components/ScrollToTopOnMount"; 
+
+
 export const revalidate = 0; // disables caching completely
 
 export default async function AvailableRidesPage() {
@@ -19,6 +24,8 @@ export default async function AvailableRidesPage() {
 
   return (
     <div className="flex flex-col">
+      {/* Scroll to the top on page mount */}
+      <ScrollToTopOnMount/>
       <AvailableRidesList rides={formattedRides} />
     </div>
   );

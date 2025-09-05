@@ -1,7 +1,8 @@
 'use server'
 
 import { createClient } from "@/lib/supabase/server";
-import { RideDetailsProps } from "@/types";
+import { BookingInfoProps, RideDetailsProps } from "@/types";
+import { revalidatePath } from "next/cache";
 
 export async function getPublicRides() {
     const supabase = await createClient();
@@ -129,21 +130,30 @@ export async function getRideDetails(rideId: string) {
 
 
 // Collect passanger's phone number(to be used for payments)
-export async function collectRiderPhoneNumber(data: { phoneNumber: string, userId: string }) {
-    console.log('PHONE:', data.phoneNumber)
-    console.log('User:', data.userId)
+export async function reserveSeats(data: BookingInfoProps) {
+    
+    console.log('PHONE:', data.passangerPhone)
+    console.log('User:', data.passangerId)
+    console.log('BookingInfo:', data)
 
     const supabase = await createClient()
 
     const { error } = await supabase
         .from('profiles')
-        .update([{ phone: data.phoneNumber}])
-        .eq('id', data.userId)
+        .update({
+            phone: data.passangerPhone,
+            booking_info: data
+        })
+        .eq('id', data.passangerId)
 
     if (error) {
         console.log('Error recording phone number:', error.message)
         return { success: false, error: error.message }
     }
+
+    // ✅ Revalidate paths affected by this booking
+    revalidatePath('/');                        // available rides list
+    revalidatePath(`/rides/${data.rideId}`);    // ride details page (dynamic)
 
     return { success: true, message: 'Phone number recorder successfully.'}
 }
