@@ -1,64 +1,110 @@
 "use client";
 
 import { Card, CardContent } from "@/components/ui/card";
-import { MapPin, Calendar, Bus, Euro } from "lucide-react";
+import { MapPin, Calendar, Bus, Euro, MoreHorizontal, MoreVertical, Users } from "lucide-react";
 import { RideCardProps } from "@/types";
+import { useEffect, useRef, useState } from "react";
 
-export default function RideCard({ ride, onEdit, onCancel }: RideCardProps) {
+export default function RideCard({ ride, onEdit, onCancel, onDelete }: RideCardProps) {
+  const [showRidePostActions, setShowRidePostActions] = useState(false);
+  const actionsRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if(actionsRef.current && !actionsRef.current.contains(event.target as Node)) {
+        setShowRidePostActions(false);
+      }
+    };
+
+    // 
+    if (showRidePostActions) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+  }, [showRidePostActions]);
+
   return (
-    <Card className="w-full max-w-md mx-auto bg-gray-900 text-gray-100 rounded-xl shadow-lg">
-      <CardContent className="p-6 space-y-4">
+    <div className="relative">
+      <Card className="w-full max-w-md mx-auto bg-gray-900 text-gray-100 rounded-xl shadow-lg">
+        <CardContent className="p-6 space-y-4">
 
-        {/* Departure → Destination */}
-        <div className="flex items-center justify-evenly text-xl font-bold mb-10">
-          <div className="flex items-center gap-2">
-            <MapPin className="w-4 h-4 text-purple-500" />
-            <span>{ride.departureLocation}</span>
+          {/* Departure → Destination */}
+          <div className="flex items-center justify-evenly text-xl font-bold mb-10">
+            <div className="flex items-center gap-2">
+              <MapPin className="w-4 h-4 text-purple-500" />
+              <span>{ride.departureLocation}</span>
+            </div>
+            <span className="text-gray-400">→</span>
+            <div className="flex items-center gap-2">
+              <span>{ride.destinationLocation}</span>
+            </div>
           </div>
-          <span className="text-gray-400">→</span>
-          <div className="flex items-center gap-2">
-            <span>{ride.destinationLocation}</span>
-          </div>
-        </div>
 
-        {/* Date & Vehicle */}
-        <div className="grid grid-cols-2 gap-4 text-sm mt-4">
-          <div className="flex items-center gap-2">
-            <Calendar className="w-4 h-4 text-blue-500" />
-            <span>{new Date(ride.departureTime).toLocaleString()}</span>
+          {/* Date & Vehicle */}
+          <div className="grid grid-cols-2 gap-4 text-sm mt-4">
+            <div className="flex items-center gap-2">
+              <Calendar className="w-4 h-4 text-blue-500" />
+              <span>{new Date(ride.departureTime).toLocaleString()}</span>
+            </div>
           </div>
-        </div>
 
-        {/* Price */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Bus className="w-4 h-4 text-yellow-400" />
-            <span className="text-gray-400">{ride.vehicle}</span>
+          {/* Price */}
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Bus className="w-4 h-4 text-yellow-400" />
+              <span className="text-gray-400">{ride.vehicle}</span>
+            </div>
           </div>
-          
-        </div>
 
-        {/* Status */}
-        <div className="flex items-center justify-between">
-          <div className="text-xs text-gray-400">
-            Status: <span className="font-medium text-green-400">{ride.status}</span>
+          {/* Remaining seats */}
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Users className="w-4 h-4 text-emerald-500" />
+              <span className="text-gray-400">{ride.remainingSeats} Empty seats</span>
+            </div>
           </div>
-          <div className="flex items-center gap-2 text-sm mr-1">
-            <span className="text-orange-400 text-xl">@</span>
-            <span>{ride.pricePerSeat} KES</span>
-          </div>
-        </div>
 
-        {/* Action buttons */}
-        <div className="flex justify-end gap-2 mt-6">
-          <button  className="secondary-btn text-sm" onClick={onEdit}>
+          {/* Status */}
+          <div className="flex items-center justify-between">
+            <div className="text-xs text-gray-400">
+              Status: <span className="font-medium text-green-400">{ride.status}</span>
+            </div>
+            <div className="flex items-center gap-2 text-sm mr-1">
+              <span className="text-orange-400 text-xl">@</span>
+              <span>{ride.pricePerSeat} KES</span>
+            </div>
+          </div>
+
+          {/* More actions */}
+            <MoreVertical 
+              onClick={() => setShowRidePostActions(prev => !prev)} 
+              className="w-5 h-5 text-gray-300 cursor-pointer float-right" 
+              />
+        </CardContent>
+      </Card>
+
+      {/* Actions container */}
+      {showRidePostActions && (
+        <div ref={actionsRef} className="flex flex-col overflow-hidden text-sm text-center absolute bottom-2 right-12 bg-gray-800 border rounded-sm">
+          <p className="border-b py-2 px-6 cursor-pointer active:scale-110 hover:bg-white/5 hover:text-gray-100 transition-all duration-300" onClick={onEdit}>
             Edit
-          </button>
-          <button  className="destructive-btn text-sm" onClick={onCancel}>
-            Cancel
-          </button>
+          </p>
+          {ride.status !== "Completed" && (
+            <p className="py-2 px-6 border-b cursor-pointer active:scale-110 hover:bg-white/5 hover:text-gray-100 transition-all duration-300" onClick={onCancel}>
+              {ride.status === "Active" 
+                ? "Cancel"
+                : "Reinstate"
+              }
+            </p>
+          )}
+          <p className="py-2 px-6 cursor-pointer active:scale-110 hover:bg-white/5 hover:text-gray-100 transition-all duration-300" onClick={onDelete}>
+            Delete
+          </p>
         </div>
-      </CardContent>
-    </Card>
+      )}
+    </div>
   );
 }

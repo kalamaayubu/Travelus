@@ -48,10 +48,18 @@ export async function fetchDriverRides() {
     const { data: rides, error } = await supabase
         .from('ride_posts')
         .select(`
-            id, departureTime, departureLocation, 
-            destinationLocation, pricePerSeat, status,
+            id, 
+            departureTime, 
+            departureLocation, 
+            destinationLocation, 
+            pricePerSeat, 
+            status,
             vehicle_types (
-                type_name
+                type_name,
+                capacity
+            ),
+            bookings (
+                count
             )
         `)
         .eq('createdBy', user.id);

@@ -41,17 +41,21 @@ export type Ride = {
   pricePerSeat: number;
   vehicle_types?: {
     type_name: string;
+    capacity: number;
   };
   driverId?: string;
   vehicle?: string;
   status?: "Active" | "Completed" | "Cancelled";
   createdAt?: string;
+  bookings?: { count: number}[];
+  remainingSeats: number;
 };
 
 export type RideCardProps = {
   ride: Ride;
   onEdit: () => void;
   onCancel: () => void;
+  onDelete: () => void;
 };
 
 export type PublicRideCardProps = {
