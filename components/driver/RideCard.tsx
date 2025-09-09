@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, CardContent } from "@/components/ui/card";
-import { MapPin, Calendar, Bus, Euro, MoreHorizontal, MoreVertical, Users } from "lucide-react";
+import { MapPin, Calendar, Bus, Euro, MoreHorizontal, Users } from "lucide-react";
 import { RideCardProps } from "@/types";
 import { useEffect, useRef, useState } from "react";
 
@@ -28,7 +28,7 @@ export default function RideCard({ ride, onEdit, onCancel, onDelete }: RideCardP
 
   return (
     <div className="relative">
-      <Card className="w-full border-none max-w-md mx-auto hover:bg-gray-800 text-gray-300 rounded-md bg-gray-700/20 transition-colors duration-300">
+      <Card className="w-full border border-white/10 max-w-md mx-auto text-gray-300 rounded-md bg-gray-700/40 transition-colors duration-300">
         <CardContent className="space-y-3">
 
           {/* Departure → Destination */}
@@ -79,7 +79,7 @@ export default function RideCard({ ride, onEdit, onCancel, onDelete }: RideCardP
           </div>
 
           {/* More actions */}
-            <MoreVertical 
+            <MoreHorizontal 
               onClick={() => setShowRidePostActions(prev => !prev)} 
               className="w-5 h-5 text-gray-300 cursor-pointer float-right" 
               />

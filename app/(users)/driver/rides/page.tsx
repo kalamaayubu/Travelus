@@ -14,10 +14,10 @@ export default async function DriverRidesPage() {
 
   return (
     <>
-      <div className='flex flex-col min-h-screen text-gray-300'>
+      <div className='flex flex-col min-h-screen text-gray-300 pb-44 md:pb-0'>
         <div className=''>
-          <div className="flex justify-center">
-          <div className="grid grid-cols-1 max-w-[12800px] md:grid-cols-2 xl:grid-cols-3 justify-items-center gap-8 xl:gap-6">
+          <div className="flex justify-center md:justify-start">
+          <div className="grid grid-cols-1 max-w-[12800px] md:grid-cols-2 xl:grid-cols-3 justify-items-center gap-7 xl:gap-6">
             {rides?.length === 0 ? (
               <p className="text-gray-400">You haven’t posted any rides yet.</p>
             ) : (
