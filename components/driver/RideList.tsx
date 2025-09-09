@@ -24,11 +24,12 @@ export default function RideList({ rides }: RideListProps) {
   const handleCancelRide = (rideId: string) => () => {
     // Confirm before cancelling
     setShowCancelRideDialog(true);
+
   }
   return (
     <>
       {rides.map((ride) => {
-        // Sum booked seats
+        // Booked seats and vehicle capacity to compute available seats
         const bookedSeats = ride.bookings?.reduce((sum, booking) => sum + (booking.count || 0), 0) || 0;
         const vehicleCapacity = ride.vehicle_types?.capacity || 0;
         
@@ -51,23 +52,6 @@ export default function RideList({ rides }: RideListProps) {
             onDelete={handleDeleteRide(ride.id!)}
           />
         )
-        // <RideCard
-        //   key={ride.id}
-        //   ride={
-        //     {
-        //       departureLocation: ride.departureLocation,
-        //       destinationLocation: ride.destinationLocation,
-        //       departureTime: ride.departureTime,
-        //       vehicle: ride?.vehicle_types?.type_name || "Unspecified Vehicle",
-        //       pricePerSeat: ride.pricePerSeat,
-        //       remainingSeats: vehicleCapacity - bookedSeats,
-        //       status: ride.status || "Active",
-        //     }
-        //   }
-        //   onEdit={() => console.log("Edit ride", ride.id)}
-        //   onCancel={handleCancelRide(ride.id!)}
-        //   onDelete={handleDeleteRide(ride.id!)}
-        // />
       })}
 
       {/* Confirm delete dialog */}

@@ -8,11 +8,17 @@ import ReusableDialog from "./reusable/dialog";
 import { useState } from "react";
 import { Check, X } from "lucide-react";
 import AlertDialog from "./reusable/AlertDialog";
+import { usePathname } from "next/navigation";
 
 
 export default function Footer() {
   const [showLoginDialog, setShowLoginDialog] = useState(false)
   const { register, handleSubmit, reset, formState: { isSubmitting, errors } } = useForm()
+  const pathname = usePathname();
+
+  // Hide footer on these routes
+  if (pathname.startsWith("/auth") || pathname.startsWith("/driver")) return null;
+  
 
   const onSubmit = async (data: { email: string } ) => {
     const res = await joinWaitlist(data)

@@ -2,7 +2,7 @@
 
 import { getVehicleTypes } from "@/actions/driver.action"
 import { saveVehicleTypes } from "@/redux/slices/vehicleTypesSlice"
-import { Loader2 } from "lucide-react"
+import { Loader2, Plus } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { useDispatch } from "react-redux"
@@ -49,12 +49,12 @@ const AddRideButton = () => {
   return (
     <button
         onClick={handleAddRide}
-        className="px-8 rounded-lg"
+        className="px-4 whitespace-nowrap rounded-md bg-green-500/20 py-2 text-green-400 hover:bg-green-500/30 transition-colors"
         disabled={isLoading}
     >
         {isLoading
             ? (<span className="flex items-center gap-4"><Loader2 className="animate-spin w-5"/> <span>Just a moment</span></span>)
-            : "Add a ride"
+            : <span className="flex items-center gap-2"><Plus className="w-4"/>Add a ride</span>
         }
     </button>
   )

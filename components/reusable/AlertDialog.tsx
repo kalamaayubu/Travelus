@@ -72,7 +72,7 @@ export default function AlertDialog({
             {actions.map((action, i) => (
               <button
                 key={i}
-                className={getButtonClass(action.variant) + " py-2 flex-1"}
+                className={getButtonClass(action.variant) + " py-2 flex-1 whitespace-nowrap"}
                 onClick={() => {
                   action.onClick?.()
                 }}

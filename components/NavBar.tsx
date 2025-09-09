@@ -13,7 +13,7 @@ const NavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   // Hide navbar on these routes
-  if (pathname.startsWith("/auth") || pathname === "/driver/post-ride") return null;
+  if (pathname.startsWith("/auth") || pathname.startsWith("/driver")) return null;
 
   return (
     <header className="text-white p-6">
