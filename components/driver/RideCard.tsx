@@ -28,7 +28,7 @@ export default function RideCard({ ride, onEdit, onCancel, onDelete }: RideCardP
 
   return (
     <div className="relative">
-      <Card className="w-full border border-white/10 max-w-md mx-auto text-gray-300 rounded-md bg-gray-700/40 transition-colors duration-300">
+      <Card className="w-full border border-white/10 max-w-md mx-auto text-gray-300 rounded-lg bg-gray-700/40 transition-colors duration-300">
         <CardContent className="space-y-3">
 
           {/* Departure → Destination */}

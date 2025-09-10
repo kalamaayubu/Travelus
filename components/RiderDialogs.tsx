@@ -85,62 +85,61 @@ const RiderDialogs = ({
       />
 
       {/* Rider Phone Form Dialog */}
-      {/* Rider Phone Form Dialog */}
-<AlertDialog
-  open={showRiderFormDialog}
-  onOpenChange={setShowRiderFormDialog}
-  title="Enter your phone number"
->
-  <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-    <input
-      type="number"
-      placeholder="Phone number here..."
-      className="mt-2"
-      {...register("phoneNumber", { 
-        required: "Phone number is required",
-        pattern: {
-          value: /^(07\d{8}|01\d{8}|2547\d{8}|2541\d{8}|\+2547\d{8}|\+2541\d{8})$/,
-          message: "Enter a valid Kenyan phone number"
-        }
-      })}
-    />
-    {errors.phoneNumber?.message && (
-      <p className="text-sm text-red-500">
-        {String(errors.phoneNumber.message)}
-      </p>
-    )}
-
-    <p className="text-[12px] text-gray-400 -translate-y-4">
-      This number will be used to make your payments
-    </p>
-
-    <div className="flex items-center justify-end mt-6 gap-4">
-      <button 
-        type="button"
-        className="secondary-btn"
-        onClick={() => setShowRiderFormDialog(false)}
+      <AlertDialog
+        open={showRiderFormDialog}
+        onOpenChange={setShowRiderFormDialog}
+        title="Enter your phone number"
       >
-        Cancel
-      </button>
-      <button 
-        type="submit"
-        disabled={isSubmitting}
-        className="primary-btn"
-      >
-        {isSubmitting 
-          ? (
-            <span className="flex items-center justify-center gap-2">
-              <Loader2 className="w-4 animate-spin" />
-              Proceeding...
-            </span>
-          ) : (
-            "Proceed to pay"
-          )
-        }
-      </button>
-    </div>
-  </form>
-</AlertDialog>
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+          <input
+            type="number"
+            placeholder="Phone number here..."
+            className="mt-2"
+            {...register("phoneNumber", { 
+              required: "Phone number is required",
+              pattern: {
+                value: /^(07\d{8}|01\d{8}|2547\d{8}|2541\d{8}|\+2547\d{8}|\+2541\d{8})$/,
+                message: "Enter a valid Kenyan phone number"
+              }
+            })}
+          />
+          {errors.phoneNumber?.message && (
+            <p className="text-sm text-red-500">
+              {String(errors.phoneNumber.message)}
+            </p>
+          )}
+
+          <p className="text-[12px] text-gray-400 -translate-y-4">
+            This number will be used to make your payments
+          </p>
+
+          <div className="flex items-center justify-end mt-6 gap-4">
+            <button 
+              type="button"
+              className="secondary-btn"
+              onClick={() => setShowRiderFormDialog(false)}
+            >
+              Cancel
+            </button>
+            <button 
+              type="submit"
+              disabled={isSubmitting}
+              className="primary-btn whitespace-nowrap"
+            >
+              {isSubmitting 
+                ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <Loader2 className="w-4 animate-spin" />
+                    Proceeding...
+                  </span>
+                ) : (
+                  "Proceed to pay"
+                )
+              }
+            </button>
+          </div>
+        </form>
+      </AlertDialog>
 
 
       {/* Payment Initialization Dialog */}

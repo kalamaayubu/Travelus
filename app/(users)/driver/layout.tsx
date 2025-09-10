@@ -16,7 +16,7 @@ export default function DriverDashboardLayout({ children }: { children: React.Re
         <div className="flex-1 flex flex-col bg-gray-800/20 gap-4 px-4 lg:px-6">
           <TopNav />
           {/* Main content */}
-          <ScrollArea className="h-full p-1 md:pb-16">
+          <ScrollArea className="h-full p-1 md:px-0 md:pb-16">
             {children}
             <SmallScreensNavbar/> {/* Navigation for small screens */}
           </ScrollArea>

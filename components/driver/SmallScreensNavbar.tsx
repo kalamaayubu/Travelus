@@ -30,13 +30,10 @@ const NavLink = ({ href, icon, label }: NavLinkProps) => {
       href={href}
       className={`relative flex flex-col items-center text-xs gap-[2px] cursor-pointer transition-all duration-300 ${
         isActive
-          ? "text-gray-200"
+          ? "text-gray-50"
           : "text-gray-400 hover:text-gray-200"
       }`}
     >
-      {isActive && (
-        <div className="absolute -top-[13px] h-[2px] w-full bg-gray-200 rounded-full" />
-      )}
       {icon}
       {label}
     </Link>

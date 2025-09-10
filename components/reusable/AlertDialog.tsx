@@ -57,7 +57,7 @@ export default function AlertDialog({
       closable={false}
       contentClassName="bg-gray-900 border border-gray-800"
     >
-      <div className="flex flex-col items-center gap-4 p-6">
+      <div className="flex flex-col items-center gap-4">
         {icon && <div className="p-8 bg-gray-800 rounded-full">{icon}</div>}
         <h2 className="text-xl font-bold text-gray-200 text-center">{title}</h2>
         {description && (
