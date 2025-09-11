@@ -42,7 +42,7 @@ export default function FeedbackSection() {
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.3 }}
           className="max-w-xl mx-auto rounded-2xl p-8 bg-white/5 backdrop-blur-xl border border-white/10 shadow-xl"
         >
           {/* Rating */}

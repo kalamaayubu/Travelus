@@ -1,6 +1,6 @@
 export default function Loading() {
   return (
-    <div className="p-6 md:p-0 space-y-6">
+    <div className="space-y-6">
       {/* Ride cards skeleton */}
       <div className="flex gap-6 flex-wrap justify-center md:justify-start">
         {Array.from({ length: 6 }).map((_, i) => (
