@@ -134,7 +134,7 @@ export default function PostRidePage() {
         name="vehicleType"
         control={control}
         rules={{ required: "Vehicle type is required" }}
-        render={({ field, fieldState }) => (
+        render={({ field }) => (
           <ComboBox
             options={vehicleTypes.map(vt => ({
               label: vt.name,
@@ -143,7 +143,6 @@ export default function PostRidePage() {
             value={field.value}
             onChange={field.onChange}
             placeholder="Select vehicle type"
-            error={fieldState.error}
           />
         )}
       />
@@ -242,7 +241,6 @@ export default function PostRidePage() {
             {...register('driverPhone', { required: 'Phone is required' })}
           />
           <p className='text-[12px] text-gray-400 -translate-y-3'>You will receive your payments through this number. You can go back and change it.</p>
-          <p>Fell free to go back and change or confirm that all information is correct before submission.</p>
           <p className="text-sm text-gray-400 flex items-center gap-3 mt-2"><span className='bg-green-600 text-white rounded-full p-1'><Check/></span> If all details are correct, submit ride below</p>
 
           <div className='flex flex-col gap-2 sm:flex-row sm:justify-end mt-4'>

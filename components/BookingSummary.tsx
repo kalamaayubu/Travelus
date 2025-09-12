@@ -16,7 +16,7 @@ const BookingSummary = ({
   onProceed
 }: BookingSummaryProps) => {
   return (
-    <div className="mb-8 p-8 border bg-gray-900 w-full max-w-[800px] rounded-xl -translate-y-8">
+    <div className="mb-8 p-8 border bg-gray-900 w-full max-w-[800px] rounded-xl">
       <h2 className="mb-4 text-2xl text-gray-300">Summary</h2>
       <div className="flex flex-col border p-4 rounded-lg gap-6">
         <p>Selected seats: {selectedSeats.length > 0 ? selectedSeats.join(", ") : 'NONE'} </p>

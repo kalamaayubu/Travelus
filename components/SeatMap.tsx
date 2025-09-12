@@ -55,7 +55,7 @@ const SeatMap = ({
               <span>Reserved</span>
             </div>
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-red-700 rounded-md"></div>
+              <div className="w-8 h-8 opacity-60 bg-red-500 rounded-md"></div>
               <span>Blocked</span>
             </div>
             <div className="flex items-center gap-2">
@@ -69,8 +69,10 @@ const SeatMap = ({
           </div>
         </div>
 
+        <p className="mt-6 font-extralight text-xl">Select your seat(s) below</p>
+
         {/* Seat Layout */}
-        <div className="flex flex-col gap-6 mt-14 lg:-rotate-90">
+        <div className="flex flex-col gap-6 mt-14">
           {seatsLayout.layout.map((row: SeatRow, rowIndex: number) => {
             let colNumber = 0;
 
@@ -91,7 +93,7 @@ const SeatMap = ({
                     return (
                       <div
                         key={seatIndex}
-                        className="w-10 h-10 ml-3 text-white rounded-lg flex items-center justify-center text-xs"
+                        className="w-10 h-10 ml-1 text-white rounded-lg flex items-center justify-center text-xs"
                       >
                         <Image
                           src={"/assets/steeringWheel.svg"}
@@ -123,7 +125,7 @@ const SeatMap = ({
                         "w-10 h-10 opacity-100 active:scale-90 transition-all duration-300 cursor-pointer rounded-md flex items-center select-none bg-gray-800 border justify-center",
                         isBooked && "cursor-not-allowed active:scale-100 opacity-60 bg-green-700",
                         isReserved && "cursor-not-allowed active:scale-100 opacity-60 bg-yellow-600",
-                        isBlocked && "cursor-not-allowed active:scale-100 opacity-60 bg-red-700",
+                        isBlocked && "cursor-not-allowed active:scale-100 opacity-60 bg-red-500",
                         isSelected && "bg-blue-800 border-none"
                       )}
                     >

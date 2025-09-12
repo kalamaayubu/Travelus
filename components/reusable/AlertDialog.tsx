@@ -6,7 +6,7 @@ import { ReactNode } from "react"
 type ButtonVariant = "primary" | "secondary" | "destructive"
 
 type DialogAction = {
-  label: string
+  label: ReactNode
   variant?: ButtonVariant
   onClick?: () => void
 }
@@ -55,7 +55,7 @@ export default function AlertDialog({
       open={open}
       onOpenChange={onOpenChange}
       closable={false}
-      contentClassName="bg-gray-900 border border-gray-800"
+      contentClassName="bg-gray-900/100 border border-gray-800"
     >
       <div className="flex flex-col items-center gap-4">
         {icon && <div className="p-8 bg-gray-800 rounded-full">{icon}</div>}

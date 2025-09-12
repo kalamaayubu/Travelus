@@ -45,8 +45,8 @@ export default function RideCard({ ride, onEdit, onCancel, onDelete }: RideCardP
 
           {/* Date & Vehicle */}
           <div className="grid grid-cols-2 gap-4 text-sm mt-4">
-            <div className="flex items-center gap-2">
-              <Calendar className="w-4 h-4 text-blue-500" />
+            <div className="flex items-center gap-2 whitespace-nowrap">
+              <Calendar className="min-w-4 min-h-4 max-w-4 max-h-4 text-blue-500" />
               <span>{new Date(ride.departureTime).toLocaleString()}</span>
             </div>
           </div>

@@ -90,3 +90,26 @@ export async function getVehicleTypes() {
     console.log('Vehicle types fetched:', data)
     return data
 }
+
+
+// Function to delete a ride by ID
+export async function deleteRide(rideId: string, userId: string) {
+    const supabase = await createClient();
+
+    if (!userId) {
+        return { success: false, error: "Ride ID is required" };
+    }
+   
+    const { data, error } = await supabase
+        .from('ride_posts')
+        .delete()
+        .eq('id', rideId)
+        .eq('createdBy', userId); // Ensure the user can only delete their own
+    if (error) {
+        console.error("Error deleting ride:", error);
+        return { success: false, error: error.message };
+    }
+
+    console.log("Ride deleted successfully:", data);
+    return { success: true, message: "Ride deleted successfully" };
+}
