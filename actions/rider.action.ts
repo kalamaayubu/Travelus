@@ -148,6 +148,18 @@ export async function reserveSeats(data: BookingInfoProps) {
 
     if (error) {
         console.log('Error recording phone number:', error.message)
+
+        // 🛑 Catch the specific constraint violation
+        if (error.message.includes(
+            'insert or update on table "bookings" violates foreign key constraint "bookings_rider_fkey'
+        )) {
+            return {
+                success: false,
+                error:
+                "You are not logged in as a passenger. Log in with a passenger account to continue.",
+            };
+        }
+
         return { success: false, error: error.message }
     }
 

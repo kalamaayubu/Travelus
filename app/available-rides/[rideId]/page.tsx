@@ -38,6 +38,7 @@ const RideDetailsPage = () => {
 
   const [showLoginDialog, setShowLoginDialog] = useState(false);
   const [showRiderFormDialog, setShowRiderFormDialog] = useState(false);
+  const [showLoginAsPassangerDialog, setShowLoginAsPassangerDialog] = useState(false);
   const [showPaymentInitializationDialog, setShowPaymentInitializationDialog] = useState(false);
   const [isInitializingPush, setIsInitializingPush] = useState(false);
 
@@ -196,6 +197,8 @@ const RideDetailsPage = () => {
         setShowLoginDialog={setShowLoginDialog}
         showRiderFormDialog={showRiderFormDialog}
         setShowRiderFormDialog={setShowRiderFormDialog}
+        showLoginAsPassangerDialog={showLoginAsPassangerDialog}
+        setShowLoginAsPassangerDialog={setShowLoginAsPassangerDialog}
         showPaymentInitializationDialog={showPaymentInitializationDialog}
         setShowPaymentInitializationDialog={setShowPaymentInitializationDialog}
         isInitializingPush={isInitializingPush}

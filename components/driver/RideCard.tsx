@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, CardContent } from "@/components/ui/card";
-import { MapPin, Calendar, Bus, Euro, MoreHorizontal, Users } from "lucide-react";
+import { MapPin, Calendar, Bus, MoreHorizontal, Users } from "lucide-react";
 import { RideCardProps } from "@/types";
 import { useEffect, useRef, useState } from "react";
 
@@ -16,7 +16,6 @@ export default function RideCard({ ride, onEdit, onCancel, onDelete }: RideCardP
       }
     };
 
-    // 
     if (showRidePostActions) {
       document.addEventListener("mousedown", handleClickOutside);
     }
@@ -32,9 +31,9 @@ export default function RideCard({ ride, onEdit, onCancel, onDelete }: RideCardP
         <CardContent className="space-y-3">
 
           {/* Departure → Destination */}
-          <div className="flex items-center justify-evenly text-xl font-bold mb-10">
-            <div className="flex items-center gap-2">
-              <MapPin className="w-4 h-4 text-purple-500" />
+          <div className="flex items-center justify-center gap-2 text-xl font-bold mb-10">
+            <div className="flex items-center gap-1">
+              <MapPin className="min-w-4 min-h-4 max-w-4 max-h-4 text-purple-500" />
               <span>{ride.departureLocation}</span>
             </div>
             <span className="text-gray-400">→</span>
@@ -88,21 +87,26 @@ export default function RideCard({ ride, onEdit, onCancel, onDelete }: RideCardP
 
       {/* Actions container */}
       {showRidePostActions && (
-        <div ref={actionsRef} className="flex flex-col overflow-hidden text-sm text-center absolute bottom-2 right-12 bg-gray-800 border rounded-sm">
-          <p className="border-b py-2 px-6 cursor-pointer active:scale-110 hover:bg-white/5 hover:text-gray-100 transition-all duration-300" onClick={onEdit}>
-            Edit
-          </p>
-          {ride.status !== "Completed" && (
-            <p className="py-2 px-6 border-b cursor-pointer active:scale-110 hover:bg-white/5 hover:text-gray-100 transition-all duration-300" onClick={onCancel}>
+        <div ref={actionsRef} className="flex flex-col overflow-hidden text-sm absolute bottom-2 right-12 bg-gray-700/100 border rounded-sm">
+          {/* <p className="border-b border-white/5 py-2 px-6 cursor-pointer active:scale-110 hover:bg-white/5 hover:text-gray-100 transition-all duration-300" onClick={onEdit}>
+            Edit Trip
+          </p> */}
+          {/* {ride.status !== "Completed" && (
+            <p className="py-2 px-6 cursor-pointer active:scale-110 hover:bg-white/5 hover:text-gray-100 transition-all duration-300" onClick={onCancel}>
               {ride.status === "Active" 
-                ? "Cancel"
+                ? "Cancel Trip"
                 : "Reinstate"
               }
             </p>
+          )} */}
+          {onDelete && (
+            <p
+              className="py-2 px-6 cursor-pointer active:scale-110 hover:bg-white/5 hover:text-gray-100 transition-all duration-300"
+              onClick={onDelete}
+            >
+              Delete Trip
+            </p>
           )}
-          <p className="py-2 px-6 cursor-pointer active:scale-110 hover:bg-white/5 hover:text-gray-100 transition-all duration-300" onClick={onDelete}>
-            Delete
-          </p>
         </div>
       )}
     </div>

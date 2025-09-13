@@ -18,7 +18,7 @@ type AlertDialogProps = {
   title: string
   description?: string
   /** single action shorthand (kept for backwards compatibility) */
-  actionLabel?: string
+  actionLabel?: ReactNode
   onAction?: () => void
   /** multiple actions */
   actions?: DialogAction[]

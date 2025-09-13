@@ -15,7 +15,7 @@ export interface ReusableDialogProps {
   trigger?: ReactNode
   children: ReactNode
   title?: string
-  description?: string // optional if you don’t always pass one
+  description?: string
   open?: boolean
   onOpenChange?: (open: boolean) => void
   closable?: boolean
@@ -31,13 +31,14 @@ export type PostRideFormData = {
   driverPhone?: string;
   departureTime: Date;
   nationalId?: string;
+  confirmation?: boolean;
 };
 
 export type Ride = {
   id?: string;
   departureLocation: string;
   destinationLocation: string;
-  departureTime: string; // stored as ISO string in DB
+  departureTime: string;
   pricePerSeat: number;
   vehicle_types?: {
     type_name: string;
@@ -53,9 +54,9 @@ export type Ride = {
 
 export type RideCardProps = {
   ride: Ride;
-  onEdit: () => void;
-  onCancel: () => void;
-  onDelete: () => void;
+  onEdit?: () => void;
+  onCancel?: () => void;
+  onDelete?: () => void;
 };
 
 export type PublicRideCardProps = {

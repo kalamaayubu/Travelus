@@ -18,17 +18,20 @@ export default function PostRidePage() {
   const [step, setStep] = useState(1); // Track dialog steps
   const vehicleTypes = useSelector((state: RootState) => state.vehicleTypes.value)
 
-
   const router = useRouter();
-
 
   const { 
     register,
     control, 
+    watch,
     handleSubmit, 
     formState: { errors, isSubmitting, isValid }, 
     trigger 
   } = useForm<PostRideFormData>({ mode: 'onChange' });
+
+    // Watch confirmation checkbox before submission
+    const confirmationChecked = watch('confirmation');
+
 
   // On page load, open dialog and parse vehicle types
   useEffect(() => {
@@ -222,40 +225,73 @@ export default function PostRidePage() {
 
 
       {/* Step 4 */}
-      {step === 4 && (
-        <ReusableDialog
-          open={open}
-          onOpenChange={setOpen}
-          title="Step 4: Confirmation & Submission"
-          description="Review and confirm your ride"
-          closable={false}
-          contentClassName="bg-gray-900 border-gray-700"
-        >
-          
+{step === 4 && (
+  <ReusableDialog
+    open={open}
+    onOpenChange={setOpen}
+    title="Step 4: Confirmation & Submission"
+    description="Review your ride details before submitting"
+    closable={false}
+    contentClassName="bg-gray-900 border-gray-700"
+  >
+    <div className="space-y-4 text-sm text-gray-300">
+      <p><strong>From:</strong> {watch("departureLocation")}</p>
+      <p><strong>To:</strong> {watch("destinationLocation")}</p>
+      <p><strong>Departure:</strong> {new Date(watch("departureTime")).toLocaleString()}</p>
+      <p><strong>Vehicle:</strong> {vehicleTypes.find(v => v.id === watch("vehicleType"))?.name}</p>
+      <p><strong>Price per seat:</strong> {watch("pricePerSeat")} KES</p>
+      <p><strong>Phone (M-Pesa):</strong> {watch("driverPhone")}</p>
+      <p><strong>National ID:</strong> {watch("nationalId")}</p>
+    </div>
 
-          <input
-            type="text"
-            placeholder="Driver Phone Number"
-            disabled
-            className="bg-gray-700 opacity-60"
-            {...register('driverPhone', { required: 'Phone is required' })}
-          />
-          <p className='text-[12px] text-gray-400 -translate-y-3'>You will receive your payments through this number. You can go back and change it.</p>
-          <p className="text-sm text-gray-400 flex items-center gap-3 mt-2"><span className='bg-green-600 text-white rounded-full p-1'><Check/></span> If all details are correct, submit ride below</p>
+    <p className="text-yellow-400 mt-4 text-sm">
+      ⚠️ Note: Once submitted, you won’t be able to edit this ride.  
+      If something is incorrect, go back and adjust it before proceeding.
+    </p>
 
-          <div className='flex flex-col gap-2 sm:flex-row sm:justify-end mt-4'>
-            <Button type='button' disabled={isSubmitting} className={`secondary-btn ${isSubmitting ? 'cursor-not-allowed ' : ''}`} onClick={prevStep}>Back</Button>
-            <Button 
-              disabled={isSubmitting || !isValid}
-              className={`primary-btn ${isSubmitting ? 'cursor-not-allowed ' : ''}`}
-              type="submit"
-              onClick={handleSubmit(onSubmit)}
-            >
-              {isSubmitting ? <span className='flex items-center gap-4'><Loader2 className='animate-spin w-5'/>Submitting ride...</span> : 'Submit Ride'}
-            </Button>
-          </div>
-        </ReusableDialog>
-      )}
+    {/* Confirmation checkbox */}
+    <div className="flex items-center gap-2 mt-4">
+      <input
+        type="checkbox"
+        id="confirm"
+        className="w-4 h-4 accent-green-600 cursor-pointer"
+        {...register("confirmation", { required: "You must confirm before submitting" })}
+      />
+      <label htmlFor="confirm" className="text-sm text-gray-300">
+        I confirm that the above details are correct
+      </label>
+    </div>
+    {errors.confirmation && (
+      <p className="text-red-500 text-sm">{errors.confirmation.message}</p>
+    )}
+
+    <div className="flex flex-col gap-2 sm:flex-row sm:justify-end mt-6">
+      <Button
+        type="button"
+        disabled={isSubmitting}
+        className={`secondary-btn ${isSubmitting ? "cursor-not-allowed" : ""}`}
+        onClick={prevStep}
+      >
+        Back
+      </Button>
+      <Button
+        disabled={isSubmitting || !isValid || !confirmationChecked}
+        className={`primary-btn ${isSubmitting ? "cursor-not-allowed" : ""}`}
+        type="submit"
+        onClick={handleSubmit(onSubmit)}
+      >
+        {isSubmitting ? (
+          <span className="flex items-center gap-4">
+            <Loader2 className="animate-spin w-5" /> Submitting ride...
+          </span>
+        ) : (
+          "Submit Ride"
+        )}
+      </Button>
+    </div>
+  </ReusableDialog>
+)}
+
     </form>
     </div>
   );

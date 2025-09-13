@@ -78,12 +78,16 @@ export default function RideList({ rides }: RideListProps) {
               remainingSeats: vehicleCapacity - bookedSeats,
               status: ride.status || "Active",
             }}
-            onEdit={() => console.log("Edit ride", ride.id)}
+            onEdit={() => router.push(`/driver/rides/${ride.id}/edit`)}
             onCancel={handleCancelRide(ride.id!)}
-            onDelete={() => {
-              setRideToDelete(ride.id!);
-              setShowConfirmDeleteDialog(true);
-            }}
+            onDelete={
+              bookedSeats === 0
+                ? () => {
+                    setRideToDelete(ride.id!);
+                    setShowConfirmDeleteDialog(true);
+                  }
+                : undefined
+            }
           />
         );
       })}

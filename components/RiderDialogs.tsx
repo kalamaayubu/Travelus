@@ -4,19 +4,25 @@ import { FaMoneyBill } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import AlertDialog from "@/components/reusable/AlertDialog";
-import ReusableDialog from "@/components/reusable/dialog";
 import { reserveSeats } from "@/actions/rider.action";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { setBookingInfo } from "@/redux/slices/bookingInfoSlice";
+import { useRouter } from "next/navigation";
 
 interface RiderDialogsProps {
   showLoginDialog: boolean;
   setShowLoginDialog: (open: boolean) => void;
+
   showRiderFormDialog: boolean;
   setShowRiderFormDialog: (open: boolean) => void;
+
+  showLoginAsPassangerDialog: boolean;
+  setShowLoginAsPassangerDialog: (open: boolean) => void;
+
   showPaymentInitializationDialog: boolean;
   setShowPaymentInitializationDialog: (open: boolean) => void;
+  
   isInitializingPush: boolean;
   selectedSeats: string[];
   pricePerSeat: number;
@@ -29,6 +35,8 @@ const RiderDialogs = ({
   setShowLoginDialog,
   showRiderFormDialog,
   setShowRiderFormDialog,
+  showLoginAsPassangerDialog,
+  setShowLoginAsPassangerDialog,
   showPaymentInitializationDialog,
   setShowPaymentInitializationDialog,
   isInitializingPush,
@@ -41,6 +49,7 @@ const RiderDialogs = ({
   const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm();
   const user = useSelector((state: RootState) => state.auth.user);
   const dispatch = useDispatch();
+  const router = useRouter()
 
   // Handle phone number submission
   const onSubmit = async (data: { phoneNumber: string }) => {
@@ -56,7 +65,7 @@ const RiderDialogs = ({
 
     const res = await reserveSeats(bookingInfoPayload);
     if (!res.success) {
-      toast.error(res.error);
+      setShowLoginAsPassangerDialog(true)
       return;
     }
 
@@ -139,6 +148,21 @@ const RiderDialogs = ({
             </button>
           </div>
         </form>
+      </AlertDialog>
+
+      {/* Not logged in as a passanger error Dialog */}
+      <AlertDialog
+        open={showLoginAsPassangerDialog}
+        onOpenChange={setShowLoginAsPassangerDialog}
+        title="Could not proceed"
+        description="You are not logged in as a passenger. Please log in with a passenger account to continue."
+        icon={<X className="w-8 h-8 text-red-500"/>}
+        onAction={() => {
+          router.push("/auth/login")
+        }}
+        actionLabel="Login as a passenger"
+      >
+
       </AlertDialog>
 
 

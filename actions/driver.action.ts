@@ -92,6 +92,40 @@ export async function getVehicleTypes() {
 }
 
 
+// Function to get ride details by ID
+export async function getRideById(rideId: string) {
+    const supabase = await createClient();
+    if (!rideId) {
+        return { success: false, error: "Ride ID is required" };
+    }
+    const { data, error } = await supabase
+        .from('ride_posts')
+        .select(`
+            id, 
+            departureLocation, 
+            destinationLocation,
+            departureTime,
+            pricePerSeat,
+            status,
+            vehicle_types (
+                id,
+                type_name,
+                capacity
+            )
+        `)
+        .eq('id', rideId)
+        .single();
+        
+    if (error) {
+        console.error("Error fetching ride by ID:", error);
+        return { success: false, error: error.message };
+    }
+
+    console.log("Ride details fetched:", data);
+    return { success: true, data };
+}
+
+
 // Function to delete a ride by ID
 export async function deleteRide(rideId: string, userId: string) {
     const supabase = await createClient();
