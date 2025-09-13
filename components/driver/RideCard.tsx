@@ -72,7 +72,7 @@ export default function RideCard({ ride, onEdit, onCancel, onDelete }: RideCardP
               Status: <span className="font-medium text-green-400">{ride.status}</span>
             </div>
             <div className="flex items-center gap-2 text-sm mr-1">
-              <span className="text-orange-400 text-xl">@</span>
+              <span className="text-orange-400">@</span>
               <span>{ride.pricePerSeat} KES</span>
             </div>
           </div>

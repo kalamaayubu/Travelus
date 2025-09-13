@@ -54,7 +54,7 @@ const AddRideButton = () => {
     >
         {isLoading
             ? (<span className="flex items-center gap-4"><Loader2 className="animate-spin w-5"/> <span>Just a moment</span></span>)
-            : <span className="flex items-center gap-2"><Plus className="w-4"/>Add a ride</span>
+            : <span className="flex items-center gap-2"><Plus className="w-4"/>Create a ride</span>
         }
     </button>
   )

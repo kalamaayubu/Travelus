@@ -47,7 +47,7 @@ const SmallScreensNavbar = () => {
 
   return (
     <>
-      <div className="md:hidden fixed pt-1 pb-1 border-t border-white/10 bottom-0 left-0 right-0 bg-gray-800/95 backdrop-blur-sm flex justify-around items-center z-20">
+      <div className="md:hidden fixed pt-1 pb-1 border-t border-zinc-700/60 bottom-0 left-0 right-0 dark:bg-zinc-800/50 backdrop-blur-sm flex justify-around items-center z-20">
         {/* Home */}
         <NavLink 
             href="/driver" 
@@ -81,8 +81,8 @@ const SmallScreensNavbar = () => {
             <Plus
               className={`w-4 h-4 ${
                 pathname === "/driver/post-ride"
-                  ? "text-green-500"
-                  : "text-green-500/50 group-hover:text-green-500"
+                  ? "text-green-600"
+                  : "text-green-500 group-hover:text-green-500"
               }`}
             />
           </div>

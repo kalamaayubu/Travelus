@@ -14,14 +14,14 @@ export default function TopNav() {
         {/* Left section */}
         <div className="items-center gap-6 hidden md:flex">
             <p className=" text-gray font-bold text-2xl rounded-md whitespace-nowrap">
-                {pathname === "/driver" && "Dashboard"}
-                {pathname === "/driver/rides" && "My Rides"}
-                {pathname === "/driver/bookings" && "Bookings"}
-                {pathname === "/driver/payments" && "Payments"}
-                {pathname === "/driver/settings" && "Settings"}
-                {pathname.includes("/driver/rides/") && pathname.includes("/edit") && (
-                  <span>Update Ride<span className="text-green-500">.</span></span>
-                )}
+              {pathname === "/driver" && <span>Dashboard<span className="text-green-500">.</span></span>}
+              {pathname === "/driver/rides" && <span>My Rides<span className="text-green-500">.</span></span>}
+              {pathname === "/driver/bookings" && <span>Bookings<span className="text-green-500">.</span></span>}
+              {pathname === "/driver/payments" && <span>Payments<span className="text-green-500">.</span></span>}
+              {pathname === "/driver/settings" && <span>Settings<span className="text-green-500">.</span></span>}
+              {pathname.includes("/driver/rides/") && pathname.includes("/edit") && (
+                <span>Update Ride<span className="text-green-500">.</span></span>
+              )}
             </p>
         </div>
 
