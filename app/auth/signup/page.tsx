@@ -2,41 +2,80 @@
 
 import { signup } from "@/actions/auth.action";
 import { SignupFormData } from "@/types";
-import { Loader2 } from "lucide-react";
-import Image from "next/image";
+import { CarFront, Loader2, Users } from "lucide-react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 
 export default function Signup() {
-  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<SignupFormData>();
+  const { register, handleSubmit, watch, setValue, formState: { errors, isSubmitting } } = useForm<SignupFormData>();
 
   // Function to handle form submission
   const onSubmit = async (data: SignupFormData) => {
     const result = await signup(data);
 
     if (result.success) {
-      alert(result.message);
+      toast.success(result.message);
     } else {
-      alert(`Error: ${result.error}`);
+      toast.error(`Error: ${result.error}`);
     }
   };
   
   return (
     <>
         <p className="text-center text-gray-400 mb-8">Create your account and enjoy the experience</p>
-
-        <button className="w-full mt-4 bg-gray-800 text-white py-[10px] text-md font-semibold flex items-center justify-center gap-4 hover:bg-gray-700">
-          <Image src="/assets/googleLogo.png" alt="Google logo" width={24} height={24} />
-          Continue with Google
-        </button>
-        <div className='flex items-center gap-4 mt-2 mb-4'>
-          <div className='h-[1px] w-full bg-gray-700'/>
-          <span>or</span>
-          <div className='h-[1px] w-full bg-gray-700'/>
-        </div>
-
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+          {/* Radio buttons for Role */}
+          <div className="flex gap-4">
+            <div className={`cursor-pointer flex-1 px-4 py-4 border rounded-md text-center ${
+              watch("role") === "driver"
+                ? "bg-gray-800 text-gray-200 border-green-600"
+                : "bg-gray-900 text-gray-400 border-gray-700"
+            }`}
+            onClick={() => setValue("role", "driver")}
+            >
+              <input
+                type="radio"
+                id="driver"
+                value={"driver"}
+                {...register('role', { required: 'Please select a role (sign up as a driver or a passanger)'})}
+                className="hidden"
+              />
+                <div className="flex flex-col items-center justify-center">
+                  <CarFront size={32}  className="text-gray-500"/>
+                  <label htmlFor="driver" className="cursor-pointer text-gray-300 mt-1 text-sm font-semibold">
+                    Sign up as a driver
+                  </label>
+                </div>
+            </div>
+            <div 
+              className={`cursor-pointer flex-1 px-4 py-4 border rounded-md text-center ${
+                watch('role') === 'rider'
+                ? "bg-gray-800 text-gray-200 border-green-600"
+                : "bg-gray-900 text-gray-400 border-gray-700"
+              }`}
+              onClick={() => setValue('role', "rider")}
+            >
+              <input
+                type="radio"
+                id="rider"
+                value={'rider'}
+                {...register('role', { required: 'Please select a role (sign up as a driver or a passanger)'})}
+                className="hidden"
+              />
+              <div className="flex flex-col items-center justify-center">
+                <Users size={32}  className="text-gray-500"/>
+                <label htmlFor="rider" className="cursor-pointer text-gray-300 mt-1 text-sm font-semibold">
+                  Sign up as a passanger
+                </label>
+              </div>
+            </div>
+          </div>
+          {errors.role?.message && (
+            <p className="text-sm text-red-500 -translate-y-3">{String(errors.role.message)}</p>
+          )}
+
           <div>
             <input
               className="w-full px-3 py-2 border border-gray-700 rounded-md bg-gray-900 text-white focus:outline-none focus:border-green-500"

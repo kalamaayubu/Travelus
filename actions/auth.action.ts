@@ -3,7 +3,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { LoginFormData, SignupFormData } from "@/types";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 
 // Signup action for user registration
 export async function signup(data: SignupFormData) {
@@ -17,7 +16,8 @@ export async function signup(data: SignupFormData) {
       password: data.password,
       options: {
         data: {
-            name: data.name
+            name: data.name,
+            role: data.role
         }
       }
     });
@@ -34,7 +34,7 @@ export async function signup(data: SignupFormData) {
     return {
       success: true,
       user: signupData.user,
-      message: "Signup successful. Check your email for verification.",
+      message: "Successful. Check your email for verification.",
     };
   } catch (err) {
     console.error("Server Action Error:", err);

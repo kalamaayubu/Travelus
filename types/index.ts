@@ -1,6 +1,7 @@
 import React, { ReactNode } from "react";
 
 export type SignupFormData = {
+  role: string;
   name: string;
   email: string;
   password: string;

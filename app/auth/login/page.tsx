@@ -33,7 +33,7 @@ export default function LoginPage() {
   return (
     <>
         <p className="text-center text-gray-400 mb-8">Enter your credentials to log in.</p>
-        <button className="w-full mt-4 bg-gray-800 text-white py-[10px] text-md font-semibold flex items-center justify-center gap-4 hover:bg-gray-700">
+        {/* <button className="w-full mt-4 bg-gray-800 text-white py-[10px] text-md font-semibold flex items-center justify-center gap-4 hover:bg-gray-700">
           <Image src="/assets/googleLogo.png" alt="Google logo" width={24} height={24} />
           Continue with Google
         </button>
@@ -41,12 +41,12 @@ export default function LoginPage() {
           <div className='h-[1px] w-full bg-gray-700'/>
           <span>or</span>
           <div className='h-[1px] w-full bg-gray-700'/>
-        </div>
+        </div> */}
 
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
           {/* Email */}
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-400">Email</label>
+            <label htmlFor="email" className="block text-sm font-medium mb-1 text-gray-400">Email</label>
             <input
               type="email"
               id="email"
@@ -59,7 +59,7 @@ export default function LoginPage() {
 
           {/* Password */}
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-400">Password</label>
+            <label htmlFor="password" className="block text-sm mb-1 font-medium text-gray-400">Password</label>
             <input
               type="password"
               id="password"

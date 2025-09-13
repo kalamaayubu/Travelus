@@ -1,0 +1,51 @@
+1️⃣ 🚀 MVP (Release Now) — Core Flow
+
+These are the bare essentials that make Travelus usable and valuable.
+
+-User Authentication & Roles (✅ done)
+-Drivers, Passengers, Admin.
+-Ride Creation (✅ done)
+-Driver sets origin, destination, date, seats, price.
+-Seat Booking Flow (✅ done)
+-Passenger books seat(s).(⚠️ Daraja Dependent)
+-Dashboard (✅ done)
+-Driver sees earnings, rides, bookings summary(✅ Almost done).
+-Payment Integration (Daraja Paybill)(⚠️ Daraja itself)
+-Passenger pays when booking.(⚠️ Daraja Dependent)
+-Driver sees pending/confirmed payments.(⚠️ Daraja Dependent)
+
+_______________________________________________________________________
+
+
+2️⃣ v1.5 (Shortly After MVP)
+
+These make the platform more trustworthy + engaging but aren’t blockers.
+
+Notifications: 
+-Ride updates, booking confirmations (Push/Email/SMS).
+
+Profile Enhancements: 
+-Vehicle details (plate, model).
+
+Ratings & Reviews ⭐: 
+-After ride, passengers rate driver, drivers rate passengers.
+
+Ride Management: 
+-Driver cancels, edits ride.
+-Passenger cancels booking.
+
+_______________________________________________________________________
+
+
+3️⃣ Future (v2+) — Scale & Trust
+These are for when you have traction & real demand.
+
+ID Verification / KYC 🪪
+-Verify drivers via government ID/NTSA license.
+
+Advanced Payments 💳
+-Wallet system.
+
+Geolocation / Live Tracking 🗺️
+-Real-time driver location.
+-Pickup points tracking.
