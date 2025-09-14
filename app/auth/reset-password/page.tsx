@@ -1,32 +1,51 @@
 'use client';
 
-import Logo from '@/components/Logo';
-import Link from 'next/link';
+import { resetPassword } from '@/actions/auth.action';
+import AlertDialog from '@/components/reusable/AlertDialog';
+import { Check, Loader2, X } from 'lucide-react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+
+type ResetPasswordFormData = {
+  password: string;
+  confirm: string;
+};
 
 export default function ResetPasswordPage() {
-  const [password, setPassword] = useState('');
-  const [confirm, setConfirm] = useState('');
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+  const { 
+    register, 
+    handleSubmit, 
+    watch,
+    reset,
+    formState: { errors, isSubmitting } 
+  } = useForm<ResetPasswordFormData>();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setError('');
-    setSuccess('');
+  const [openResetSuccessDialog, setOpenResetSuccessDialog] = useState(false);
+  const [openResetErrorDialog, setOpenResetErrorDialog] = useState(false)
+  const params = useSearchParams()
+  const router = useRouter();
 
-    if (!password || !confirm) {
-      setError('Please fill in both password fields.');
+   // Watch password field for confirm validation
+  const passwordValue = watch("password");
+
+  const onSubmit = async (data: ResetPasswordFormData) => {
+    const code = params.get('code') || '';
+    if (!code) {
+      alert("Invalid or missing reset code.");
       return;
     }
-    if (password !== confirm) {
-      setError('Passwords do not match.');
+    const res = await resetPassword(data.password);
+
+    if(!res.success) {
+      setOpenResetErrorDialog(true)
+      reset()
       return;
     }
 
-    // Handle password reset logic here
-    console.log('New password set:', password);
-    setSuccess('Your password has been successfully reset.');
+    // Show success dialog and the redirect button
+    setOpenResetSuccessDialog(true);
+    return;
   };
 
   return (
@@ -35,43 +54,82 @@ export default function ResetPasswordPage() {
         Enter and confirm your new password.
       </p>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+      <form 
+        onSubmit={handleSubmit(onSubmit)} 
+        noValidate 
+        className="flex flex-col gap-4"
+      >
+        {/* Password field */}
         <div>
-          <label htmlFor="password" className="block text-sm font-medium text-gray-400">New Password</label>
+          <label htmlFor="password" className="block text-sm font-medium text-gray-400">
+            New Password
+          </label>
           <input
             type="password"
             id="password"
-            value={password}
             placeholder="********"
-            onChange={(e) => setPassword(e.target.value)}
-            className="mt-1"
-            required
+            className="mt-1 block w-full p-2 border border-gray-600 rounded-md shadow-sm text-white focus:outline-none focus:ring-green-500 focus:border-green-500"
+            {...register("password", {
+              required: "Password is required",
+              minLength: { value: 6, message: "Password must be at least 6 characters" },
+            })}
           />
+          {errors.password && (
+            <p className="text-red-500 text-sm">{errors.password.message}</p>
+          )}
         </div>
 
+        {/* Confirm password field */}
         <div>
-          <label htmlFor="confirm" className="block text-sm font-medium text-gray-400">Confirm Password</label>
+          <label htmlFor="confirm" className="block text-sm font-medium text-gray-400">
+            Confirm Password
+          </label>
           <input
             type="password"
             id="confirm"
-            value={confirm}
             placeholder="********"
-            onChange={(e) => setConfirm(e.target.value)}
-            className='mt-1'
-            required
+            className="mt-1 block w-full p-2 border border-gray-600 rounded-md shadow-sm text-white focus:outline-none focus:ring-green-500 focus:border-green-500"
+            {...register("confirm", {
+              required: "Please confirm your password",
+              validate: (value) =>
+                value === passwordValue || "Passwords do not match",
+            })}
           />
+          {errors.confirm && (
+            <p className="text-red-500 text-sm">{errors.confirm.message}</p>
+          )}
         </div>
-
-        {error && <p className="text-red-500 text-sm">{error}</p>}
-        {success && <p className="text-green-500 text-sm">{success}</p>}
 
         <button
           type="submit"
-          className="w-full bg-green-500 text-white p-2 rounded-md font-semibold hover:bg-green-600 transition duration-300 mt-4"
+          disabled={isSubmitting}
+          className="w-full bg-green-500 text-white p-2 rounded-md font-semibold hover:bg-green-600 transition duration-300 mt-4 disabled:opacity-50"
         >
-          Reset Password
+          {isSubmitting ? <span className='flex items-center justify-center gap-2'><Loader2 className='w-4 h-4 animate-spin'/>Resetting...</span> : "Reset Password"}
         </button>
       </form>
+
+      {/* Password reset successful dialog */}
+      <AlertDialog
+        open={openResetSuccessDialog}
+        onOpenChange={setOpenResetSuccessDialog}
+        title="Password Reset Successful"
+        icon={<Check className='w-5 h-5 text-green-600'/>}
+        description="Your password has been updated successfully. You can now log in with your new password."
+        actionLabel="Go to Login"
+        onAction={() => router.push('/auth/login')}
+      />
+
+      {/* Password reset error dialog */}
+      <AlertDialog
+        open={openResetErrorDialog}
+        onOpenChange={setOpenResetErrorDialog}
+        title={`Couldn't Reset`}
+        icon={<X className='w-6 h-6 text-red-500'/>}
+        description="An error occured while reseting your password. Please try again later."
+        actionLabel="Okay"
+        onAction={() => setOpenResetErrorDialog(false)}
+      />
     </>
   );
 }

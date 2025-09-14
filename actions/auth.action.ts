@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import supabaseAdmin from "@/lib/supabase/supabaseAdmin";
 import { LoginFormData, SignupFormData } from "@/types";
 import { cookies } from "next/headers";
 
@@ -127,7 +128,6 @@ export async function login(formData: LoginFormData) {
 export async function logout() {
   const supabase = await createClient();
 
-  
   // Clear manual cookies
   const cookieStore = await cookies();
   cookieStore.delete("authState");
@@ -148,4 +148,61 @@ export async function getSession() {
   const supabase = await createClient();
   const { data: { session } } = await supabase.auth.getSession();
   return session;
+}
+
+
+// Forgot password action to send reset email
+export async function forgotPassword(email: string) {
+  const supabase = await createClient();
+
+  // Get the base URL dynamically for appropriate redirection
+  const baseUrl = process.env.NODE_ENV === 'production'
+      ? 'https://travelusapp.netlify.app'
+      : 'http://localhost:3000';
+
+  const { error: sendEmailError  } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: `${baseUrl}/auth/reset-password`
+  })
+
+  if (sendEmailError) {
+    console.error("Error sending reset email:", sendEmailError.message);
+    return { success: false, error: sendEmailError.message };
+  }
+
+  console.log("Password reset email sent to:", email);
+  return { success: true, message: "If your email is registered, you’ll receive a password reset link shortly." };
+}
+
+
+// Reset password action to update the password
+export async function resetPassword(newPassword: string ) {
+  const supabase = await createClient();
+  
+  // Optional: Log current session to verify auth status
+  const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+
+  if (sessionError || !sessionData.session) {
+    return {
+      success: false,
+      error: 'No active session found. Please use the reset link from your email again.',
+    };
+  }
+
+  // Update the password for the current user
+  const { error: updateError } = await supabase.auth.updateUser({
+    password: newPassword,
+  });
+
+  if (updateError) {
+    console.error('Error updating password:', updateError.message);
+    return {
+      success: false,
+      error: updateError.message,
+    };
+  }
+
+  return {
+    success: true,
+    message: 'Password updated successfully. You can now log in with your new password.',
+  };
 }
