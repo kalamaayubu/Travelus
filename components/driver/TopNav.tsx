@@ -9,18 +9,18 @@ export default function TopNav() {
 
   return (
     <header
-      className="h-16 md:flex items-center justify-between py-3 pb-0"
+      className="h-16 md:flex text-gray-200 items-center justify-between py-3 pb-0"
     >
         {/* Left section */}
         <div className="items-center gap-6 hidden md:flex">
             <p className=" text-gray font-bold text-2xl rounded-md whitespace-nowrap">
-              {pathname === "/driver" && <span>Dashboard<span className="text-green-500">.</span></span>}
-              {pathname === "/driver/rides" && <span>My Rides<span className="text-green-500">.</span></span>}
-              {pathname === "/driver/bookings" && <span>Bookings<span className="text-green-500">.</span></span>}
-              {pathname === "/driver/payments" && <span>Payments<span className="text-green-500">.</span></span>}
-              {pathname === "/driver/settings" && <span>Settings<span className="text-green-500">.</span></span>}
+              {pathname === "/driver" && <span>Dashboard<span className="text-green-500 text-xl">.</span></span>}
+              {pathname === "/driver/rides" && <span>My Rides<span className="text-green-500 text-xl">.</span></span>}
+              {pathname === "/driver/bookings" && <span>Bookings<span className="text-green-500 text-xl">.</span></span>}
+              {pathname === "/driver/payments" && <span>Payments<span className="text-green-500 text-xl">.</span></span>}
+              {pathname === "/driver/settings" && <span>Settings<span className="text-green-500 text-xl">.</span></span>}
               {pathname.includes("/driver/rides/") && pathname.includes("/edit") && (
-                <span>Update Ride<span className="text-green-500">.</span></span>
+                <span>Update Ride<span className="text-green-500 text-xl">.</span></span>
               )}
             </p>
         </div>
@@ -39,13 +39,13 @@ export default function TopNav() {
 
       {/* Header for small screens */}
       <p className="text-2xl py-2 pb-0 md:hidden text-center font-bold">
-        {pathname === "/driver" && <span>Dashboard<span className="text-green-500">.</span></span>}
-        {pathname === "/driver/rides" && <span>My Rides<span className="text-green-500">.</span></span>}
-        {pathname === "/driver/bookings" && <span>Bookings<span className="text-green-500">.</span></span>}
-        {pathname === "/driver/payments" && <span>Payments<span className="text-green-500">.</span></span>}
-        {pathname === "/driver/settings" && <span>Settings<span className="text-green-500">.</span></span>}
+        {pathname === "/driver" && <span>Dashboard<span className="text-green-500 text-xl">.</span></span>}
+        {pathname === "/driver/rides" && <span>My Rides<span className="text-green-500 text-xl">.</span></span>}
+        {pathname === "/driver/bookings" && <span>Bookings<span className="text-green-500 text-xl">.</span></span>}
+        {pathname === "/driver/payments" && <span>Payments<span className="text-green-500 text-xl">.</span></span>}
+        {pathname === "/driver/settings" && <span>Settings<span className="text-green-500 text-xl">.</span></span>}
         {pathname.includes("/driver/rides/") && pathname.includes("/edit") && (
-          <span>Update Ride<span className="text-green-500">.</span></span>
+          <span>Update Ride<span className="text-green-500 text-xl">.</span></span>
         )}      
       </p>
     </header>

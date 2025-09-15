@@ -6,7 +6,6 @@ import { Loader2 } from 'lucide-react';
 import { login } from '@/actions/auth.action'; // same style as signup
 import { LoginFormData } from '@/types';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
 import { toast } from 'sonner';
 import { useDispatch } from 'react-redux';
 import { setUser } from '@/redux/slices/authSlice';
@@ -33,16 +32,6 @@ export default function LoginPage() {
   return (
     <>
         <p className="text-center text-gray-400 mb-8">Enter your credentials to log in.</p>
-        {/* <button className="w-full mt-4 bg-gray-800 text-white py-[10px] text-md font-semibold flex items-center justify-center gap-4 hover:bg-gray-700">
-          <Image src="/assets/googleLogo.png" alt="Google logo" width={24} height={24} />
-          Continue with Google
-        </button>
-        <div className='flex items-center gap-4 mt-2 mb-4'>
-          <div className='h-[1px] w-full bg-gray-700'/>
-          <span>or</span>
-          <div className='h-[1px] w-full bg-gray-700'/>
-        </div> */}
-
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
           {/* Email */}
           <div>

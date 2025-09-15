@@ -43,9 +43,7 @@ const RideDetailsPage = () => {
   const [isInitializingPush, setIsInitializingPush] = useState(false);
 
   const { rideId } = useParams<{ rideId: string }>();
-  const isAuthenticated = useSelector(
-    (state: RootState) => state.auth.isAuthenticated
-  );
+  const { isAuthenticated, user: { user_metadata: { role} }} = useSelector((state: RootState) => state.auth);
 
   const supabase = createClient()
   const router = useRouter()
@@ -54,12 +52,11 @@ const RideDetailsPage = () => {
   useEffect(() => {
     const fetchRideDetails = async () => {
       const res = await getRideDetails(rideId);
-      console.log("TRIPDETAILS:", res);
       setRide(res);
       setLoading(false);
     };
 
-    window.scrollTo(0, 0); // Scroll to top of the page even if the data is not ready
+    window.scrollTo(0, 0); // Scroll to top of the page even if the ride details are not ready
     fetchRideDetails();
   }, [rideId]);
 
@@ -146,6 +143,11 @@ const RideDetailsPage = () => {
       setIsProceeding(false);
       setShowLoginDialog(true);
       return;
+    }
+
+    // Ensure user is logged in as a passanger(with a passanger account)
+    if (role !== 'rider') {
+      setShowLoginAsPassangerDialog(true)
     }
 
     setIsProceeding(false);

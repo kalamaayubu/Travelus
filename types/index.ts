@@ -147,3 +147,20 @@ export interface BookingInfoProps {
 }
 
 export type SeatStatus = "AVAILABLE" | "SELECTED" | "RESERVED" | "BOOKED" | "BLOCKED";
+
+
+export type DropdownItem = {
+  label: string;
+  onClick?: () => void;
+  separator?: boolean;
+  icon?: ReactNode;
+  className?: string;
+};
+
+export interface ReusableDropdownProps {
+  triggerText?: string;
+  trigger?: ReactNode; // Custom trigger node
+  label?: string;
+  items: DropdownItem[];
+  contentClassName?: string; // For styling
+}

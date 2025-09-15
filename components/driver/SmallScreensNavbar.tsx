@@ -1,6 +1,7 @@
 "use client"
 
 import { logout } from "@/actions/auth.action"
+import { clearUser } from "@/redux/slices/authSlice"
 import {
   Bell,
   Car,
@@ -14,6 +15,7 @@ import {
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { useState } from "react"
+import { useDispatch } from "react-redux"
 
 type NavLinkProps = {
   href: string
@@ -44,6 +46,7 @@ const SmallScreensNavbar = () => {
   const [openMore, setOpenMore] = useState(false)
   const router = useRouter()
   const pathname = usePathname()
+  const dispatch = useDispatch()
 
   return (
     <>
@@ -116,6 +119,8 @@ const SmallScreensNavbar = () => {
           </div>
           <div
             onClick={() => {
+              // Clear auth from store and redirect
+              dispatch(clearUser())
               logout()
               setOpenMore(false)
               router.push("/auth/login")

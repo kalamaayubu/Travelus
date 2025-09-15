@@ -86,7 +86,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="dark scroll-smooth">
-      <body className={`antialiased bg-gray-950 text-gray-400 scroll-smooth`}>
+      <body className={`antialiased bg-gray-950 text-gray-300 scroll-smooth`}>
         <ReduxProvider>
           <NavBar />
           {children}

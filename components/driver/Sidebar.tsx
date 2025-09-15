@@ -11,17 +11,25 @@ import {
   LayoutDashboard,
   User,
   MoreHorizontal,
+  Settings,
 } from "lucide-react"
 import { usePathname, useRouter } from "next/navigation"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
 import { logout } from "@/actions/auth.action"
+import { clearUser } from "@/redux/slices/authSlice"
+import { useDispatch, useSelector } from "react-redux"
+import { RootState } from "@/redux/store"
+import { DropdownItem } from "@/types"
+import ReusableDropdown from "../reusable/ReusableDropdown"
 
 const Sidebar = () => {
-  const pathname = usePathname()
-  const [openProfileDropdown, setOpenProfileDropdown] = useState(false)
+  const userName = useSelector((state: RootState) => state.auth.user?.user_metadata?.name)
   const [openSidebar, setOpenSidebar] = useState(true)
+  const pathname = usePathname()
   const router = useRouter()
+  const dispatch = useDispatch()
+
 
   const navItems = [
     { label: "Dashboard", href: "/driver", icon: LayoutDashboard },
@@ -29,6 +37,28 @@ const Sidebar = () => {
     { label: "Bookings", href: "/driver/bookings", icon: Users },
     { label: "Payments", href: "/driver/payments", icon: CreditCard },
   ]
+
+  // Menu footer items
+  const footerItems: DropdownItem[] = [
+    {
+      label: "Profile",
+      icon: <User className="w-[15px]" />,
+    },
+    {
+      label: 'Settings',
+      icon: <Settings className="w-[15px]"/>,
+    },
+    {
+      label: "Logout",
+      icon: <LogOut className="w-[15px]" />,
+      onClick: () => {
+        dispatch(clearUser());
+        logout();
+        router.push("/auth/login");
+      },
+       className: "hover:bg-red-600 hover:text-white",
+    },
+  ];
 
   return (
     <motion.aside
@@ -97,14 +127,13 @@ const Sidebar = () => {
         </Link>
       ))}
 
-      {/* Footer nav items */}
-      <div className="absolute bottom-4 left-0 right-0 px-2">
-        <div className="relative cursor-pointer text-gray-300 hover:text-gray-200 transition-colors py-2 px-2 hover:bg-white/10 rounded-md">
-          <div
-            onClick={() => setOpenProfileDropdown(!openProfileDropdown)}
-            className="flex items-center justify-between gap-2"
-          >
-            <User className="w-6 h-6 rounded-full border border-gray-700 p-1 flex-shrink-0" />
+      {/* Dropdown for more operations(options) */}
+      <ReusableDropdown
+        items={footerItems}
+        contentClassName="absolute bottom-0 mb-2 w-48 hidden md:flex flex-col" // full control
+        trigger={
+          <div className="flex mx-4 bg-gray-50/5 absolute bottom-4 left-0 right-0 px-3 items-center justify-between gap-2 cursor-pointer py-2 hover:bg-white/10 rounded-md text-gray-300 hover:text-gray-200 transition-colors">
+            <User className="w-7 h-7 rounded-full border border-gray-700 p-1 flex-shrink-0" />
             <AnimatePresence>
               {openSidebar && (
                 <motion.span
@@ -114,43 +143,14 @@ const Sidebar = () => {
                   transition={{ duration: 0.2 }}
                   className="flex-1"
                 >
-                  Driver
+                  { userName }
                 </motion.span>
               )}
             </AnimatePresence>
             {openSidebar && <MoreHorizontal className="w-4 h-4" />}
           </div>
-
-          <AnimatePresence>
-            {openProfileDropdown && openSidebar && (
-              <motion.div
-                initial={{ opacity: 0, y: -8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.2 }}
-                className="absolute z-50 left-full bottom-0 ml-2 overflow-hidden bg-gray-900 border border-gray-800 rounded-md"
-              >
-                <div
-                  className="w-full flex items-center gap-3 text-left px-6 py-2 cursor-pointer text-sm text-gray-300 hover:bg-white/5 hover:text-white"
-                  onClick={() => setOpenProfileDropdown(false)}
-                >
-                  <User className="w-[15px]" /> Profile
-                </div>
-                <div
-                  className="w-full flex items-center gap-3 text-left px-6 py-2 cursor-pointer text-sm text-gray-300 hover:bg-red-600 hover:opacity-80 transition-all duration-300 hover:text-white"
-                  onClick={() => {
-                    logout()
-                    router.push("/auth/login")
-                    setOpenProfileDropdown(false)
-                  }}
-                >
-                  <LogOut className="w-[15px]" /> <span>Logout</span>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-      </div>
+        }
+      />
     </motion.aside>
   )
 }

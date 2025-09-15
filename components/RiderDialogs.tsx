@@ -88,6 +88,7 @@ const RiderDialogs = ({
         title="Login Required"
         description="Please log in to continue with your booking."
         icon={<X className="w-8 h-8 text-red-500"/>}
+        actionLabel='Okay'
         onAction={() => {
           window.location.href = "/auth/login";
         }}
@@ -155,7 +156,7 @@ const RiderDialogs = ({
         open={showLoginAsPassangerDialog}
         onOpenChange={setShowLoginAsPassangerDialog}
         title="Could not proceed"
-        description="You are not logged in as a passenger. Please log in with a passenger account to continue."
+        description="You are not logged in as a passenger. Please log in with a passenger account to continue booking."
         icon={<X className="w-8 h-8 text-red-500"/>}
         onAction={() => {
           router.push("/auth/login")

@@ -23,7 +23,7 @@ const AddRideButton = () => {
         setVehicleTypes(res)
 
         if (!res || res.length === 0) {
-            toast.error('Could not add ride, please try again')
+            toast.error('Could not create a ride, please try again')
             return;
         }
 
@@ -40,7 +40,7 @@ const AddRideButton = () => {
         console.log('VEHICLE TYPES:', normalized)
     } catch (error) {
         console.log('Could not add a ride:', error)
-        toast.error('Could not add a ride')
+        toast.error('Could not create a ride')
     } finally {
         setIsLoading(false)
     }
@@ -53,7 +53,7 @@ const AddRideButton = () => {
         disabled={isLoading}
     >
         {isLoading
-            ? (<span className="flex items-center gap-4"><Loader2 className="animate-spin w-5"/> <span>Just a moment</span></span>)
+            ? (<span className="flex items-center gap-2"><Loader2 className="animate-spin w-5"/> <span>Just a moment</span></span>)
             : <span className="flex items-center gap-2"><Plus className="w-4"/>Create a ride</span>
         }
     </button>
