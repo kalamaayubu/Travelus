@@ -14,7 +14,7 @@ export default function DashboardCard({
   gradient: string
 }) {
   return (
-    <Card className={`p-6 rounded-lg border-0 bg-gradient-to-br ${gradient}`}>
+    <Card className={`p-6 rounded-lg border-0 bg-gradient-to-tr ${gradient}`}>
       <CardContent className="flex flex-col gap-3">
         <div className="flex items-center justify-between">
           <span className="text-sm font-medium text-gray-600 dark:text-gray-300">

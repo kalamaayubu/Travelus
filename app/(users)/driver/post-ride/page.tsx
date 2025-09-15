@@ -116,7 +116,8 @@ export default function PostRidePage() {
             <p className="text-red-500 text-sm -translate-y-2">{errors.departureTime.message}</p>
           )}
 
-          <div className="flex justify-end mt-4">
+          <div className='flex flex-col gap-2 sm:flex-row sm:justify-end mt-4'>
+            <Button onClick={router.back} className='secondary-btn'>Cancel</Button>
             <Button onClick={nextStep} className='primary-btn' disabled={!isValid}>Proceed</Button>
           </div>
         </ReusableDialog>

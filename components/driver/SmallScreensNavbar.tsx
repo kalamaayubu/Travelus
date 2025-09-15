@@ -50,7 +50,7 @@ const SmallScreensNavbar = () => {
 
   return (
     <>
-      <div className="md:hidden fixed pt-1 pb-1 border-t border-zinc-700/60 bottom-0 left-0 right-0 dark:bg-zinc-800/50 backdrop-blur-sm flex justify-around items-center z-20">
+      <div className="md:hidden fixed py-1 border-t border-zinc-700/50 bottom-0 left-0 right-0 dark:bg-zinc-800/70 backdrop-blur-sm flex justify-around items-center z-20">
         {/* Home */}
         <NavLink 
             href="/driver" 
@@ -95,8 +95,8 @@ const SmallScreensNavbar = () => {
         {/* Notifications */}
         <div className="relative flex flex-col group gap-[2px] cursor-pointer items-center text-xs text-gray-400 hover:text-gray-200">
           <Bell className="w-4 h-4" />
-          Notifications
-          <div className="bg-green-500 group-hover:bg-green-400 w-2 h-2 right-6 rounded-full absolute" />
+          Alerts
+          <div className="bg-green-500 flex items-center justify-center group-hover:bg-green-400 w-2 h-2 left-4 rounded-full absolute" ></div>
         </div>
 
         {/* More */}
