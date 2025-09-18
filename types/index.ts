@@ -164,3 +164,10 @@ export interface ReusableDropdownProps {
   items: DropdownItem[];
   contentClassName?: string; // For styling
 }
+
+export type RideFilterForm = {
+  search: string;
+  vehicle: string;
+  maxPrice: string;
+  date: string;
+};

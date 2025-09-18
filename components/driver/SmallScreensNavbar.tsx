@@ -2,6 +2,8 @@
 
 import { logout } from "@/actions/auth.action"
 import { clearUser } from "@/redux/slices/authSlice"
+import { AppDispatch } from "@/redux/store"
+import { handleAddRide } from "@/utils/handleAddRide"
 import {
   Bell,
   Car,
@@ -14,8 +16,9 @@ import {
 } from "lucide-react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
+import { toast } from "sonner"
 
 type NavLinkProps = {
   href: string
@@ -44,9 +47,30 @@ const NavLink = ({ href, icon, label }: NavLinkProps) => {
 
 const SmallScreensNavbar = () => {
   const [openMore, setOpenMore] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+
   const router = useRouter()
   const pathname = usePathname()
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>()
+
+  // Reset loading state after navigation complets
+  useEffect(() => {
+    if (isLoading) {
+      setIsLoading(false)
+    }
+  }, [pathname])
+
+  // Function to handle post ride
+  const onAddRide = async () => {
+    setIsLoading(true)
+    const result = await handleAddRide(dispatch, router)
+
+    if (!result.success) {
+      console.error(result.error)
+      toast.error(result.error)
+    }
+  }
+
 
   return (
     <>
@@ -66,8 +90,8 @@ const SmallScreensNavbar = () => {
         />
 
         {/* Post Ride (special styling) */}
-        <Link
-          href="/driver/post-ride"
+        <div
+          onClick={onAddRide}
           className={`relative flex flex-col items-center text-xs gap-[2px] cursor-pointer transition-all duration-300 ${
             pathname === "/driver/post-ride"
               ? "text-green-500 font-medium"
@@ -90,7 +114,7 @@ const SmallScreensNavbar = () => {
             />
           </div>
           Post Ride
-        </Link>
+        </div>
 
         {/* Notifications */}
         <div className="relative flex flex-col group gap-[2px] cursor-pointer items-center text-xs text-gray-400 hover:text-gray-200">
@@ -129,6 +153,13 @@ const SmallScreensNavbar = () => {
           >
             <LogOut className="w-[15px]" /> <span>Logout</span>
           </div>
+        </div>
+      )}
+
+      {/* ✅ Global loading overlay */}
+      {isLoading && (
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-[100]">
+          <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-green-500"></div>
         </div>
       )}
     </>

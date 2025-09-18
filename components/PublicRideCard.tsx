@@ -16,9 +16,9 @@ export default function PublicRideCard({
 }: PublicRideCardProps) {
 
   return (
-    <Card className="w-full group max-w-md mx-auto bg-gradient-to-br from-gray-950 to-gray-900 text-gray-100 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+    <Card className="w-full group max-w-md mx-auto bg-gradient-to-br from-gray-800 to-gray-900 text-gray-100 rounded-lg">
       <CardHeader className="pb-2">
-        <CardTitle className="text-xl font-bold text-center flex items-center justify-center gap-2">
+        <CardTitle className="text-xl text-gray-50 font-semibold text-center flex items-center justify-center gap-2">
           <MapPin className="w-5 h-5 text-purple-400" />
           {departure}
           <span className="text-gray-400">→</span>

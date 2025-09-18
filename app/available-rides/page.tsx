@@ -1,4 +1,3 @@
-// app/available-rides/page.tsx
 import { getPublicRides } from "@/actions/rider.action";
 import AvailableRidesList from "@/components/AvailableRidesList";
 import dayjs from "dayjs";
@@ -23,7 +22,7 @@ export default async function AvailableRidesPage() {
   console.log("Formatted rides:", formattedRides);
 
   return (
-    <div className="flex flex-col">
+    <div className="relative flex flex-col min-h-screen">
       {/* Scroll to the top on page mount */}
       <ScrollToTopOnMount/>
       <AvailableRidesList rides={formattedRides} />
