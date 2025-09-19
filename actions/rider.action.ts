@@ -150,21 +150,21 @@ export async function reserveSeats(data: BookingInfoProps) {
         console.log('Error recording phone number:', error.message)
 
         // 🛑 Catch the specific constraint violation
-        if (error.message.includes(
-            'insert or update on table "bookings" violates foreign key constraint "bookings_rider_fkey'
-        )) {
-            return {
-                success: false,
-                error:
-                "You are not logged in as a passenger. Log in with a passenger account to continue.",
-            };
-        }
+        // if (error.message.includes(
+        //     'insert or update on table "bookings" violates foreign key constraint "bookings_rider_fkey'
+        // )) {
+        //     return {
+        //         success: false,
+        //         error:
+        //         "You are not logged in as a passenger. Log in with a passenger account to continue.",
+        //     };
+        // }
 
         return { success: false, error: error.message }
     }
 
     // ✅ Revalidate paths affected by this booking
-    revalidatePath('/');                        // available rides list
+    revalidatePath('/available-rides');                        // available rides list
     revalidatePath(`/rides/${data.rideId}`);    // ride details page (dynamic)
 
     return { success: true, message: 'Phone number recorder successfully.'}

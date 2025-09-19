@@ -43,21 +43,25 @@ const RideDetailsPage = () => {
   const [isInitializingPush, setIsInitializingPush] = useState(false);
 
   const { rideId } = useParams<{ rideId: string }>();
-  const { isAuthenticated, user: { user_metadata: { role} }} = useSelector((state: RootState) => state.auth);
+  const { isAuthenticated, user } = useSelector((state: RootState) => state.auth);
+  const role = user?.user_metadata?.role
 
   const supabase = createClient()
   const router = useRouter()
 
+
+  // Helper function to fetch ride details
+  const fetchRideDetails = async () => {
+    const res = await getRideDetails(rideId);
+    setRide(res);
+    setLoading(false);
+  }
+
+
   // Fetch ride details
   useEffect(() => {
-    const fetchRideDetails = async () => {
-      const res = await getRideDetails(rideId);
-      setRide(res);
-      setLoading(false);
-    };
-
+    fetchRideDetails()
     window.scrollTo(0, 0); // Scroll to top of the page even if the ride details are not ready
-    fetchRideDetails();
   }, [rideId]);
 
   // 🔥 Real-time subscription for seats status updates
@@ -66,7 +70,7 @@ const RideDetailsPage = () => {
 
     // Subscribe to changes on bookings table for this rideId
     const channel = supabase
-      .channel(`bookings-realtime-${rideId}`) // scoped channel
+      .channel(`bookings-realtime-${rideId}`) // scoped channel (for the current ride id only)
       .on(
         'postgres_changes',
         { 
@@ -77,8 +81,7 @@ const RideDetailsPage = () => {
         },
         (payload) => {
           console.log("Realtime payload:", payload);
-          toast.info("Seats updated, refreshing...");
-          window.location.reload(); // refresh ride + seats
+          fetchRideDetails(); // Refetch the ride details when changes occur
         }
       )
       .subscribe();
@@ -148,6 +151,7 @@ const RideDetailsPage = () => {
     // Ensure user is logged in as a passanger(with a passanger account)
     if (role !== 'rider') {
       setShowLoginAsPassangerDialog(true)
+      return
     }
 
     setIsProceeding(false);

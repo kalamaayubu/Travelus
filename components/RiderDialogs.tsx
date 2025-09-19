@@ -65,7 +65,7 @@ const RiderDialogs = ({
 
     const res = await reserveSeats(bookingInfoPayload);
     if (!res.success) {
-      setShowLoginAsPassangerDialog(true)
+      toast.error(res.error, { duration: 5000})
       return;
     }
 
@@ -158,10 +158,17 @@ const RiderDialogs = ({
         title="Could not proceed"
         description="You are not logged in as a passenger. Please log in with a passenger account to continue booking."
         icon={<X className="w-8 h-8 text-red-500"/>}
-        onAction={() => {
-          router.push("/auth/login")
-        }}
-        actionLabel="Login as a passenger"
+        actions={[
+          {
+            label: 'Cancel',
+            onClick: () => setShowLoginAsPassangerDialog(false),
+            variant: 'secondary'
+          },
+          {
+            label: 'Login',
+            onClick: () => router.push('/auth/login')
+          }
+        ]}
       >
 
       </AlertDialog>
