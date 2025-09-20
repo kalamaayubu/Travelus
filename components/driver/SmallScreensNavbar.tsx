@@ -19,6 +19,7 @@ import { usePathname, useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { toast } from "sonner"
+import MoreDropdown from "./MoreDropDown"
 
 type NavLinkProps = {
   href: string
@@ -124,37 +125,8 @@ const SmallScreensNavbar = () => {
         </div>
 
         {/* More */}
-        <div
-          onClick={() => setOpenMore(!openMore)}
-          className="flex flex-col gap-[2px] cursor-pointer items-center text-xs text-gray-400 hover:text-gray-200"
-        >
-          <MoreVertical className="w-4 h-4" />
-          More
-        </div>
+        <MoreDropdown dispatch={dispatch}/>
       </div>
-
-      {openMore && (
-        <div className="md:hidden overflow-hidden min-w-1/2 fixed bottom-[50px] right-2 max-w-52 bg-gray-800/90 backdrop-blur-sm flex flex-col justify-center items-center text-center rounded-lg z-50 border border-white/10">
-          <div className="w-full flex items-center gap-3 text-left py-2 px-6 cursor-pointer text-sm text-gray-300 hover:bg-gray-50/5 hover:text-white transition-all duration-300">
-            <User className="w-[15px]" /> <span>Profile</span>
-          </div>
-          <div className="w-full flex items-center gap-3 text-left py-2 px-6 cursor-pointer text-sm text-gray-300 hover:bg-gray-50/5 hover:text-white transition-all duration-300">
-            <Settings className="w-[15px]" /> <span>Settings</span>
-          </div>
-          <div
-            onClick={() => {
-              // Clear auth from store and redirect
-              dispatch(clearUser())
-              logout()
-              setOpenMore(false)
-              router.push("/auth/login")
-            }}
-            className="w-full hover:bg-red-500/80 flex items-center gap-3 text-left py-2 px-6 cursor-pointer text-sm text-gray-300 hover:text-white transition-all duration-300"
-          >
-            <LogOut className="w-[15px]" /> <span>Logout</span>
-          </div>
-        </div>
-      )}
 
       {/* ✅ Global loading overlay */}
       {isLoading && (

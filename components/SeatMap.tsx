@@ -69,7 +69,7 @@ const SeatMap = ({
           </div>
         </div>
 
-        <p className="mt-6 font-extralight text-xl">Select your seat(s) below</p>
+        <p className="mt-6">Select your seat</p>
 
         {/* Seat Layout */}
         <div className="flex flex-col gap-6 mt-14">

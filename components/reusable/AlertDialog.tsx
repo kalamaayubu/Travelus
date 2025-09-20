@@ -45,20 +45,16 @@ export default function AlertDialog({
       ? "secondary-btn"
       : "destructive-btn"
 
-  // handle click
-  const handleClick = (callback?: () => void) => {
-    callback?.()
-  }
 
   return (
     <ReusableDialog
       open={open}
       onOpenChange={onOpenChange}
       closable={false}
-      contentClassName="bg-gray-900/100 border border-gray-800"
+      contentClassName="bg-gray-800 border border-gray-800"
     >
       <div className="flex flex-col items-center gap-4">
-        {icon && <div className="p-8 bg-gray-800 rounded-full">{icon}</div>}
+        {icon && <div className="p-8 bg-gray-700/50 rounded-full">{icon}</div>}
         <h2 className="text-xl font-bold text-gray-200 text-center">{title}</h2>
         {description && (
           <p className="text-sm text-gray-400 text-center">{description}</p>

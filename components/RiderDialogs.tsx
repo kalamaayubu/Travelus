@@ -1,5 +1,6 @@
 "use client"
-import { X, Loader2, Loader } from "lucide-react";
+
+import { X, Loader2, Check } from "lucide-react";
 import { FaMoneyBill } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -9,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { setBookingInfo } from "@/redux/slices/bookingInfoSlice";
 import { useRouter } from "next/navigation";
+import React from "react";
 
 interface RiderDialogsProps {
   showLoginDialog: boolean;
@@ -22,12 +24,16 @@ interface RiderDialogsProps {
 
   showPaymentInitializationDialog: boolean;
   setShowPaymentInitializationDialog: (open: boolean) => void;
-  
+
   isInitializingPush: boolean;
+  showSuccessPayDialog: boolean;
+  setShowSuccessPayDialog: (open: boolean) => void
+
   selectedSeats: string[];
   pricePerSeat: number;
   createdBy: string;
   rideId: string
+  onStartPayment: () => void;
 }
 
 const RiderDialogs = ({
@@ -37,13 +43,18 @@ const RiderDialogs = ({
   setShowRiderFormDialog,
   showLoginAsPassangerDialog,
   setShowLoginAsPassangerDialog,
+
   showPaymentInitializationDialog,
   setShowPaymentInitializationDialog,
   isInitializingPush,
+  showSuccessPayDialog,
+  setShowSuccessPayDialog,
+
   selectedSeats,
   pricePerSeat,
   createdBy,
-  rideId
+  rideId,
+  onStartPayment
 }: RiderDialogsProps) => {
 
   const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm();
@@ -69,13 +80,11 @@ const RiderDialogs = ({
       return;
     }
 
-
     // Save booking info in Redux
     dispatch(setBookingInfo(bookingInfoPayload));
     reset();
 
     // Open payment dialog
-    setShowRiderFormDialog(false);
     setShowPaymentInitializationDialog(true);
   };
 
@@ -88,10 +97,18 @@ const RiderDialogs = ({
         title="Login Required"
         description="Please log in to continue with your booking."
         icon={<X className="w-8 h-8 text-red-500"/>}
-        actionLabel='Okay'
-        onAction={() => {
-          window.location.href = "/auth/login";
-        }}
+        actions={[
+          {
+            label: 'Cancel',
+            variant: 'secondary',
+            onClick: () => setShowLoginDialog(false)
+          },
+          {
+            label: 'Login',
+            variant: 'primary',
+            onClick: () => router.push('/auth/login')
+          }
+        ]}
       />
 
       {/* Rider Phone Form Dialog */}
@@ -114,7 +131,7 @@ const RiderDialogs = ({
             })}
           />
           {errors.phoneNumber?.message && (
-            <p className="text-sm text-red-500">
+            <p className="text-sm text-red-500 -translate-y-3">
               {String(errors.phoneNumber.message)}
             </p>
           )}
@@ -143,7 +160,7 @@ const RiderDialogs = ({
                     Proceeding...
                   </span>
                 ) : (
-                  "Proceed to pay"
+                  "Proceed"
                 )
               }
             </button>
@@ -180,13 +197,47 @@ const RiderDialogs = ({
         onOpenChange={setShowPaymentInitializationDialog}
         title="Almost There"
         icon={<FaMoneyBill className="w-8 h-8 text-orange-500"/>}
-        description="Start your payment process by clicking on the button below"
-        actionLabel={
-          isInitializingPush 
-            ? <p className="flex items-center justify-center gap-2"><Loader className="animate-spin"/>Initializing <span className="animate-pulse">...</span></p> 
-            : "Start payment"
-        }
+        description="Just click the button below to start your payment."
+        actions={[
+          {
+            label: "Cancel",
+            onClick: () => setShowPaymentInitializationDialog(false),
+            variant: "secondary"
+          },
+          {
+            label:  isInitializingPush
+              ? (
+                <p className="flex items-center justify-center">
+                  <span className="flex gap-2 items-center">
+                    <Loader2 className="animate-spin w-4 h-4"/>
+                    Sending request
+                  </span>
+                  <span className="animate-pulse">...</span>
+                </p> 
+              )
+              : "Start payment",
+            onClick: () => {
+              onStartPayment()
+            },
+            variant: "primary"
+          }
+        ]}
       />
+
+
+      {/* Successfull payment dialog */}
+      <AlertDialog
+        open={showSuccessPayDialog}
+        onOpenChange={setShowSuccessPayDialog}
+        title="Payment Successful 🎉"
+        description="Thank you! Your payment has been received and confirmed."   
+        icon={<Check className="w-8 h-8 text-green-500" />}  
+        actionLabel="Okay"
+        onAction={() => {
+          setShowSuccessPayDialog(false);
+          router.push("/available-rides");
+        }}
+     />
     </>
   );
 };

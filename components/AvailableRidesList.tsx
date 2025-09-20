@@ -7,6 +7,10 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { CarFront } from "lucide-react";
 
+import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat"
+dayjs.extend(customParseFormat)
+
 
 export default function AvailableRidesList({ rides }: AvailableRidesListProps) {
   const router = useRouter();
@@ -39,7 +43,7 @@ export default function AvailableRidesList({ rides }: AvailableRidesListProps) {
       !maxPrice || ride.pricePerSeat <= Number(maxPrice);
 
     const matchesDate =
-      !date || ride.departureTime.startsWith(date)
+      !date || dayjs(ride.departureTime, "DD/MM/YYYY, hh:mm A").format("YYYY-MM-D") === date
 
     return matchesSearch && matchesVehicle && matchesPrice && matchesDate;
   })
@@ -64,14 +68,14 @@ export default function AvailableRidesList({ rides }: AvailableRidesListProps) {
         <form className="grid md:grid-cols-4 gap-4 bg-gray-900 p-4 rounded-lg backdrop:blur-xl sticky top-0 z-20">
           <input
             type="text"
-            placeholder="Search location..."
+            placeholder="Search location (departure or destination)"
             {...register("search")}
             className="p-2 rounded-md bg-gray-800 text-white"
           />
 
           <input
             type="text"
-            placeholder="Vehicle type..."
+            placeholder="Vehicle type (e.g shuttle, bus, car, etc)"
             {...register("vehicle")}
             className="p-2 rounded-md bg-gray-800 text-white"
           />
@@ -100,7 +104,7 @@ export default function AvailableRidesList({ rides }: AvailableRidesListProps) {
 
             {/* Friendly Message */}
             <h3 className="text-lg sm:text-xl xl:text-2xl font-semibold text-gray-200">
-              No rides match your filters
+              No rides match your filter
             </h3>
             <p className="text-gray-400 text-sm mt-2 max-w-sm">
               Try adjusting your search criteria or explore other available rides.

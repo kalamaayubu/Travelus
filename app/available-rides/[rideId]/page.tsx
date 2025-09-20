@@ -12,6 +12,7 @@ import BookingSummary from "@/components/BookingSummary";
 import RiderDialogs from "@/components/RiderDialogs";
 import { createClient } from "@/lib/supabase/client";
 import { toast } from "sonner";
+import initializePayments from "@/actions/payments.action";
 
 // 1. Booking type
 interface Booking {
@@ -41,8 +42,10 @@ const RideDetailsPage = () => {
   const [showLoginAsPassangerDialog, setShowLoginAsPassangerDialog] = useState(false);
   const [showPaymentInitializationDialog, setShowPaymentInitializationDialog] = useState(false);
   const [isInitializingPush, setIsInitializingPush] = useState(false);
+  const [showSuccessPayDialog, setShowSuccessPayDialog] = useState(false)
 
   const { rideId } = useParams<{ rideId: string }>();
+  const bookingInfo = useSelector((state: RootState) => state.bookingInfo) // Booking information
   const { isAuthenticated, user } = useSelector((state: RootState) => state.auth);
   const role = user?.user_metadata?.role
 
@@ -137,7 +140,7 @@ const RideDetailsPage = () => {
     );
   };
 
-  // Handle Proceed
+  // Proceed after providing phone number
   const handleProceedBooking = () => {
     setIsProceeding(true);
 
@@ -157,6 +160,29 @@ const RideDetailsPage = () => {
     setIsProceeding(false);
     setShowRiderFormDialog(true);
   };
+
+  // Handle STK push initialization
+  const handleSTKPush = async () => {
+      setIsInitializingPush(true)
+  
+      try {
+        const res = await initializePayments(bookingInfo);
+        console.log(`IS INITIALIZING PUSH:`, isInitializingPush)
+        console.log(res)
+
+        if (res.success) {
+          toast.success(res.message);
+          setShowPaymentInitializationDialog(false)
+          setShowSuccessPayDialog(true)
+        } else {
+          toast.error(res.message || "Payment failed");
+        }
+      } catch (error: any) {
+        toast.error(`Payment failed: ${error.message || error}`);
+      } finally {
+          setIsInitializingPush(false)
+      }
+  }
 
   const {
     id,
@@ -208,6 +234,9 @@ const RideDetailsPage = () => {
         showPaymentInitializationDialog={showPaymentInitializationDialog}
         setShowPaymentInitializationDialog={setShowPaymentInitializationDialog}
         isInitializingPush={isInitializingPush}
+        onStartPayment={handleSTKPush}
+        showSuccessPayDialog={showSuccessPayDialog}
+        setShowSuccessPayDialog={setShowSuccessPayDialog}
         selectedSeats={selectedSeats}
         pricePerSeat={pricePerSeat}
         createdBy={createdBy}
