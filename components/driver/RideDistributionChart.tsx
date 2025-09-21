@@ -9,7 +9,7 @@ const rideDistribution = [
   { name: "Cancelled", value: 5 },
 ];
 
-const COLORS = ["#16a34a", "#dc2626", "#f97316"]; // green, red, orange
+const COLORS = ["#15803d", "#3b82f6", "#f97316"]; // green, red, orange
 
 export default function RideDistributionChart() {
   return (

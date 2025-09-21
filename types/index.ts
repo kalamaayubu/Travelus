@@ -13,15 +13,15 @@ export type LoginFormData = {
 };
 
 export interface ReusableDialogProps {
-  trigger?: ReactNode
-  children: ReactNode
-  title?: string
-  description?: string
-  open?: boolean
-  onOpenChange?: (open: boolean) => void
-  closable?: boolean
-  contentClassName?: string 
-  footer?: React.ReactNode
+  trigger?: ReactNode;
+  children: ReactNode;
+  title?: string;
+  description?: string;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  closable?: boolean;
+  contentClassName?: string;
+  footer?: React.ReactNode;
 }
 
 export type PostRideFormData = {
@@ -49,7 +49,7 @@ export type Ride = {
   vehicle?: string;
   status?: "Active" | "Completed" | "Cancelled";
   createdAt?: string;
-  bookings?: { count: number}[];
+  bookings?: { count: number }[];
   remainingSeats: number;
 };
 
@@ -87,14 +87,14 @@ export type Booking = {
   id: string;
   seatNumber: string;
   userId: string;
-}
+};
 
 export type Vehicle = {
   id: string;
   type_name: string;
   capacity: number;
   seat_layout: SeatsLayout;
-}
+};
 
 export type RideDetailsProps = {
   id: string;
@@ -104,10 +104,10 @@ export type RideDetailsProps = {
   departureTime: string;
   pricePerSeat: number;
   vehicle: Vehicle | null;
-  bookings: Booking[]
+  bookings: Booking[];
   availableSeats: number;
-  status: string
-}
+  status: string;
+};
 
 export type SeatRow = {
   row: number;
@@ -119,12 +119,12 @@ export type SeatsLayout = {
 };
 
 export interface VehicleType {
-    id: string;
-    name: string;
+  id: string;
+  name: string;
 }
 
 export interface VehicleTypesState {
-    value: VehicleType[]
+  value: VehicleType[];
 }
 
 export interface WaitlistFormData {
@@ -138,16 +138,20 @@ export interface FeedbackFormData {
 }
 
 export interface BookingInfoProps {
-  rideId: string,
-  selectedSeats: string[]
+  rideId: string;
+  selectedSeats: string[];
   totalCost: number;
   passangerId: string;
   driverId: string;
-  passangerPhone: string
+  passangerPhone: string;
 }
 
-export type SeatStatus = "AVAILABLE" | "SELECTED" | "RESERVED" | "BOOKED" | "BLOCKED";
-
+export type SeatStatus =
+  | "AVAILABLE"
+  | "SELECTED"
+  | "RESERVED"
+  | "BOOKED"
+  | "BLOCKED";
 
 export type DropdownItem = {
   label: string;
@@ -171,3 +175,9 @@ export type RideFilterForm = {
   maxPrice: string;
   date: string;
 };
+
+export interface EmailProps {
+  to: string;
+  subject: string;
+  body: string;
+}
