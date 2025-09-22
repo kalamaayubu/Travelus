@@ -14,23 +14,6 @@ import { createClient } from "@/lib/supabase/client";
 import { toast } from "sonner";
 import initializePayments from "@/actions/payments.action";
 
-// 1. Booking type
-interface Booking {
-  id: string;
-  count: number;
-  status: "RESERVED" | "BOOKED" | "BLOCKED" | "AVAILABLE" | "CANCELLED";
-  seatNumber: string; // e.g. "B3, B4"
-}
-
-// 2. SeatsByStatus type
-type SeatsByStatus = {
-  BOOKED: string[];
-  RESERVED: string[];
-  BLOCKED: string[];
-  CANCELLED: string[];
-  AVAILABLE: string[];
-};
-
 const RideDetailsPage = () => {
   const [ride, setRide] = useState<RideDetailsProps | null>(null);
   const [loading, setLoading] = useState(true);
@@ -39,31 +22,33 @@ const RideDetailsPage = () => {
 
   const [showLoginDialog, setShowLoginDialog] = useState(false);
   const [showRiderFormDialog, setShowRiderFormDialog] = useState(false);
-  const [showLoginAsPassangerDialog, setShowLoginAsPassangerDialog] = useState(false);
-  const [showPaymentInitializationDialog, setShowPaymentInitializationDialog] = useState(false);
+  const [showLoginAsPassangerDialog, setShowLoginAsPassangerDialog] =
+    useState(false);
+  const [showPaymentInitializationDialog, setShowPaymentInitializationDialog] =
+    useState(false);
   const [isInitializingPush, setIsInitializingPush] = useState(false);
-  const [showSuccessPayDialog, setShowSuccessPayDialog] = useState(false)
+  const [showSuccessPayDialog, setShowSuccessPayDialog] = useState(false);
 
   const { rideId } = useParams<{ rideId: string }>();
-  const bookingInfo = useSelector((state: RootState) => state.bookingInfo) // Booking information
-  const { isAuthenticated, user } = useSelector((state: RootState) => state.auth);
-  const role = user?.user_metadata?.role
+  const bookingInfo = useSelector((state: RootState) => state.bookingInfo); // Booking information
+  const { isAuthenticated, user } = useSelector(
+    (state: RootState) => state.auth
+  );
+  const role = user?.user_metadata?.role;
 
-  const supabase = createClient()
-  const router = useRouter()
-
+  const supabase = createClient();
+  const router = useRouter();
 
   // Helper function to fetch ride details
   const fetchRideDetails = async () => {
     const res = await getRideDetails(rideId);
     setRide(res);
     setLoading(false);
-  }
-
+  };
 
   // Fetch ride details
   useEffect(() => {
-    fetchRideDetails()
+    fetchRideDetails();
     window.scrollTo(0, 0); // Scroll to top of the page even if the ride details are not ready
   }, [rideId]);
 
@@ -75,12 +60,12 @@ const RideDetailsPage = () => {
     const channel = supabase
       .channel(`bookings-realtime-${rideId}`) // scoped channel (for the current ride id only)
       .on(
-        'postgres_changes',
-        { 
-          event: '*', // INSERT | UPDATE | DELETE
-          schema: 'public', 
-          table: 'bookings', 
-          filter: `rideId=eq.${rideId}` // ✅ only this ride
+        "postgres_changes",
+        {
+          event: "*", // INSERT | UPDATE | DELETE
+          schema: "public",
+          table: "bookings",
+          filter: `rideId=eq.${rideId}`, // ✅ only this ride
         },
         (payload) => {
           console.log("Realtime payload:", payload);
@@ -89,11 +74,10 @@ const RideDetailsPage = () => {
       )
       .subscribe();
 
-      return () => {
-        supabase.removeChannel(channel);
-      };
-  }, [router, rideId, supabase])
-
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [router, rideId, supabase]);
 
   if (loading) {
     return <CustomLoader message="Loading trip details" />;
@@ -133,10 +117,11 @@ const RideDetailsPage = () => {
       return; // ❌ do nothing if seat is not free
     }
 
-    setSelectedSeats((prev) =>
-      prev.includes(seatId)
-        ? prev.filter((s) => s !== seatId) // remove if already selected
-        : [...prev, seatId] // add if not selected
+    setSelectedSeats(
+      (prev) =>
+        prev.includes(seatId)
+          ? prev.filter((s) => s !== seatId) // remove if already selected
+          : [...prev, seatId] // add if not selected
     );
   };
 
@@ -152,9 +137,9 @@ const RideDetailsPage = () => {
     }
 
     // Ensure user is logged in as a passanger(with a passanger account)
-    if (role !== 'rider') {
-      setShowLoginAsPassangerDialog(true)
-      return
+    if (role !== "rider") {
+      setShowLoginAsPassangerDialog(true);
+      return;
     }
 
     setIsProceeding(false);
@@ -163,26 +148,26 @@ const RideDetailsPage = () => {
 
   // Handle STK push initialization
   const handleSTKPush = async () => {
-      setIsInitializingPush(true)
-  
-      try {
-        const res = await initializePayments(bookingInfo);
-        console.log(`IS INITIALIZING PUSH:`, isInitializingPush)
-        console.log(res)
+    setIsInitializingPush(true);
 
-        if (res.success) {
-          toast.success(res.message);
-          setShowPaymentInitializationDialog(false)
-          setShowSuccessPayDialog(true)
-        } else {
-          toast.error(res.message || "Payment failed");
-        }
-      } catch (error: any) {
-        toast.error(`Payment failed: ${error.message || error}`);
-      } finally {
-          setIsInitializingPush(false)
+    try {
+      const res = await initializePayments(bookingInfo);
+      console.log(`IS INITIALIZING PUSH:`, isInitializingPush);
+      console.log(res);
+
+      if (res.success) {
+        toast.success(res.message);
+        setShowPaymentInitializationDialog(false);
+        setShowSuccessPayDialog(true);
+      } else {
+        toast.error(res.message || "Payment failed");
       }
-  }
+    } catch (error: any) {
+      toast.error(`Payment failed: ${error.message || error}`);
+    } finally {
+      setIsInitializingPush(false);
+    }
+  };
 
   const {
     id,

@@ -44,12 +44,21 @@ export type Ride = {
   vehicle_types?: {
     type_name: string;
     capacity: number;
+    seats_layout?: { layout: SeatRow[] };
   };
   driverId?: string;
   vehicle?: string;
+  seatsLayout?: { layout: SeatRow[] };
+  seatsByStatus?: {
+    BOOKED: string[];
+    RESERVED: string[];
+    BLOCKED: string[];
+    CANCELLED: string[];
+    AVAILABLE: string[];
+  };
   status?: "Active" | "Completed" | "Cancelled";
   createdAt?: string;
-  bookings?: { count: number }[];
+  bookings?: BookingStatusProps[];
   remainingSeats: number;
 };
 
@@ -118,6 +127,22 @@ export type SeatsLayout = {
   layout: SeatRow[];
 };
 
+export interface SeatMapProps {
+  departureLocation: string;
+  destinationLocation: string;
+  departureTime: string;
+  seatsLayout: SeatsLayout;
+  seatsByStatus: {
+    BOOKED: string[];
+    RESERVED: string[];
+    BLOCKED: string[];
+    CANCELLED: string[];
+    AVAILABLE: string[];
+  };
+  selectedSeats: string[];
+  onSeatSelect: (seat: string) => void;
+}
+
 export interface VehicleType {
   id: string;
   name: string;
@@ -145,6 +170,23 @@ export interface BookingInfoProps {
   driverId: string;
   passangerPhone: string;
 }
+
+// 1. Booking status
+export interface BookingStatusProps {
+  id: string;
+  count: number;
+  status: "RESERVED" | "BOOKED" | "BLOCKED" | "AVAILABLE" | "CANCELLED";
+  seatNumber: string; // e.g. "B3, B4"
+}
+
+// 2. SeatsByStatus type
+export type SeatsByStatus = {
+  BOOKED: string[];
+  RESERVED: string[];
+  BLOCKED: string[];
+  CANCELLED: string[];
+  AVAILABLE: string[];
+};
 
 export type SeatStatus =
   | "AVAILABLE"

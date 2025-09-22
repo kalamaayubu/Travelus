@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import React, { useState } from "react"
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
 import {
   Car,
   CreditCard,
@@ -12,31 +12,36 @@ import {
   User,
   MoreHorizontal,
   Settings,
-} from "lucide-react"
-import { usePathname, useRouter } from "next/navigation"
-import Image from "next/image"
-import { motion, AnimatePresence } from "framer-motion"
-import { logout } from "@/actions/auth.action"
-import { clearUser } from "@/redux/slices/authSlice"
-import { useDispatch, useSelector } from "react-redux"
-import { RootState } from "@/redux/store"
-import { DropdownItem } from "@/types"
-import ReusableDropdown from "../reusable/ReusableDropdown"
+} from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
+import { logout } from "@/actions/auth.action";
+import { clearUser } from "@/redux/slices/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+import { DropdownItem } from "@/types";
+import ReusableDropdown from "../reusable/ReusableDropdown";
 
 const Sidebar = () => {
-  const userName = useSelector((state: RootState) => state.auth.user?.user_metadata?.name)
-  const [openSidebar, setOpenSidebar] = useState(true)
-  const pathname = usePathname()
-  const router = useRouter()
-  const dispatch = useDispatch()
+  const userName = useSelector(
+    (state: RootState) => state.auth.user?.user_metadata?.name
+  );
+  const [openSidebar, setOpenSidebar] = useState(true);
+  const pathname = usePathname();
+  const router = useRouter();
+  const dispatch = useDispatch();
 
+  // For conditional rendering when in the client
+  const [isClient, setIsClient] = useState(false);
+  useEffect(() => setIsClient(true), []);
 
   const navItems = [
     { label: "Dashboard", href: "/driver", icon: LayoutDashboard },
     { label: "My Rides", href: "/driver/rides", icon: Car },
     { label: "Bookings", href: "/driver/bookings", icon: Users },
     { label: "Payments", href: "/driver/payments", icon: CreditCard },
-  ]
+  ];
 
   // Menu footer items
   const footerItems: DropdownItem[] = [
@@ -45,8 +50,8 @@ const Sidebar = () => {
       icon: <User className="w-[15px]" />,
     },
     {
-      label: 'Settings',
-      icon: <Settings className="w-[15px]"/>,
+      label: "Settings",
+      icon: <Settings className="w-[15px]" />,
     },
     {
       label: "Logout",
@@ -56,7 +61,7 @@ const Sidebar = () => {
         logout();
         router.push("/auth/login");
       },
-       className: "hover:bg-red-600 hover:text-white",
+      className: "hover:bg-red-600 hover:text-white",
     },
   ];
 
@@ -98,7 +103,6 @@ const Sidebar = () => {
         }`}
       />
 
-
       {/* Navigation */}
       {navItems.map(({ label, href, icon: Icon }) => (
         <Link
@@ -134,25 +138,28 @@ const Sidebar = () => {
         trigger={
           <div className="flex mx-4 bg-gray-50/5 absolute bottom-4 left-0 right-0 px-3 items-center justify-between gap-2 cursor-pointer py-2 hover:bg-white/10 rounded-md text-gray-300 hover:text-gray-200 transition-colors">
             <User className="w-7 h-7 rounded-full border border-gray-700 p-1 flex-shrink-0" />
-            <AnimatePresence>
-              {openSidebar && (
-                <motion.span
-                  initial={{ opacity: 0, x: -6 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -6 }}
-                  transition={{ duration: 0.2 }}
-                  className="flex-1"
-                >
-                  { userName }
-                </motion.span>
-              )}
-            </AnimatePresence>
+            {/* Ensure that name is rendered only on client side */}
+            {isClient && (
+              <AnimatePresence>
+                {openSidebar && (
+                  <motion.span
+                    initial={{ opacity: 0, x: -6 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -6 }}
+                    transition={{ duration: 0.2 }}
+                    className="flex-1"
+                  >
+                    {userName}
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            )}
             {openSidebar && <MoreHorizontal className="w-4 h-4" />}
           </div>
         }
       />
     </motion.aside>
-  )
-}
+  );
+};
 
-export default Sidebar
+export default Sidebar;

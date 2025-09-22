@@ -1,11 +1,10 @@
-"use client";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-import { MapPin, Calendar } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { SeatRow, SeatMapProps } from "@/types";
+import { CalendarRange, MapPin } from "lucide-react";
 
-const SeatMap = ({
+const DriverSeatMap = ({
   departureLocation,
   destinationLocation,
   departureTime,
@@ -14,6 +13,7 @@ const SeatMap = ({
   selectedSeats,
   onSeatSelect,
 }: SeatMapProps) => {
+  console.log(`DE DATA: ${departureLocation}`);
   return (
     <Card className="bg-gray-900 max-w-[800px] w-full">
       <CardContent>
@@ -23,10 +23,9 @@ const SeatMap = ({
           {departureLocation} → {destinationLocation}
         </h2>
         <p className="flex items-center gap-2">
-          <Calendar className="text-blue-700" />
+          <CalendarRange className="text-blue-700" />
           {new Date(departureTime).toLocaleString()}
         </p>
-
         {/* Legend */}
         <div className="flex mt-8">
           <div className="flex items-center flex-wrap gap-6 md:justify-between md:ml-auto">
@@ -53,7 +52,7 @@ const SeatMap = ({
           </div>
         </div>
 
-        <p className="mt-6">Select your seat</p>
+        <p className="mt-6 font-semibold text-xl">Preserve a seat</p>
 
         {/* Seat Layout */}
         <div className="flex flex-col gap-6 mt-14">
@@ -131,4 +130,4 @@ const SeatMap = ({
   );
 };
 
-export default SeatMap;
+export default DriverSeatMap;
