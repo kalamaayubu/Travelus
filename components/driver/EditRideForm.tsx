@@ -1,8 +1,19 @@
 "use client";
 
-import { BookingStatusProps, Ride, SeatsByStatus, SeatsLayout } from "@/types";
+import {
+  BookingStatusProps,
+  DriverSeatReservationProps,
+  Ride,
+  SeatsByStatus,
+  SeatsLayout,
+} from "@/types";
 import DriverSeatMap from "./DriverSeatMap";
 import { useState } from "react";
+import { lockSeats } from "@/actions/driver.action";
+import { toast } from "sonner";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+import { useParams } from "next/navigation";
 
 type EditRideFormProps = {
   ride: Ride;
@@ -10,9 +21,13 @@ type EditRideFormProps = {
 
 const EditRideForm = ({ ride }: EditRideFormProps) => {
   const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
+  const { user } = useSelector((state: RootState) => state.auth);
+  const [isReserving, setIsReserving] = useState(false);
+  const params = useParams();
 
   // ✅ Ensure bookings is always an array
   const bookings = ride.bookings ?? [];
+  console.log("BOOKINGS FROM EDIT FORM:", bookings);
 
   // ✅ Compute seatsByStatus from bookings
   const seatsByStatus: SeatsByStatus = bookings.reduce(
@@ -55,7 +70,34 @@ const EditRideForm = ({ ride }: EditRideFormProps) => {
     );
   };
 
-  //   Function to reserve a seat
+  //   Function to reserve seats
+  const reserveSeats = async () => {
+    setIsReserving(true);
+    if (!params?.rideId || !user?.id || selectedSeats.length === 0) return;
+
+    // Seat reservation data
+    const payload: DriverSeatReservationProps = {
+      rideId:
+        typeof params.rideId === "string" ? params.rideId : params.rideId[0],
+      count: selectedSeats.length,
+      seatNumber: selectedSeats,
+      userId: user.id,
+      userType: "driver",
+      status: "BLOCKED",
+    };
+    console.log("PAYLOAD:", payload);
+    const res = await lockSeats(payload);
+
+    if (!res.success) {
+      setIsReserving(false);
+      toast.error("Failed to reserve. Please try again later");
+      return;
+    }
+
+    setIsReserving(false);
+    window.location.reload();
+    toast.success("Seats reserved successfully");
+  };
 
   return (
     <>
@@ -68,6 +110,8 @@ const EditRideForm = ({ ride }: EditRideFormProps) => {
         seatsByStatus={seatsByStatus}
         selectedSeats={selectedSeats}
         onSeatSelect={(seatId) => handleSeatSelect(seatId)}
+        onReserveSeats={reserveSeats}
+        isReserving={isReserving}
       />
     </>
   );

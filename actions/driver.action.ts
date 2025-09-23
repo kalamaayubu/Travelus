@@ -1,7 +1,7 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
-import { PostRideFormData } from "@/types";
+import { DriverSeatReservationProps, PostRideFormData } from "@/types";
 import { getUser } from "@/utils/getServerUser";
 
 // This function handles the logic for posting a ride
@@ -149,7 +149,7 @@ export async function deleteRide(rideId: string, userId: string) {
   return { success: true, message: "Ride deleted successfully" };
 }
 
-// Fetch ride layout
+// Fetch ride layout(to be used for driver seat reservation)
 export async function getRideData(rideId: string) {
   const supabase = await createClient();
 
@@ -185,4 +185,35 @@ export async function getRideData(rideId: string) {
   }
 
   return { success: true, data };
+}
+
+// Function to reserve a seat
+export async function lockSeats(
+  seatReservationData: DriverSeatReservationProps
+) {
+  const supabase = await createClient();
+
+  // Convert seatNumbers array to comma-separated string
+  const seatNumberStr = seatReservationData.seatNumber.join(",");
+
+  const { data, error } = await supabase.from("bookings").insert([
+    {
+      ride: seatReservationData.rideId,
+      count: seatReservationData.count,
+      user_id: seatReservationData.userId,
+      user_type: seatReservationData.userType,
+      seatNumber: seatNumberStr,
+      status: seatReservationData.status,
+    },
+  ]);
+
+  if (error) {
+    console.error("ERROR RESERVING A SEAT:", error);
+    return { success: false, error: error.message };
+  }
+
+  return {
+    success: true,
+    message: `${seatReservationData.count > 1 ? "Seats" : "Seat"} reserved successfully.`,
+  };
 }

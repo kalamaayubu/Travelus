@@ -15,7 +15,5 @@ export default async function RideEditingPage({
     return <div>Ride not found</div>;
   }
 
-  // console.log("RIDE DATA:", res.data[0]);
-
   return <EditRideForm ride={res.data[0]} />;
 }

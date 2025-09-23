@@ -1,8 +1,10 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { SeatRow, SeatMapProps } from "@/types";
-import { CalendarRange, MapPin } from "lucide-react";
+import { CalendarRange, Loader2, MapPin } from "lucide-react";
 
 const DriverSeatMap = ({
   departureLocation,
@@ -12,8 +14,9 @@ const DriverSeatMap = ({
   seatsByStatus,
   selectedSeats,
   onSeatSelect,
+  onReserveSeats,
+  isReserving,
 }: SeatMapProps) => {
-  console.log(`DE DATA: ${departureLocation}`);
   return (
     <Card className="bg-gray-900 max-w-[800px] w-full">
       <CardContent>
@@ -39,7 +42,7 @@ const DriverSeatMap = ({
             </div>
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 opacity-60 bg-red-500 rounded-md"></div>
-              <span>Blocked</span>
+              <span>Locked</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 bg-gray-800 border rounded-md"></div>
@@ -126,6 +129,33 @@ const DriverSeatMap = ({
           })}
         </div>
       </CardContent>
+
+      {/* Summary and action(seat preservation) */}
+      <div className="px-6 py-4 border-t flex flex-col gap-4">
+        <h3 className="text-xl font-semibold">Summary</h3>
+        <div className="flex flex-col gap-4">
+          <p className="">
+            Selected seats:{" "}
+            {selectedSeats.length === 0 ? "NONE" : selectedSeats.join(", ")}
+          </p>
+          {/* <p>Click the button below to preseve the selected seats</p> */}
+          <button
+            disabled={selectedSeats.length === 0}
+            onClick={onReserveSeats}
+            className=""
+          >
+            {isReserving ? (
+              <span className="flex items-center justify-center gap-2">
+                <Loader2 className="w-4 animate-spin" /> Reserving...
+              </span>
+            ) : selectedSeats.length > 1 ? (
+              "Reserve seats"
+            ) : (
+              "Reserve seat"
+            )}
+          </button>
+        </div>
+      </div>
     </Card>
   );
 };

@@ -141,6 +141,10 @@ export interface SeatMapProps {
   };
   selectedSeats: string[];
   onSeatSelect: (seat: string) => void;
+
+  // DriverSeatMap  props
+  onReserveSeats?: () => void;
+  isReserving?: boolean;
 }
 
 export interface VehicleType {
@@ -194,6 +198,15 @@ export type SeatStatus =
   | "RESERVED"
   | "BOOKED"
   | "BLOCKED";
+
+export type DriverSeatReservationProps = {
+  rideId: string;
+  count: number;
+  seatNumber: string[];
+  userId: string;
+  userType: "driver" | "rider";
+  status: SeatStatus;
+};
 
 export type DropdownItem = {
   label: string;
