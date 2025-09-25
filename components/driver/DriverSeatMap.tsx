@@ -29,6 +29,7 @@ const DriverSeatMap = ({
           <CalendarRange className="text-blue-700" />
           {new Date(departureTime).toLocaleString()}
         </p>
+
         {/* Legend */}
         <div className="flex mt-8">
           <div className="flex items-center flex-wrap gap-6 md:justify-between md:ml-auto">
@@ -55,7 +56,7 @@ const DriverSeatMap = ({
           </div>
         </div>
 
-        <p className="mt-6 font-semibold text-xl">Preserve a seat</p>
+        <p className="mt-6 font-semibold text-xl">Reserve a seat</p>
 
         {/* Seat Layout */}
         <div className="flex flex-col gap-6 mt-14">

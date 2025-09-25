@@ -125,7 +125,7 @@ const RideDetailsPage = () => {
     );
   };
 
-  // Proceed after providing phone number
+  // Proceed to provide phone number
   const handleProceedBooking = () => {
     setIsProceeding(true);
 
@@ -158,6 +158,9 @@ const RideDetailsPage = () => {
       if (res.success) {
         toast.success(res.message);
         setShowPaymentInitializationDialog(false);
+
+        // Send a success notification to the user
+
         setShowSuccessPayDialog(true);
       } else {
         toast.error(res.message || "Payment failed");

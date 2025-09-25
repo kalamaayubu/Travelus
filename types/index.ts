@@ -236,3 +236,13 @@ export interface EmailProps {
   subject: string;
   body: string;
 }
+
+export type NotificationRecipient = {
+  endpoint: string;
+};
+
+export interface NotificationProps {
+  title: string;
+  body: string;
+  recipients: NotificationRecipient[];
+}

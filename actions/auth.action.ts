@@ -17,14 +17,14 @@ export async function signup(data: SignupFormData) {
       password: data.password,
       options: {
         data: {
-            name: data.name,
-            role: data.role
-        }
-      }
+          name: data.name,
+          role: data.role,
+        },
+      },
     });
 
     if (authError) {
-        console.error("Signup Error:", authError);
+      console.error("Signup Error:", authError);
       return {
         success: false,
         error: authError.message,
@@ -46,20 +46,19 @@ export async function signup(data: SignupFormData) {
   }
 }
 
-
 // Login action for user authentication
-export async function login(formData: LoginFormData) {
-  const supabase = await createClient()
-  const cookieStore = await cookies()
+export async function login(formData: LoginFormData, from: string) {
+  const supabase = await createClient();
+  const cookieStore = await cookies();
 
-  const { data, error } = await supabase.auth.signInWithPassword({ 
-    email: formData.email, 
-    password: formData.password 
-})
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email: formData.email,
+    password: formData.password,
+  });
 
   if (error) {
-    console.error("Error logging in:", error.stack)
-    return { success: false, error: error.message }
+    console.error("Error logging in:", error.stack);
+    return { success: false, error: error.message };
   }
 
   // Fetch the user's role after successful login
@@ -67,31 +66,38 @@ export async function login(formData: LoginFormData) {
     .from("profiles")
     .select("role")
     .eq("id", data.user.id)
-    .single()
+    .single();
 
   if (profileError) {
-    console.error("Error fetching profile:", profileError.message)
-    return { success: false, error: "Could not fetch user profile." }
+    console.error("Error fetching profile:", profileError.message);
+    return { success: false, error: "Could not fetch user profile." };
   }
 
-    // If the profile data contains a role, set it in the authState cookie
+  // If the profile data contains a role, set it in the authState cookie
   if (profileData?.role) {
-        cookieStore.set(
-            "authState",
-            encodeURIComponent(JSON.stringify({ role: profileData.role, isAuthenticated: true })),
-            { httpOnly: true, path: "/" }
-        );
+    cookieStore.set(
+      "authState",
+      encodeURIComponent(
+        JSON.stringify({ role: profileData.role, isAuthenticated: true })
+      ),
+      { httpOnly: true, path: "/" }
+    );
   }
 
   // Role based redirection
-  const role = profileData.role
+  const role = profileData.role;
   let redirectUrl: string = "/";
-  if (role === "rider") redirectUrl = "/available-rides"
-  if (role === "driver") redirectUrl = "/driver/rides"
-  if (role === "admin") redirectUrl = "/admin/dashboard"
+  if (role === "rider") redirectUrl = "/passanger";
+  if (role === "driver") redirectUrl = "/driver/rides";
+  if (role === "admin") redirectUrl = "/admin/dashboard";
+
+  // If 'from' param exists, redirect accordingly
+  if (from) {
+    redirectUrl = from;
+  }
 
   // If successful, manually set cookies if needed
-  const { access_token, refresh_token } = data.session
+  const { access_token, refresh_token } = data.session;
 
   // The access token
   cookieStore.set("sb-access-token", access_token, {
@@ -100,7 +106,7 @@ export async function login(formData: LoginFormData) {
     secure: process.env.NODE_ENV === "production",
     sameSite: "strict",
     maxAge: 60 * 60 * 5, // Five hours
-  })
+  });
 
   // The refresh token
   cookieStore.set("sb-refresh-token", refresh_token, {
@@ -109,9 +115,9 @@ export async function login(formData: LoginFormData) {
     secure: process.env.NODE_ENV === "production",
     sameSite: "strict",
     maxAge: 60 * 60 * 24 * 7, // 7 days
-  })
+  });
 
-  console.log('USER:', data.user)
+  console.log("USER:", data.user);
 
   // Response object to the client
   return {
@@ -120,9 +126,8 @@ export async function login(formData: LoginFormData) {
     user: data.user,
     redirectUrl,
     message: "Successfully logged in",
-  }
+  };
 }
-
 
 // Logout action to clear session and cookies
 export async function logout() {
@@ -146,23 +151,28 @@ export async function logout() {
 // Function to check if the user is authenticated
 export async function getSession() {
   const supabase = await createClient();
-  const { data: { session } } = await supabase.auth.getSession();
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
   return session;
 }
-
 
 // Forgot password action to send reset email
 export async function forgotPassword(email: string) {
   const supabase = await createClient();
 
   // Get the base URL dynamically for appropriate redirection
-  const baseUrl = process.env.NODE_ENV === 'production'
-      ? 'https://travelusapp.netlify.app'
-      : 'http://localhost:3000';
+  const baseUrl =
+    process.env.NODE_ENV === "production"
+      ? "https://travelusapp.netlify.app"
+      : "http://localhost:3000";
 
-  const { error: sendEmailError  } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: `${baseUrl}/auth/reset-password`
-  })
+  const { error: sendEmailError } = await supabase.auth.resetPasswordForEmail(
+    email,
+    {
+      redirectTo: `${baseUrl}/auth/reset-password`,
+    }
+  );
 
   if (sendEmailError) {
     console.error("Error sending reset email:", sendEmailError.message);
@@ -170,21 +180,26 @@ export async function forgotPassword(email: string) {
   }
 
   console.log("Password reset email sent to:", email);
-  return { success: true, message: "If your email is registered, you’ll receive a password reset link shortly." };
+  return {
+    success: true,
+    message:
+      "If your email is registered, you’ll receive a password reset link shortly.",
+  };
 }
 
-
 // Reset password action to update the password
-export async function resetPassword(newPassword: string ) {
+export async function resetPassword(newPassword: string) {
   const supabase = await createClient();
-  
+
   // Optional: Log current session to verify auth status
-  const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+  const { data: sessionData, error: sessionError } =
+    await supabase.auth.getSession();
 
   if (sessionError || !sessionData.session) {
     return {
       success: false,
-      error: 'No active session found. Please use the reset link from your email again.',
+      error:
+        "No active session found. Please use the reset link from your email again.",
     };
   }
 
@@ -194,7 +209,7 @@ export async function resetPassword(newPassword: string ) {
   });
 
   if (updateError) {
-    console.error('Error updating password:', updateError.message);
+    console.error("Error updating password:", updateError.message);
     return {
       success: false,
       error: updateError.message,
@@ -203,6 +218,7 @@ export async function resetPassword(newPassword: string ) {
 
   return {
     success: true,
-    message: 'Password updated successfully. You can now log in with your new password.',
+    message:
+      "Password updated successfully. You can now log in with your new password.",
   };
 }
