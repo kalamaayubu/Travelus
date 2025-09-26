@@ -1,35 +1,24 @@
-"use client"
+"use client";
 
-import { logout } from "@/actions/auth.action"
-import { clearUser } from "@/redux/slices/authSlice"
-import { AppDispatch } from "@/redux/store"
-import { handleAddRide } from "@/utils/handleAddRide"
-import {
-  Bell,
-  Car,
-  LayoutDashboard,
-  LogOut,
-  MoreVertical,
-  Plus,
-  Settings,
-  User,
-} from "lucide-react"
-import Link from "next/link"
-import { usePathname, useRouter } from "next/navigation"
-import { useEffect, useState } from "react"
-import { useDispatch } from "react-redux"
-import { toast } from "sonner"
-import MoreDropdown from "./MoreDropDown"
+import { AppDispatch } from "@/redux/store";
+import { handleAddRide } from "@/utils/handleAddRide";
+import { Bell, Car, LayoutDashboard, Plus } from "lucide-react";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { toast } from "sonner";
+import MoreDropdown from "./MoreDropDown";
 
 type NavLinkProps = {
-  href: string
-  icon: React.ReactNode
-  label: string
-}
+  href: string;
+  icon: React.ReactNode;
+  label: string;
+};
 
 const NavLink = ({ href, icon, label }: NavLinkProps) => {
-  const pathname = usePathname()
-  const isActive = pathname === href
+  const pathname = usePathname();
+  const isActive = pathname === href;
 
   return (
     <Link
@@ -43,51 +32,49 @@ const NavLink = ({ href, icon, label }: NavLinkProps) => {
       {icon}
       {label}
     </Link>
-  )
-}
+  );
+};
 
 const SmallScreensNavbar = () => {
-  const [openMore, setOpenMore] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
 
-  const router = useRouter()
-  const pathname = usePathname()
-  const dispatch = useDispatch<AppDispatch>()
+  const router = useRouter();
+  const pathname = usePathname();
+  const dispatch = useDispatch<AppDispatch>();
 
   // Reset loading state after navigation complets
   useEffect(() => {
     if (isLoading) {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }, [pathname])
+  }, [pathname]);
 
   // Function to handle post ride
   const onAddRide = async () => {
-    setIsLoading(true)
-    const result = await handleAddRide(dispatch, router)
+    setIsLoading(true);
+    const result = await handleAddRide(dispatch, router);
 
     if (!result.success) {
-      console.error(result.error)
-      toast.error(result.error)
+      console.error(result.error);
+      toast.error(result.error);
     }
-  }
-
+  };
 
   return (
     <>
       <div className="md:hidden fixed py-1 border-t border-zinc-700/50 bottom-0 left-0 right-0 dark:bg-zinc-800/70 backdrop-blur-sm flex justify-around items-center z-20">
         {/* Home */}
-        <NavLink 
-            href="/driver" 
-            icon={<LayoutDashboard className="w-4 h-4" />} 
-            label="Home" 
+        <NavLink
+          href="/driver"
+          icon={<LayoutDashboard className="w-4 h-4" />}
+          label="Home"
         />
 
         {/* My Rides */}
-        <NavLink 
-            href="/driver/rides" 
-            icon={<Car className="w-4 h-4" />} 
-            label="My Rides" 
+        <NavLink
+          href="/driver/rides"
+          icon={<Car className="w-4 h-4" />}
+          label="My Rides"
         />
 
         {/* Post Ride (special styling) */}
@@ -121,11 +108,11 @@ const SmallScreensNavbar = () => {
         <div className="relative flex flex-col group gap-[2px] cursor-pointer items-center text-xs text-gray-400 hover:text-gray-200">
           <Bell className="w-4 h-4" />
           Alerts
-          <div className="bg-green-500 flex items-center justify-center group-hover:bg-green-400 w-2 h-2 left-4 rounded-full absolute" ></div>
+          <div className="bg-green-500 flex items-center justify-center group-hover:bg-green-400 w-2 h-2 left-4 rounded-full absolute"></div>
         </div>
 
         {/* More */}
-        <MoreDropdown dispatch={dispatch}/>
+        <MoreDropdown dispatch={dispatch} />
       </div>
 
       {/* ✅ Global loading overlay */}
@@ -135,7 +122,7 @@ const SmallScreensNavbar = () => {
         </div>
       )}
     </>
-  )
-}
+  );
+};
 
-export default SmallScreensNavbar
+export default SmallScreensNavbar;

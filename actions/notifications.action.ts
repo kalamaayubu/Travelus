@@ -8,7 +8,7 @@ export async function saveFcmToken(token: string) {
 
   const { error } = await supabase
     .from("notification_subscriptions")
-    .upsert({ endpoint: token });
+    .upsert({ fcm_token: token });
 
   if (error) {
     console.log("Error saving FCM token:", error);

@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { usePathname } from "next/navigation";
 import Logo from "./Logo";
@@ -13,7 +13,12 @@ const NavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   // Hide navbar on these routes
-  if (pathname.startsWith("/auth") || pathname.startsWith("/driver")) return null;
+  if (
+    pathname.startsWith("/auth") ||
+    pathname.startsWith("/driver") ||
+    pathname.startsWith("/rider")
+  )
+    return null;
 
   return (
     <header className="text-white p-6">
@@ -22,10 +27,34 @@ const NavBar = () => {
         <Logo />
         <ul className="space-x-4 flex">
           {/* <li><LogInOutBtn /></li> */}
-          <Link onClick={() => setIsMenuOpen(false)} href={'/#faqs'} className="mx-4 text-gray-300 hover:text-green-600">FAQs</Link>
-          <Link onClick={() => setIsMenuOpen(false)} href={'/#about'} className="mx-4 text-gray-300 hover:text-green-600">About Us</Link>
-          <Link onClick={() => setIsMenuOpen(false)} href={'/#feedback'} className="mx-4 text-gray-300 hover:text-green-600">Feedback</Link>
-          <Link onClick={() => setIsMenuOpen(false)} href={'/#waitlist'} className="mx-4 text-gray-300 hover:text-green-600">Join waitlist</Link>
+          <Link
+            onClick={() => setIsMenuOpen(false)}
+            href={"/#faqs"}
+            className="mx-4 text-gray-300 hover:text-green-600"
+          >
+            FAQs
+          </Link>
+          <Link
+            onClick={() => setIsMenuOpen(false)}
+            href={"/#about"}
+            className="mx-4 text-gray-300 hover:text-green-600"
+          >
+            About Us
+          </Link>
+          <Link
+            onClick={() => setIsMenuOpen(false)}
+            href={"/#feedback"}
+            className="mx-4 text-gray-300 hover:text-green-600"
+          >
+            Feedback
+          </Link>
+          <Link
+            onClick={() => setIsMenuOpen(false)}
+            href={"/#waitlist"}
+            className="mx-4 text-gray-300 hover:text-green-600"
+          >
+            Join waitlist
+          </Link>
         </ul>
       </nav>
 
@@ -36,9 +65,15 @@ const NavBar = () => {
           <div className="flex items-center justify-between">
             <Logo />
             {isMenuOpen ? (
-              <X onClick={() => setIsMenuOpen(false)} className="cursor-pointer" />
+              <X
+                onClick={() => setIsMenuOpen(false)}
+                className="cursor-pointer"
+              />
             ) : (
-              <Menu onClick={() => setIsMenuOpen(true)} className="cursor-pointer" />
+              <Menu
+                onClick={() => setIsMenuOpen(true)}
+                className="cursor-pointer"
+              />
             )}
           </div>
         </nav>
@@ -65,11 +100,29 @@ const NavBar = () => {
 
               {/* Menu content */}
               <ul className="flex flex-col gap-4 mt-10 text-gray-300">
-                <Link onClick={() => setIsMenuOpen(false)} href={'/'} className="">Home</Link>
-                <Link onClick={() => setIsMenuOpen(false)} href={'/#faqs'}>FAQs</Link>
-                <Link onClick={() => setIsMenuOpen(false)} href={'/#about'}>About us</Link>
-                <Link onClick={() => setIsMenuOpen(false)} href={'/#feedback'}>Feedback</Link>
-                <Link onClick={() => setIsMenuOpen(false)} href={'/#waitlist'} className="">Join waitlist</Link>
+                <Link
+                  onClick={() => setIsMenuOpen(false)}
+                  href={"/"}
+                  className=""
+                >
+                  Home
+                </Link>
+                <Link onClick={() => setIsMenuOpen(false)} href={"/#faqs"}>
+                  FAQs
+                </Link>
+                <Link onClick={() => setIsMenuOpen(false)} href={"/#about"}>
+                  About us
+                </Link>
+                <Link onClick={() => setIsMenuOpen(false)} href={"/#feedback"}>
+                  Feedback
+                </Link>
+                <Link
+                  onClick={() => setIsMenuOpen(false)}
+                  href={"/#waitlist"}
+                  className=""
+                >
+                  Join waitlist
+                </Link>
                 {/* <LogInOutBtn />
                 <Link 
                   className="primary-btn w-full" 
