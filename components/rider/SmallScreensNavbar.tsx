@@ -50,7 +50,7 @@ const RiderSmallScreensNavbar = () => {
 
         {/* My Bookings / Rides */}
         <NavLink
-          href="/rider/rides"
+          href="/rider/bookings"
           icon={<ClipboardList className="w-4 h-4" />}
           label="My Bookings"
         />

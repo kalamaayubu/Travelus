@@ -12,6 +12,7 @@ import {
   User,
   MoreHorizontal,
   Settings,
+  ShieldCheck,
 } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
@@ -40,6 +41,7 @@ const Sidebar = () => {
     { label: "Dashboard", href: "/driver", icon: LayoutDashboard },
     { label: "My Rides", href: "/driver/rides", icon: Car },
     { label: "Bookings", href: "/driver/bookings", icon: Users },
+    { label: "Approvals", href: "/driver/approvals", icon: ShieldCheck },
     { label: "Payments", href: "/driver/payments", icon: CreditCard },
   ];
 

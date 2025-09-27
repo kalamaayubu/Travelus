@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Construction } from "lucide-react";
 import Link from "next/link";
 
-export default function Bookings() {
+export default function MyBookings() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white p-6">
       {/* Icon */}
@@ -23,7 +23,7 @@ export default function Bookings() {
         transition={{ delay: 0.2, duration: 0.5 }}
         className="text-4xl md:text-5xl font-bold mb-4 text-center"
       >
-        Bookings
+        My Bookings
       </motion.h1>
 
       {/* Message */}

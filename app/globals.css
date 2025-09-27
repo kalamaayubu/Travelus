@@ -129,7 +129,7 @@
     @apply cursor-pointer opacity-80 bg-green-600 active:scale-95 text-white p-[6px] px-6 rounded-md hover:bg-green-500 transition duration-300;
   }
   button:disabled {
-    @apply cursor-not-allowed opacity-60 bg-gray-600 active:scale-100;
+    @apply cursor-not-allowed opacity-60 active:scale-100;
   }
   a {
     @apply text-green-500 hover:text-indigo-500 w-fit;

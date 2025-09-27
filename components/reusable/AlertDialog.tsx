@@ -50,7 +50,7 @@ export default function AlertDialog({
       open={open}
       onOpenChange={onOpenChange}
       closable={false}
-      contentClassName="bg-gray-800 border border-gray-600/80"
+      contentClassName="bg-gray-800 border border-gray-600/40"
     >
       <div className="flex flex-col items-center gap-4">
         {icon && <div className="p-8 bg-gray-700/50 rounded-full">{icon}</div>}

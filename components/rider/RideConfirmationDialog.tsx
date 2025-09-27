@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { CheckCircle, XCircle } from "lucide-react";
+import { CheckCircle, X } from "lucide-react";
 import AlertDialog from "../reusable/AlertDialog";
 
 const RideConfirmationDialog = ({ notif, onClose, onConfirmed }) => {
@@ -90,7 +90,7 @@ const RideConfirmationDialog = ({ notif, onClose, onConfirmed }) => {
             animate={{ width: `${holdProgress}%` }}
             transition={{ ease: "linear", duration: 0.2 }}
           />
-          <span className="absolute inset-0 flex items-center justify-center text-white font-medium">
+          <span className="absolute select-none inset-0 flex items-center justify-center text-white font-medium">
             {status === "confirming"
               ? "Confirming..."
               : holdProgress > 0
@@ -125,7 +125,7 @@ const RideConfirmationDialog = ({ notif, onClose, onConfirmed }) => {
         onOpenChange={() => setShowErrorDialog(false)}
         title="Confirmation Failed"
         description="We could not confirm your ride. Please try again."
-        icon={<XCircle className="text-red-500" size={28} />}
+        icon={<X className="text-red-500" size={28} />}
         actions={[
           {
             label: "Cancel",
