@@ -54,9 +54,9 @@ export default function AlertDialog({
     >
       <div className="flex flex-col items-center gap-4">
         {icon && <div className="p-8 bg-gray-700/50 rounded-full">{icon}</div>}
-        <h2 className="text-xl font-bold text-gray-200 text-center">{title}</h2>
+        <h2 className="text-xl font-bold text-gray-100 text-center">{title}</h2>
         {description && (
-          <p className="text-sm text-gray-400 text-center">{description}</p>
+          <p className="text-sm text-gray-300 text-center">{description}</p>
         )}
 
         {/* If children exist, render them directly */}

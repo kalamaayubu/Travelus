@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useState, useRef, useEffect } from "react";
 import { FieldError } from "react-hook-form";
@@ -67,7 +67,7 @@ export default function ComboBox({
         onClick={() => setIsOpen((o) => !o)}
         className={`w-full px-3 py-2 rounded-lg border ${
           error ? "border-red-500" : "border-gray-600"
-        } bg-gray-800 text-gray-100 placeholder-gray-400 focus:outline-none`}
+        } bg-gray-800 text-gray-50 placeholder-gray-400 focus:outline-none`}
       />
 
       {isOpen && filteredOptions.length > 0 && (
@@ -87,7 +87,7 @@ export default function ComboBox({
       )}
 
       {isOpen && filteredOptions.length === 0 && (
-        <div className="absolute z-50 w-full bg-gray-800 border border-gray-600 rounded-lg mt-1 px-3 py-2 text-gray-400">
+        <div className="absolute z-50 w-full bg-gray-800 border border-gray-600 rounded-lg mt-1 px-3 py-2 text-gray-300">
           No results
         </div>
       )}

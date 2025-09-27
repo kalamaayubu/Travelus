@@ -4,7 +4,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PublicRideCardProps } from "@/types";
 import { Users, MapPin, Calendar, Bus } from "lucide-react";
 
-
 export default function PublicRideCard({
   departure,
   destination,
@@ -14,17 +13,16 @@ export default function PublicRideCard({
   price,
   onViewDetails,
 }: PublicRideCardProps) {
-
   return (
-    <Card className="w-full group max-w-md mx-auto bg-gradient-to-br from-gray-800 to-gray-900 text-gray-100 rounded-lg">
+    <Card className="w-full group max-w-md mx-auto bg-gradient-to-br from-gray-800 to-gray-900 text-gray-50 rounded-lg">
       <CardHeader className="pb-2">
-        <CardTitle className="text-xl text-gray-50 font-semibold text-center flex items-center justify-center gap-2">
+        <CardTitle className="text-xl text-gray-0 font-semibold text-center flex items-center justify-center gap-2">
           <MapPin className="w-5 h-5 text-purple-400" />
           {departure}
-          <span className="text-gray-400">→</span>
+          <span className="text-gray-300">→</span>
           {destination}
         </CardTitle>
-        <p className="text-sm mt-2 text-gray-400 text-center flex items-center justify-center gap-2">
+        <p className="text-sm mt-2 text-gray-300 text-center flex items-center justify-center gap-2">
           <Bus className="w-4 h-4 text-yellow-400" /> {vehicle}
         </p>
       </CardHeader>
@@ -41,14 +39,14 @@ export default function PublicRideCard({
           <Users className="w-4 h-4 text-green-400" />
           <span>
             {availableSeats}{" "}
-            <span className="text-gray-400">seats available</span>
+            <span className="text-gray-300">seats available</span>
           </span>
         </div>
 
         {/* Price */}
         <div className="flex items-center gap-2 text-sm">
           <span className="font-semibold text-orange-400">{price} KES</span>
-          <span className="text-gray-400">per seat</span>
+          <span className="text-gray-300">per seat</span>
         </div>
 
         {/* CTA buttons */}

@@ -26,7 +26,7 @@ const NavLink = ({ href, icon, label }: NavLinkProps) => {
       className={`relative flex flex-col items-center text-xs gap-[2px] cursor-pointer transition-all duration-300 ${
         isActive
           ? "text-white font-semibold"
-          : "text-gray-400 hover:text-gray-200"
+          : "text-gray-300 hover:text-gray-100"
       }`}
     >
       {icon}
@@ -66,14 +66,14 @@ const SmallScreensNavbar = () => {
         {/* Home */}
         <NavLink
           href="/driver"
-          icon={<LayoutDashboard className="w-4 h-4" />}
+          icon={<LayoutDashboard className="w-5 h-5" />}
           label="Home"
         />
 
         {/* My Rides */}
         <NavLink
           href="/driver/rides"
-          icon={<Car className="w-4 h-4" />}
+          icon={<Car className="w-5 h-5" />}
           label="My Rides"
         />
 
@@ -83,7 +83,7 @@ const SmallScreensNavbar = () => {
           className={`relative flex flex-col items-center text-xs gap-[2px] cursor-pointer transition-all duration-300 ${
             pathname === "/driver/post-ride"
               ? "text-green-500 font-medium"
-              : "text-gray-400 hover:text-gray-200"
+              : "text-gray-300 hover:text-gray-100"
           } group active:scale-90`}
         >
           <div
@@ -94,7 +94,7 @@ const SmallScreensNavbar = () => {
             }`}
           >
             <Plus
-              className={`w-4 h-4 ${
+              className={`w-5 h-5 ${
                 pathname === "/driver/post-ride"
                   ? "text-green-600"
                   : "text-green-500 group-hover:text-green-500"
@@ -105,8 +105,8 @@ const SmallScreensNavbar = () => {
         </div>
 
         {/* Notifications */}
-        <div className="relative flex flex-col group gap-[2px] cursor-pointer items-center text-xs text-gray-400 hover:text-gray-200">
-          <Bell className="w-4 h-4" />
+        <div className="relative flex flex-col group gap-[2px] cursor-pointer items-center text-xs text-gray-300 hover:text-gray-100">
+          <Bell className="w-5 h-5" />
           Alerts
           <div className="bg-green-500 flex items-center justify-center group-hover:bg-green-400 w-2 h-2 left-4 rounded-full absolute"></div>
         </div>

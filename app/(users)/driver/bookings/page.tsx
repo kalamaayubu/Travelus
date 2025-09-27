@@ -31,7 +31,7 @@ export default function Bookings() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.4, duration: 0.5 }}
-        className="text-gray-300 text-center mb-8 max-w-md"
+        className="text-gray-200 text-center mb-8 max-w-md"
       >
         This feature is under development. Stay tuned for updates and new
         functionality!

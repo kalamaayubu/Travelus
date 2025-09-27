@@ -8,10 +8,10 @@ export default function TopNav() {
   const pathname = usePathname();
 
   return (
-    <header className="h-16 md:flex text-gray-200 items-center justify-between py-3 pb-0">
+    <header className="h-16 md:flex text-gray-100 items-center justify-between py-3 pb-0">
       {/* Left section */}
       <div className="items-center gap-6 hidden md:flex">
-        <p className=" text-gray font-bold text-2xl rounded-md whitespace-nowrap">
+        <p className=" text-gray font-bold text-3xl rounded-md whitespace-nowrap">
           {pathname === "/driver" && (
             <span>
               Dashboard<span className="text-green-500 text-xl">.</span>
@@ -54,7 +54,7 @@ export default function TopNav() {
       {/* Right section */}
       <div className="md:flex hidden items-center gap-6 justify-end flex-1">
         {/* Notifications */}
-        <div className="relative cursor-pointer text-gray-300 hover:text-white transition-colors py-2 px-6 bg-gray-500/40 rounded-md">
+        <div className="relative cursor-pointer text-gray-200 hover:text-white transition-colors py-2 px-6 bg-gray-500/40 rounded-md">
           <Bell className="w-5 h-5" />
           <span className="absolute top-[6px] right-6 block w-2 h-2 bg-green-500 rounded-full" />
         </div>
@@ -64,7 +64,7 @@ export default function TopNav() {
       </div>
 
       {/* Header for small screens */}
-      <p className="text-2xl py-2 pb-0 md:hidden text-center font-bold">
+      <p className="text-3xl py-2 pb-0 md:hidden text-center font-bold">
         {pathname === "/driver" && (
           <span>
             Dashboard<span className="text-green-500 text-xl">.</span>

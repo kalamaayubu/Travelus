@@ -8,7 +8,7 @@ export default function TopNav() {
   const pathname = usePathname();
 
   return (
-    <header className="h-16 md:flex text-gray-200 items-center justify-between py-3 pb-0">
+    <header className="h-16 md:flex text-gray-100 items-center justify-between py-3 pb-0">
       {/* Left section - dynamic page title */}
       <div className="items-center gap-6 hidden md:flex">
         <p className="text-gray font-bold text-2xl rounded-md whitespace-nowrap">
@@ -50,14 +50,14 @@ export default function TopNav() {
         {/* Notifications */}
         <Link
           href={"/rider/notifications"}
-          className="relative cursor-pointer text-gray-300 hover:text-white transition-colors py-2 px-6 bg-gray-500/40 rounded-md"
+          className="relative cursor-pointer text-gray-200 hover:text-white transition-colors py-2 px-6 bg-gray-500/40 rounded-md"
         >
           <Bell className="w-5 h-5" />
           <span className="absolute top-[6px] right-6 block w-2 h-2 bg-green-500 rounded-full" />
         </Link>
 
         {/* Help / Support shortcut */}
-        <div className="cursor-pointer text-gray-300 hover:text-white transition-colors py-2 px-6 bg-gray-500/40 rounded-md flex items-center gap-2">
+        <div className="cursor-pointer text-gray-200 hover:text-white transition-colors py-2 px-6 bg-gray-500/40 rounded-md flex items-center gap-2">
           <HelpCircle className="w-5 h-5" />
           <span className="hidden lg:block">Help</span>
         </div>

@@ -42,7 +42,10 @@ export async function fetchDriverRides() {
   const user = await getUser();
 
   if (!user) {
-    return { success: false, error: "User not authenticated" };
+    return {
+      success: false,
+      error: "Please check your network connection and try again",
+    };
   }
 
   const { data: rides, error } = await supabase

@@ -90,7 +90,7 @@ export default function DriverRideConfirmationPage() {
               <User className="w-6 h-6 text-green-500/80" />
               <div>
                 <p className="font-semibold">{p.name}</p>
-                <p className="text-gray-400 text-sm">Seat: {p.seat}</p>
+                <p className="text-gray-300 text-sm">Seat: {p.seat}</p>
               </div>
             </div>
 
@@ -110,7 +110,7 @@ export default function DriverRideConfirmationPage() {
               {!p.confirmed && (
                 <button
                   onClick={() => sendNotification(p.id)}
-                  className="px-3 py-1 rounded-sm bg-blue-600 hover:bg-blue-600 text-gray-100 text-sm font-medium"
+                  className="px-3 py-1 rounded-sm bg-blue-600 hover:bg-blue-600 text-gray-50 text-sm font-medium"
                 >
                   Notify
                 </button>

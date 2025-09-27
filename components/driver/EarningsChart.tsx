@@ -38,7 +38,7 @@ export default function EarningsChart() {
                 if (active && payload && payload.length) {
                   return (
                     <div className="rounded-sm bg-zinc-800/95 text-white px-3 py-2 border border-zinc-700">
-                      <p className="text-xs text-gray-400">{label}</p>
+                      <p className="text-xs text-gray-300">{label}</p>
                       <p className="text-sm font-semibold">
                         {payload[0].name}: {payload[0].value}
                       </p>

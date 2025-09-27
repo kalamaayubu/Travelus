@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { Armchair, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -13,23 +13,31 @@ const BookingSummary = ({
   selectedSeats,
   pricePerSeat,
   isProceeding,
-  onProceed
+  onProceed,
 }: BookingSummaryProps) => {
   return (
     <div className="mb-8 p-8 border bg-gray-900 w-full max-w-[800px] rounded-xl">
-      <h2 className="mb-4 text-xl text-gray-300">Summary</h2>
+      <h2 className="mb-4 text-xl text-gray-200">Summary</h2>
       <div className="flex flex-col border p-4 rounded-lg gap-6">
-        <p>Selected seats: {selectedSeats.length > 0 ? selectedSeats.join(", ") : 'NONE'} </p>
-        <p className="flex items-center justify-between">Fare (per seat): <span>{ pricePerSeat }/=</span></p>
+        <p>
+          Selected seats:{" "}
+          {selectedSeats.length > 0 ? selectedSeats.join(", ") : "NONE"}{" "}
+        </p>
+        <p className="flex items-center justify-between">
+          Fare (per seat): <span>{pricePerSeat}/=</span>
+        </p>
 
         {selectedSeats.length > 0 && (
           <div className="flex items-center justify-between mt-2">
             <div className="flex relative w-10 h-10 bg-gray-700 rounded-full p-2">
               <Armchair />
-              <div className="bg-gray-50 rounded-full absolute -translate-y-5 translate-x-4 w-6 h-6 text-center text-gray-900">{selectedSeats.length}</div>
+              <div className="bg-gray-50 rounded-full absolute -translate-y-5 translate-x-4 w-6 h-6 text-center text-gray-900">
+                {selectedSeats.length}
+              </div>
             </div>
             <p className="flex items-center justify-between gap-4">
-              <span>Total cost: </span><span>{ selectedSeats.length * pricePerSeat }/=</span>
+              <span>Total cost: </span>
+              <span>{selectedSeats.length * pricePerSeat}/=</span>
             </p>
           </div>
         )}
@@ -44,10 +52,14 @@ const BookingSummary = ({
               : ""
           )}
         >
-          { isProceeding 
-            ? <span className="flex items-center justify-center gap-4"><Loader2 className="w-4 animate-spin"/>Proceeding...</span> 
-            : 'Proceed'
-          }
+          {isProceeding ? (
+            <span className="flex items-center justify-center gap-4">
+              <Loader2 className="w-4 animate-spin" />
+              Proceeding...
+            </span>
+          ) : (
+            "Proceed"
+          )}
         </button>
       </div>
     </div>

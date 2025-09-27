@@ -48,9 +48,9 @@ const NotificationsPage = () => {
               <div className="flex items-start justify-between">
                 <div>
                   <h3 className="font-semibold">{notif.title}</h3>
-                  <p className="text-sm text-gray-300">{notif.description}</p>
+                  <p className="text-sm text-gray-200">{notif.description}</p>
                 </div>
-                <span className="text-xs text-gray-400">{notif.time}</span>
+                <span className="text-xs text-gray-300">{notif.time}</span>
               </div>
 
               {isConfirmed && (

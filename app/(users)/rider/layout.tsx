@@ -11,7 +11,7 @@ export default function RiderDashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="h-screen flex flex-col text-gray-400">
+    <div className="h-screen flex flex-col text-gray-300">
       <div className="flex flex-1 overflow-hidden">
         <Sidebar /> {/* Sidebar */}
         {/* TopNav and Main page content */}

@@ -35,7 +35,7 @@ export default function RideCard({
 
   return (
     <div className="relative">
-      <Card className="w-full border border-white/10 max-w-md mx-auto text-gray-300 rounded-lg bg-gray-700/40 transition-colors duration-300">
+      <Card className="w-full border border-white/10 max-w-md mx-auto text-gray-200 rounded-lg bg-gray-700/40 transition-colors duration-300">
         <CardContent className="space-y-3">
           {/* Departure → Destination */}
           <div className="flex items-center justify-center gap-2 text-xl font-bold mb-10">
@@ -43,7 +43,7 @@ export default function RideCard({
               <MapPin className="min-w-4 min-h-4 max-w-4 max-h-4 text-purple-500" />
               <span>{ride.departureLocation}</span>
             </div>
-            <span className="text-gray-400">→</span>
+            <span className="text-gray-300">→</span>
             <div className="flex items-center gap-2">
               <span>{ride.destinationLocation}</span>
             </div>
@@ -61,7 +61,7 @@ export default function RideCard({
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Bus className="w-4 h-4 text-yellow-400" />
-              <span className="text-gray-400">{ride.vehicle}</span>
+              <span className="text-gray-300">{ride.vehicle}</span>
             </div>
           </div>
 
@@ -69,7 +69,7 @@ export default function RideCard({
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Users className="w-4 h-4 text-emerald-500" />
-              <span className="text-gray-400">
+              <span className="text-gray-300">
                 {ride.remainingSeats} Empty seats
               </span>
             </div>
@@ -77,7 +77,7 @@ export default function RideCard({
 
           {/* Status */}
           <div className="flex items-center justify-between">
-            <div className="text-xs text-gray-400">
+            <div className="text-xs text-gray-300">
               Status:{" "}
               <span className="font-medium text-green-400">{ride.status}</span>
             </div>
@@ -90,7 +90,7 @@ export default function RideCard({
           {/* More actions */}
           <MoreHorizontal
             onClick={() => setShowRidePostActions((prev) => !prev)}
-            className="w-5 h-5 text-gray-300 cursor-pointer float-right"
+            className="w-5 h-5 text-gray-200 cursor-pointer float-right"
           />
         </CardContent>
       </Card>
@@ -102,14 +102,14 @@ export default function RideCard({
           className="flex flex-col overflow-hidden text-sm absolute bottom-2 right-12 bg-gray-700/100 border rounded-sm"
         >
           <p
-            className="border-b border-white/5 py-2 px-6 cursor-pointer active:scale-110 hover:bg-white/5 hover:text-gray-100 transition-all duration-300"
+            className="border-b border-white/5 py-2 px-6 cursor-pointer active:scale-110 hover:bg-white/5 hover:text-gray-50 transition-all duration-300"
             onClick={onEdit}
           >
             Edit Trip
           </p>
           {/* {ride.status !== "Completed" && (
             <p
-              className="py-2 px-6 cursor-pointer active:scale-110 hover:bg-white/5 hover:text-gray-100 transition-all duration-300"
+              className="py-2 px-6 cursor-pointer active:scale-110 hover:bg-white/5 hover:text-gray-50 transition-all duration-300"
               onClick={onCancel}
             >
               {ride.status === "Active" ? "Cancel Trip" : "Reinstate"}
@@ -117,7 +117,7 @@ export default function RideCard({
           )} */}
           {onDelete && (
             <p
-              className="py-2 px-6 cursor-pointer active:scale-110 hover:bg-white/5 hover:text-gray-100 transition-all duration-300"
+              className="py-2 px-6 cursor-pointer active:scale-110 hover:bg-white/5 hover:text-gray-50 transition-all duration-300"
               onClick={onDelete}
             >
               Delete Trip

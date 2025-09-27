@@ -78,7 +78,7 @@ const RiderHomePage = () => {
               className="p-4 bg-gradient-to-r from-gray-100 to-gray-200 dark:from-gray-800/20 dark:to-gray-900/30 rounded-2xl shadow-md hover:shadow-lg transition-all cursor-pointer flex justify-between items-center"
             >
               <span className="font-medium">{ride.route}</span>
-              <span className="text-sm text-gray-500">{ride.date}</span>
+              <span className="text-sm text-gray-00">{ride.date}</span>
             </motion.div>
           ))}
         </div>
@@ -96,7 +96,7 @@ const RiderHomePage = () => {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: idx * 0.1 }}
-              className="p-3 rounded-xl bg-white dark:bg-gray-800 shadow hover:shadow-lg transition-all cursor-pointer flex items-center gap-2 text-gray-800 dark:text-gray-200"
+              className="p-3 rounded-xl bg-white dark:bg-gray-800 shadow hover:shadow-lg transition-all cursor-pointer flex items-center gap-2 text-gray-800 dark:text-gray-100"
             >
               <Bell className="w-5 h-5 text-green-500" />
               <span className="text-sm">{alert}</span>

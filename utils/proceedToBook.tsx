@@ -24,7 +24,7 @@
 //           <X className="font-bold text-red-600 opacity-100"/>
 //         </button>
 //         <p className="text-center text-xl font-bold">Login Required</p>
-//         <p className="text-sm text-center text-gray-400">
+//         <p className="text-sm text-center text-gray-300">
 //           Please log in to continue with your booking.
 //         </p>
 //         <button className="primary-btn py-5 mt-4" onClick={() => (window.location.href = '/auth/login')}>

@@ -37,7 +37,7 @@ export default function LoginPage() {
 
   return (
     <>
-      <p className="text-center text-gray-400 mb-8">
+      <p className="text-center text-gray-300 mb-8">
         Enter your credentials to log in.
       </p>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
@@ -45,7 +45,7 @@ export default function LoginPage() {
         <div>
           <label
             htmlFor="email"
-            className="block text-sm font-medium mb-1 text-gray-400"
+            className="block text-sm font-medium mb-1 text-gray-300"
           >
             Email
           </label>
@@ -67,7 +67,7 @@ export default function LoginPage() {
         <div>
           <label
             htmlFor="password"
-            className="block text-sm mb-1 font-medium text-gray-400"
+            className="block text-sm mb-1 font-medium text-gray-300"
           >
             Password
           </label>
@@ -103,7 +103,7 @@ export default function LoginPage() {
         </button>
       </form>
 
-      <p className="text-center text-sm text-gray-400 mt-6">
+      <p className="text-center text-sm text-gray-300 mt-6">
         Don’t have an account?{" "}
         <Link href="/auth/signup" className="text-green-500 hover:underline">
           Sign Up

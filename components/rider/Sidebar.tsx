@@ -72,7 +72,7 @@ const Sidebar = () => {
     <motion.aside
       animate={{ width: openSidebar ? 208 : 76 }}
       transition={{ duration: 0.3, ease: "easeInOut" }}
-      className="relative h-screen bg-gray-50/10 text-gray-400 hidden md:flex flex-col p-4 py-5 space-y-2"
+      className="relative h-screen bg-gray-50/10 text-gray-300 hidden md:flex flex-col p-4 py-5 space-y-2"
     >
       {/* Logo + title */}
       <div className="flex items-center gap-2 overflow-hidden mb-8 ml-2">
@@ -101,7 +101,7 @@ const Sidebar = () => {
       {/* Toggle button */}
       <SidebarOpen
         onClick={() => setOpenSidebar((prev) => !prev)}
-        className={`absolute -right-4 top-4 w-8 h-8 p-2 rounded-full bg-gray-700/90 text-gray-400 hover:text-gray-200 hover:bg-gray-700 cursor-pointer transition-transform duration-300 ${
+        className={`absolute -right-4 top-4 w-8 h-8 p-2 rounded-full bg-gray-700/90 text-gray-300 hover:text-gray-100 hover:bg-gray-700 cursor-pointer transition-transform duration-300 ${
           openSidebar ? "rotate-180" : ""
         }`}
       />
@@ -111,10 +111,10 @@ const Sidebar = () => {
         <Link
           key={href}
           href={href}
-          className={`flex items-center w-full whitespace-nowrap gap-3 px-3 py-2 rounded-md hover:bg-gray-50/5 hover:text-gray-200 transition-colors ${
+          className={`flex items-center w-full whitespace-nowrap gap-3 px-3 py-2 rounded-md hover:bg-gray-50/5 hover:text-gray-100 transition-colors ${
             pathname === href
-              ? "bg-gray-50/10 hover:bg-gray-50/10 text-gray-50"
-              : "text-gray-400"
+              ? "bg-gray-50/10 hover:bg-gray-50/10 text-gray-0"
+              : "text-gray-300"
           }`}
         >
           <Icon className="w-5 h-5 flex-shrink-0" />
@@ -139,7 +139,7 @@ const Sidebar = () => {
         items={footerItems}
         contentClassName="absolute bottom-0 mb-2 w-48 hidden md:flex flex-col"
         trigger={
-          <div className="flex mx-4 bg-gray-50/5 absolute bottom-4 left-0 right-0 px-3 items-center justify-between gap-2 cursor-pointer py-2 hover:bg-white/10 rounded-md text-gray-300 hover:text-gray-200 transition-colors">
+          <div className="flex mx-4 bg-gray-50/5 absolute bottom-4 left-0 right-0 px-3 items-center justify-between gap-2 cursor-pointer py-2 hover:bg-white/10 rounded-md text-gray-200 hover:text-gray-100 transition-colors">
             <User className="w-7 h-7 rounded-full border border-gray-700 p-1 flex-shrink-0" />
             {isClient && (
               <AnimatePresence>

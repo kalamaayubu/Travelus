@@ -28,8 +28,8 @@ export default function Testimonials() {
   return (
     <section id="testimonials" className="relative py-20 bg-gray-950">
       <div className="relative z-10 max-w-6xl mx-auto px-6 text-center">
-        <Heading title="What they say about Travelus"/>
-        <p className="text-gray-400 max-w-2xl mx-auto mb-12 mt-6">
+        <Heading title="What they say about Travelus" />
+        <p className="text-gray-300 max-w-2xl mx-auto mb-12 mt-6">
           Real experiences from people moving with us every day.
         </p>
 
@@ -50,9 +50,9 @@ export default function Testimonials() {
                 height={200}
                 className="w-14 h-14 object-cover rounded-full mx-auto mb-4 border border-white/20"
               />
-              <h3 className="text-lg font-semibold text-gray-300">{t.name}</h3>
-              <p className="text-sm text-gray-500 mb-3">{t.role}</p>
-              <p className="text-gray-400 italic">“{t.text}”</p>
+              <h3 className="text-lg font-semibold text-gray-200">{t.name}</h3>
+              <p className="text-sm text-gray-00 mb-3">{t.role}</p>
+              <p className="text-gray-300 italic">“{t.text}”</p>
               <div className="flex justify-center mt-3 text-green-600">
                 {"★★★★★"}
               </div>

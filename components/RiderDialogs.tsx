@@ -142,7 +142,7 @@ const RiderDialogs = ({
             </p>
           )}
 
-          <p className="text-[12px] text-gray-400 -translate-y-4">
+          <p className="text-[12px] text-gray-300 -translate-y-4">
             This number will be used to make your payments
           </p>
 

@@ -13,27 +13,35 @@ import AlertDialog from "../reusable/AlertDialog";
 export default function FeedbackSection() {
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
-  const [showAlertDialog, setShowAlertDialog] = useState(false)
+  const [showAlertDialog, setShowAlertDialog] = useState(false);
 
-  const { handleSubmit, register, reset, formState: { errors, isSubmitting }} = useForm()
+  const {
+    handleSubmit,
+    register,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm();
 
   const onSubmit = async (data: FeedbackFormData) => {
-    const res = await sendFeedback(data)
+    const res = await sendFeedback(data);
     if (!res.success) {
-      toast.error(res.error)
-      return
+      toast.error(res.error);
+      return;
     }
 
-    setShowAlertDialog(true)
-    reset()
-  }
+    setShowAlertDialog(true);
+    reset();
+  };
 
   return (
     <>
-      <section id="feedback" className="py-20 px-6 bg-gradient-to-tl from-gray-950 to-gray-900 text-white">
+      <section
+        id="feedback"
+        className="py-20 px-6 bg-gradient-to-tl from-gray-950 to-gray-900 text-white"
+      >
         <div className="max-w-3xl mx-auto text-center mb-12">
-          <Heading title="We Value Your Feedback"/>
-          <p className="text-gray-400 mt-2">
+          <Heading title="We Value Your Feedback" />
+          <p className="text-gray-200 mt-2">
             Help us improve Travelus by sharing your thoughts. 🚀
           </p>
         </div>
@@ -60,7 +68,7 @@ export default function FeedbackSection() {
                 >
                   <Star
                     className={`w-4 h-4 ${
-                      starValue <= (hover || rating) ? "fill-indigo-600 text-indigo-600" : "text-gray-500"
+                      starValue <= (hover || rating) ? "fill-indigo-600 text-indigo-600" : "text-gray-00"
                     }`}
                   />
                 </button>
@@ -86,39 +94,51 @@ export default function FeedbackSection() {
             )} */}
 
             <motion.input
-              whileFocus={{ scale: 1.02, borderColor: "#22c55e", boxShadow: "0 0 10px #22c55e" }}
+              whileFocus={{
+                scale: 1.02,
+                borderColor: "#22c55e",
+                boxShadow: "0 0 10px #22c55e",
+              }}
               transition={{ type: "spring", stiffness: 300 }}
               type="email"
               placeholder="Enter your email (optional)"
               className="w-full rounded-lg p-3 bg-gray-700/5 border border-white/10 text-white placeholder-gray-400 focus:outline-none"
-              {...register('email', {
+              {...register("email", {
                 // required: "Email is required",
                 pattern: {
                   value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                  message: "Enter a valid email address"
-                }
+                  message: "Enter a valid email address",
+                },
               })}
             />
-            { errors?.email?.message && (
-              <p className="text-sm text-red-500 -translate-y-5">{errors?.email?.message}</p>
+            {errors?.email?.message && (
+              <p className="text-sm text-red-500 -translate-y-5">
+                {errors?.email?.message}
+              </p>
             )}
 
             <motion.textarea
-              whileFocus={{ scale: 1.02, borderColor: "#22c55e", boxShadow: "0 0 10px #22c55e" }}
+              whileFocus={{
+                scale: 1.02,
+                borderColor: "#22c55e",
+                boxShadow: "0 0 10px #22c55e",
+              }}
               transition={{ type: "spring", stiffness: 300 }}
               placeholder="Your thoughts here..."
               rows={4}
               className="w-full rounded-lg p-3 bg-gray-700/5 border border-white/10 text-white placeholder-gray-400 focus:outline-none"
-              {...register('content', {
-                required: 'Your feedback is required before submission.',
+              {...register("content", {
+                required: "Your feedback is required before submission.",
                 minLength: {
                   value: 15,
-                  message: 'Your feeback must be atleast 15 characters long.'
-                } 
+                  message: "Your feeback must be atleast 15 characters long.",
+                },
               })}
             />
-            { errors?.content?.message && (
-              <p className="text-sm text-red-500 -translate-y-6">{errors?.content?.message}</p>
+            {errors?.content?.message && (
+              <p className="text-sm text-red-500 -translate-y-6">
+                {errors?.content?.message}
+              </p>
             )}
 
             <motion.button
@@ -128,7 +148,7 @@ export default function FeedbackSection() {
               className="w-full py-3 bg-green-600 rounded-lg font-semibold shadow-lg"
               disabled={isSubmitting}
             >
-              { isSubmitting ? 'Submitting...' : 'Send Feedback ✨'}
+              {isSubmitting ? "Submitting..." : "Send Feedback ✨"}
             </motion.button>
           </form>
         </motion.div>
@@ -137,9 +157,10 @@ export default function FeedbackSection() {
       <AlertDialog
         open={showAlertDialog}
         onOpenChange={setShowAlertDialog}
-        icon={<Check  className="w-6 h-6 text-green-500" />}
-        title="We Appreciate You!"
-        description="Thanks for sharing your thoughts — we really appreciate it."
+        icon={<Check className="w-6 h-6 text-green-500" />}
+        title="Message Received"
+        description="Thanks for sharing your thoughts, we really appreciate you"
+        actionLabel="Okay"
         onAction={() => setShowAlertDialog(false)}
       />
     </>

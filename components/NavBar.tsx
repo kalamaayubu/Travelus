@@ -30,28 +30,28 @@ const NavBar = () => {
           <Link
             onClick={() => setIsMenuOpen(false)}
             href={"/#faqs"}
-            className="mx-4 text-gray-300 hover:text-green-600"
+            className="mx-4 text-gray-200 hover:text-green-600"
           >
             FAQs
           </Link>
           <Link
             onClick={() => setIsMenuOpen(false)}
             href={"/#about"}
-            className="mx-4 text-gray-300 hover:text-green-600"
+            className="mx-4 text-gray-200 hover:text-green-600"
           >
             About Us
           </Link>
           <Link
             onClick={() => setIsMenuOpen(false)}
             href={"/#feedback"}
-            className="mx-4 text-gray-300 hover:text-green-600"
+            className="mx-4 text-gray-200 hover:text-green-600"
           >
             Feedback
           </Link>
           <Link
             onClick={() => setIsMenuOpen(false)}
             href={"/#waitlist"}
-            className="mx-4 text-gray-300 hover:text-green-600"
+            className="mx-4 text-gray-200 hover:text-green-600"
           >
             Join waitlist
           </Link>
@@ -99,7 +99,7 @@ const NavBar = () => {
               </div>
 
               {/* Menu content */}
-              <ul className="flex flex-col gap-4 mt-10 text-gray-300">
+              <ul className="flex flex-col gap-4 mt-10 text-gray-200">
                 <Link
                   onClick={() => setIsMenuOpen(false)}
                   href={"/"}

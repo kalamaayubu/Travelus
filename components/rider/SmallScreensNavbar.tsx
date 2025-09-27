@@ -24,7 +24,7 @@ const NavLink = ({ href, icon, label, badge }: NavLinkProps) => {
       className={`relative flex flex-col items-center text-xs gap-[2px] cursor-pointer transition-all duration-300 ${
         isActive
           ? "text-white font-semibold"
-          : "text-gray-400 hover:text-gray-200"
+          : "text-gray-300 hover:text-gray-100"
       }`}
     >
       {icon}

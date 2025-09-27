@@ -31,53 +31,53 @@ const MoreDropdown = ({ dispatch }: MoreDropdownProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="bg-transparent outline-none p-0 rounded-none">
-        <div className="flex flex-col gap-[2px] cursor-pointer items-center text-xs text-gray-400 hover:text-gray-200">
+        <div className="flex flex-col gap-[8px] cursor-pointer items-center text-xs text-gray-300 hover:text-gray-100">
           <MoreVertical className="w-4 h-4" />
           More
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="bg-gray-800/90 backdrop-blur-sm rounded-md border border-white/10">
-        <DropdownMenuLabel className="text-gray-300 py-1 px-3 text-sm">
+        <DropdownMenuLabel className="text-gray-200 py-1 px-3 text-sm">
           More options
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem
-          className="flex items-center gap-2 text-sm text-gray-300 hover:bg-gray-50/5 hover:text-white transition-all duration-300"
+          className="flex items-center gap-2 text-sm text-gray-200 hover:bg-gray-50/5 hover:text-white transition-all duration-300"
           onClick={() => router.push("/driver/profile")}
         >
           <User className="w-[15px]" />
           Profile
         </DropdownMenuItem>
         <DropdownMenuItem
-          className="flex items-center gap-2 text-sm text-gray-300 hover:bg-gray-50/5 hover:text-white transition-all duration-300"
+          className="flex items-center gap-2 text-sm text-gray-200 hover:bg-gray-50/5 hover:text-white transition-all duration-300"
           onClick={() => router.push("/driver/approvals")}
         >
           <ShieldCheck className="w-[15px]" />
           Approvals
         </DropdownMenuItem>
         <DropdownMenuItem
-          className="flex items-center gap-2 text-sm text-gray-300 hover:bg-gray-50/5 hover:text-white transition-all duration-300"
+          className="flex items-center gap-2 text-sm text-gray-200 hover:bg-gray-50/5 hover:text-white transition-all duration-300"
           onClick={() => router.push("/driver/bookings")}
         >
           <CircuitBoard className="w-[15px]" />
           Bookings
         </DropdownMenuItem>
         <DropdownMenuItem
-          className="flex items-center gap-2 text-sm text-gray-300 hover:bg-gray-50/5 hover:text-white transition-all duration-300"
+          className="flex items-center gap-2 text-sm text-gray-200 hover:bg-gray-50/5 hover:text-white transition-all duration-300"
           onClick={() => router.push("/driver/payments")}
         >
           <CreditCard className="w-[15px]" />
           Payments
         </DropdownMenuItem>
         <DropdownMenuItem
-          className="flex items-center gap-2 text-sm text-gray-300 hover:bg-gray-50/5 hover:text-white transition-all duration-300"
+          className="flex items-center gap-2 text-sm text-gray-200 hover:bg-gray-50/5 hover:text-white transition-all duration-300"
           onClick={() => router.push("/driver/settings")}
         >
           <Settings className="w-[15px]" />
           Settings
         </DropdownMenuItem>
         <DropdownMenuItem
-          className="flex items-center gap-2 text-sm text-gray-300 hover:bg-red-500/80 hover:text-white transition-all duration-300"
+          className="flex items-center gap-2 text-sm text-gray-200 hover:bg-red-500/80 hover:text-white transition-all duration-300"
           onClick={() => {
             dispatch(clearUser());
             logout();

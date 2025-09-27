@@ -54,8 +54,8 @@ export default function Footer() {
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1  lg:grid-cols-4 gap-12">
           {/* Logo + mission */}
           <div>
-            <h3 className="text-2xl font-bold text-gray-300 mb-4">Travelus</h3>
-            <p className="text-gray-500 text-sm leading-relaxed max-w-md">
+            <h3 className="text-2xl font-bold text-gray-50 mb-4">Travelus</h3>
+            <p className="text-gray-300 leading-relaxed max-w-md">
               Reimagining travel for the modern world. Connecting people,
               places, and possibilities.
             </p>
@@ -63,10 +63,10 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-lg font-semibold text-gray-300 mb-4">
+            <h4 className="text-lg font-semibold text-gray-50 mb-4">
               Quick Links
             </h4>
-            <ul className="space-y-3 text-gray-400 text-sm">
+            <ul className="space-y-3 text-gray-200">
               <li>
                 <Link
                   href="/#about"
@@ -91,7 +91,7 @@ export default function Footer() {
             <h4 className="text-lg font-semibold text-white mb-3">
               Join the waitlist
             </h4>
-            <p className="text-gray-500 text-sm mb-4 max-w-md">
+            <p className="text-gray-300 mb-4 max-w-md">
               Join the waitlist now and be the first to know when Travelus is
               launched.
             </p>
@@ -109,7 +109,7 @@ export default function Footer() {
                     message: "Enter a valid email address",
                   },
                 })}
-                className={`rounded-lg bg-gray-900 text-gray-200 placeholder-gray-500 
+                className={`rounded-lg bg-gray-900 text-gray-100 placeholder-gray-500 
                   border border-gray-700 focus:border-indigo-500 focus:outline-none 
                   animate-pulse focus:animate-none
                   ${errors.email ? "border-red-500 focus:border-indigo-500" : ""}
@@ -132,8 +132,8 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-16 border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-sm px-10">
-          <p className="text-gray-500">
+        <div className="mt-16 border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center px-10">
+          <p className="text-gray-300">
             © {new Date().getFullYear()} Travelus. All rights reserved.
           </p>
           <div className="flex space-x-6 mt-4 md:mt-0">
@@ -141,7 +141,7 @@ export default function Footer() {
               href="https://linkedin.com/in/johana-kalama-8083ba2b5"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-blue-400 transition text-xl"
+              className="text-gray-200 hover:text-blue-400 transition text-xl"
             >
               <FaLinkedin />
             </a>
@@ -149,7 +149,7 @@ export default function Footer() {
               href="https://t.me/kalamaayubu"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-blue-600 transition text-xl"
+              className="text-gray-200 hover:text-blue-600 transition text-xl"
             >
               <FaTelegram />
             </a>
