@@ -3,10 +3,10 @@ export default function Loading() {
     <div className="space-y-6">
       {/* Ride cards skeleton */}
       <div className="flex gap-6 flex-wrap justify-center md:justify-start">
-        {Array.from({ length: 6 }).map((_, i) => (
+        {Array.from({ length: 9 }).map((_, i) => (
           <div
             key={i}
-            className="space-y-3 p-4 h-64 sm:w-72 w-full bg-gray-800 rounded-xl shadow-md border border-gray-700 animate-pulse"
+            className="space-y-3 p-4 flex-1 h-[280px] sm:w-72 w-full bg-gray-800 rounded-xl shadow-md border border-gray-700 animate-pulse"
           >
             {/* Top row: locations */}
             <div className="flex justify-between items-center mb-8">
@@ -30,5 +30,5 @@ export default function Loading() {
         ))}
       </div>
     </div>
-  )
+  );
 }
