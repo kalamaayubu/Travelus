@@ -65,19 +65,14 @@ const RideConfirmationDialog = ({ notif, onClose, onConfirmed }) => {
         open={!!notif && status !== "success"}
         onOpenChange={onClose}
         title="Confirm Ride Boarding"
-        description="Please confirm that you have boarded this ride. Once confirmed, payment will be disbursed to the driver."
+        description="Press and hold the button below to confirm that you have boarded this ride."
         icon={<CheckCircle className="text-orange-500" size={28} />}
       >
-        {status === "idle" && (
-          <button onClick={onClose} className="secondary-btn w-full mb-3">
-            Cancel
-          </button>
-        )}
         <motion.div
-          className={`w-full h-10 rounded-lg overflow-hidden relative ${
+          className={`w-full h-10 rounded-lg overflow-hidden relative mb-3 ${
             status === "confirming"
               ? "bg-gray-600 cursor-not-allowed"
-              : "bg-gray-700 cursor-pointer"
+              : "bg-green-600/20 border border-green-600 cursor-pointer"
           }`}
           onMouseDown={() => status === "idle" && setIsHolding(true)}
           onMouseUp={() => setIsHolding(false)}
@@ -90,7 +85,7 @@ const RideConfirmationDialog = ({ notif, onClose, onConfirmed }) => {
             animate={{ width: `${holdProgress}%` }}
             transition={{ ease: "linear", duration: 0.2 }}
           />
-          <span className="absolute select-none inset-0 flex items-center justify-center text-white font-medium">
+          <span className="absolute select-none inset-0 flex items-center justify-center text-white">
             {status === "confirming"
               ? "Confirming..."
               : holdProgress > 0
@@ -98,6 +93,11 @@ const RideConfirmationDialog = ({ notif, onClose, onConfirmed }) => {
                 : "Press & Hold to Confirm"}
           </span>
         </motion.div>
+        {status === "idle" && (
+          <button onClick={onClose} className="secondary-btn w-full">
+            Cancel
+          </button>
+        )}
       </AlertDialog>
 
       {/* ✅ Success dialog */}
@@ -115,7 +115,7 @@ const RideConfirmationDialog = ({ notif, onClose, onConfirmed }) => {
           onClose();
         }}
         title="Ride Confirmed"
-        description="Your ride has been confirmed successfully. Payment will be released to the driver."
+        description="Your ride has been confirmed successfully. Have a nice time."
         icon={<CheckCircle className="text-green-500" size={28} />}
       />
 

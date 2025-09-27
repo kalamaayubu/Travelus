@@ -23,14 +23,17 @@ export default function RideDistributionChart() {
               cx="50%"
               cy="50%"
               outerRadius={100}
-              innerRadius={80}
+              // innerRadius={80}
               dataKey="value"
               labelLine={false}
               label={({ percent }) => `${(percent * 100).toFixed(0)}%`}
               stroke="none"
             >
               {rideDistribution.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                <Cell
+                  key={`cell-${index}`}
+                  fill={COLORS[index % COLORS.length]}
+                />
               ))}
             </Pie>
             <Legend />

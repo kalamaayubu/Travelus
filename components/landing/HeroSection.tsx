@@ -12,9 +12,21 @@ export default function Hero() {
 
   useEffect(() => {
     // Intro animations
-    gsap.fromTo(imgRef.current, { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 1, ease: "power3.out" });
-    gsap.fromTo(textRef.current, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 1, delay: 0.4, ease: "power3.out" });
-    gsap.fromTo(btnRef.current, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 1, delay: 0.8, ease: "power3.out" });
+    gsap.fromTo(
+      imgRef.current,
+      { y: 50, opacity: 0 },
+      { y: 0, opacity: 1, duration: 1, ease: "power3.out" }
+    );
+    gsap.fromTo(
+      textRef.current,
+      { y: 20, opacity: 0 },
+      { y: 0, opacity: 1, duration: 1, delay: 0.4, ease: "power3.out" }
+    );
+    gsap.fromTo(
+      btnRef.current,
+      { y: 20, opacity: 0 },
+      { y: 0, opacity: 1, duration: 1, delay: 0.8, ease: "power3.out" }
+    );
 
     // Gentle sway for the beam (like a hand-held torch)
     gsap.to(beamRef.current, {
@@ -28,7 +40,10 @@ export default function Hero() {
   }, []);
 
   return (
-    <section id="hero" className="relative flex flex-col items-center justify-center text-center pt-32 pb-24 px-6 bg-gray-950 overflow-hidden">
+    <section
+      id="hero"
+      className="relative flex flex-col items-center justify-center text-center pt-32 pb-24 px-6 bg-gray-950 overflow-hidden"
+    >
       {/* Torch Light Cone (SVG) */}
       <svg
         className="pointer-events-none absolute animate-pulse top-0 left-1/2 -translate-x-1/2"
@@ -54,7 +69,13 @@ export default function Hero() {
           </linearGradient>
 
           <mask id="soft-edges">
-            <rect x="0" y="0" width="100%" height="100%" fill="url(#side-fade)" />
+            <rect
+              x="0"
+              y="0"
+              width="100%"
+              height="100%"
+              fill="url(#side-fade)"
+            />
           </mask>
 
           {/* Optional soft blur for the entire cone */}
@@ -86,18 +107,27 @@ export default function Hero() {
 
       <div className="">
         {/* Tag/brief catch description of what travelus is */}
-        <p className="mt-6 max-w-xl text-gray-500 text-lg md:text-xl relative z-10">
-            Seamless<span className="green-indigo_text-gradient font-bold italic"> connection </span>
+        <p className="mt-6 max-w-xl font-bold text-gray-300 text-3xl relative z-10">
+          Connecting drivers with empty seats to passengers going the
+          <span className="green-indigo_text-gradient font-bold">
+            {" "}
+            same way
+          </span>
+          {/* Seamless<span className="green-indigo_text-gradient font-bold italic"> connection </span>
             between drivers/vehicle owners and passengers in real time, making daily travels
-            faster and more reliable.
+            faster and more reliable. */}
         </p>
 
         <button
-            ref={btnRef}
-            onClick={() => document.getElementById("waitlist")?.scrollIntoView({ behavior: "smooth" })}
-            className="px-10 py-3 mt-6 rounded-lg font-semibold animate-pulse hover:animate-none transition-all duration-300 text-white hover:shadow-[0_0_40px_rgba(22,163,74,0.9)] shadow-[0_0_30px_rgba(22,163,74,0.8)]"
+          ref={btnRef}
+          onClick={() =>
+            document
+              .getElementById("waitlist")
+              ?.scrollIntoView({ behavior: "smooth" })
+          }
+          className="px-10 py-3 mt-6 rounded-lg font-semibold animate-pulse hover:animate-none transition-all duration-300 text-white hover:shadow-[0_0_40px_rgba(22,163,74,0.9)] shadow-[0_0_30px_rgba(22,163,74,0.8)]"
         >
-            Be Part of the Network
+          Be Part of the Network
         </button>
       </div>
     </section>

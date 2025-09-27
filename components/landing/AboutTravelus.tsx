@@ -12,13 +12,13 @@ const steps = [
     icon: <Users className="w-6 h-6 text-purple-500" />,
     title: "Explore trips",
     description:
-    "Browse available trips in seconds and connect with people heading your way. Finding a seat has never been this simple.",
+      "Browse available trips in seconds and connect with people heading your way. Finding a seat has never been this simple.",
   },
   {
     icon: <Calendar className="w-6 h-6 text-blue-500" />,
     title: "Book with Ease",
     description:
-    'Reserve the exact seat you prefer from a visual seat layout, and skip the hassle of last-minute arrangements or overpriced rides.'
+      "Reserve the exact seat you prefer from a visual seat layout, and skip the hassle of last-minute arrangements or overpriced rides.",
   },
   {
     icon: <CheckCircle className="w-6 h-6 text-green-500" />,
@@ -28,22 +28,24 @@ const steps = [
   },
 ];
 
-
 const AboutTravelus = () => {
   return (
     <section id="about" className="relative py-20 pb-36 px-6">
       <div className="max-w-5xl mx-auto text-center">
         {/* Heading */}
         <Heading title="More About Travelus" />
-        <p className="mt-8 text-gray-500 text-lg md:text-xl">
-          <strong className="text-green-600 opacity-90">Travelus</strong> is a modern ride-sharing platform that connects 
-          <strong> drivers with empty seats</strong> to passengers heading the same way. 
-          During peak times—like school openings or when public vehicles are full—it provides a 
-          <strong> reliable alternative</strong>. Even outside rush hours, it remains a 
-          <strong className="text-indigo-500 opacity-90"> smart choice</strong>: drivers earn from seats that would otherwise go empty by 
-          offering rides at a relatively lower cost, and passengers enjoy a 
-          <strong> smooth, affordable, and reliable journey</strong>. In the end, 
-          everyone goes home happy😂.
+        <p className="mt-8 text-gray-300 text-lg md:text-xl">
+          <strong className="text-green-600 opacity-90">Travelus</strong> is a
+          modern ride-sharing platform that connects
+          <strong> drivers with empty seats</strong> to passengers heading the
+          same way. During peak times, like school openings or when public
+          vehicles are full, it provides a<strong> reliable alternative</strong>
+          . Even outside rush hours, it remains a
+          <strong className="text-indigo-500 opacity-90"> smart choice</strong>:
+          drivers earn from seats that would otherwise go empty by offering
+          rides at a relatively lower cost, and passengers enjoy a
+          <strong> smooth, affordable, and reliable journey</strong>. In the
+          end, everyone goes home happy😂.
         </p>
 
         {/* Timeline */}
@@ -56,14 +58,18 @@ const AboutTravelus = () => {
                           bg-white/5 border border-white/10 backdrop-blur-xl shadow-lg hover:scale-105 
                           transition-transform duration-300 w-full"
               >
-                <div className="w-7 h-7 rounded-full z-10 text-white translate-y-4 -translate-x-4 bg-gradient-to-tr from-green-950 to-indigo-900 border border-white/20 backdrop-blur-xl">{idx + 1}</div>
+                <div className="w-7 h-7 rounded-full z-10 text-white translate-y-4 -translate-x-4 bg-gradient-to-tr from-green-950 to-indigo-900 border border-white/20 backdrop-blur-xl">
+                  {idx + 1}
+                </div>
                 {/* Icon bubble */}
                 <div className="flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-tr from-green-400/20 to-indigo-500/20 border border-white/20 mb-4">
                   {step.icon}
                 </div>
 
-                <h3 className="text-lg font-semibold text-gray-200">{step.title}</h3>
-                <p className="text-sm text-gray-400 mt-2">{step.description}</p>
+                <h3 className="text-lg font-semibold text-white">
+                  {step.title}
+                </h3>
+                <p className="text-gray-300 mt-2">{step.description}</p>
               </div>
             ))}
           </div>

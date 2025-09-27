@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import HeroSection from "@/components/landing/HeroSection";
 import FlowDiagram from "@/components/landing/FlowDiagram";
@@ -10,33 +10,40 @@ import CTA from "@/components/landing/CTA";
 import Image from "next/image";
 import AboutTravelus from "@/components/landing/AboutTravelus";
 
-
 export default function LandingPage() {
   return (
     <div className="bg-gray-950 text-white min-h-screen w-full overflow-x-hidden">
-      <HeroSection/>
+      <HeroSection />
 
       {/* About section */}
-      <AboutTravelus/>
+      <AboutTravelus />
 
       {/* How it works */}
       <div className="p-8 py-20 flex flex-col text-center md:text-start bg-gradient-to-tl from-gray-950 to-gray-900">
-        <Heading title="How Travelus Works"/>
+        <Heading title="How Travelus Works" />
         <div className="flex flex-col md:flex-row items-center justify-between">
           <FlowDiagram />
-            <Image
-              src={'/assets/movingCarModal.svg'}
-              width={200}
-              height={100}
-              alt=""
-              className="hidden lg:flex"
-            />
+          <Image
+            src={"/assets/movingCarModal.svg"}
+            width={200}
+            height={100}
+            alt=""
+            className="hidden lg:flex"
+          />
           <div className="flex flex-col items-center md:items-start text-center md:text-start">
-            <p className="max-w-xl text-gray-500 text-lg md:text-xl">
-              Through Travelus, passengers explore rides already posted by drivers and simply pick the one that fits their journey. The platform keeps them updated with timely notifications, ensuring they never miss their trip and every journey runs on time. It’s seamless, transparent, and built for peace of mind.
+            <p className="max-w-xl text-gray-300 text-lg md:text-xl">
+              Through Travelus, passengers explore rides already posted by
+              drivers and simply pick the one that fits their journey. The
+              platform keeps them updated with timely notifications, ensuring
+              they never miss their trip and every journey runs on time. It’s
+              seamless, transparent, and built for peace of mind.
             </p>
             <button
-              onClick={() => document.getElementById("waitlist")?.scrollIntoView({ behavior: "smooth" })}
+              onClick={() =>
+                document
+                  .getElementById("waitlist")
+                  ?.scrollIntoView({ behavior: "smooth" })
+              }
               className="px-10 py-3 mt-6 rounded-lg font-semibold animate-pulse hover:animate-none transition-all duration-300 text-white hover:shadow-[0_0_40px_rgba(22,163,74,0.9)] shadow-[0_0_30px_rgba(22,163,74,0.8)]"
             >
               Join the Waitlist
@@ -48,13 +55,13 @@ export default function LandingPage() {
       {/* <Testimonials/> */}
 
       {/* FAQ */}
-      <FAQSection/>
+      <FAQSection />
 
       {/* Feedback */}
-      <FeedbackSection/>
+      <FeedbackSection />
 
       {/* Call to action */}
-      <CTA/>
+      <CTA />
     </div>
   );
 }
