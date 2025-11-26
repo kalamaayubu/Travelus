@@ -107,7 +107,11 @@ export default function Hero() {
 
       <div className="">
         {/* Tag/brief catch description of what travelus is */}
+<<<<<<< HEAD
         <p className="mt-6 max-w-xl font-bold text-gray-200 text-3xl relative z-10">
+=======
+        <p className="mt-6 max-w-xl font-bold text-gray-300 text-3xl relative z-10">
+>>>>>>> 92cd2e26e4104ffd0a31c3b5f7251265d1c25f38
           Connecting drivers with empty seats to passengers going the
           <span className="green-indigo_text-gradient font-bold">
             {" "}

@@ -11,7 +11,11 @@ export default function CTA() {
 
       <div className="max-w-3xl mx-auto text-center px-6">
         <Heading title="Here we go!" />
+<<<<<<< HEAD
         <p className="text-3xl font-bold text-gray-200 mb-10 mt-6">
+=======
+        <p className="text-3xl font-bold text-gray-300 mb-10 mt-6">
+>>>>>>> 92cd2e26e4104ffd0a31c3b5f7251265d1c25f38
           A better way to travel, where
           <span className="font-semibold text-indigo-500"> empty seats </span>
           turn into shared journeys.

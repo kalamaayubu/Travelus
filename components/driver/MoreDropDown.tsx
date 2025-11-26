@@ -31,7 +31,7 @@ const MoreDropdown = ({ dispatch }: MoreDropdownProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="bg-transparent outline-none p-0 rounded-none">
-        <div className="flex flex-col gap-[8px] cursor-pointer items-center text-xs text-gray-300 hover:text-gray-100">
+        <div className="flex flex-col gap-[2px] cursor-pointer items-center text-xs text-gray-400 hover:text-gray-100">
           <MoreVertical className="w-4 h-4" />
           More
         </div>

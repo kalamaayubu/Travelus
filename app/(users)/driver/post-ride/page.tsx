@@ -278,7 +278,11 @@ export default function PostRidePage() {
             closable={false}
             contentClassName="bg-gray-900 border-gray-700"
           >
+<<<<<<< HEAD
             <div className="space-y-4 text-sm text-gray-200">
+=======
+            <div className="space-y-4 text-sm text-gray-300">
+>>>>>>> 92cd2e26e4104ffd0a31c3b5f7251265d1c25f38
               <p>
                 <strong>From:</strong> {watch("departureLocation")}
               </p>
@@ -319,7 +323,11 @@ export default function PostRidePage() {
                   required: "You must confirm before submitting",
                 })}
               />
+<<<<<<< HEAD
               <label htmlFor="confirm" className="text-sm text-gray-200">
+=======
+              <label htmlFor="confirm" className="text-sm text-gray-300">
+>>>>>>> 92cd2e26e4104ffd0a31c3b5f7251265d1c25f38
                 I confirm that the above details are correct
               </label>
             </div>
