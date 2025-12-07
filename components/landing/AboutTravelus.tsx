@@ -34,11 +34,7 @@ const AboutTravelus = () => {
       <div className="max-w-5xl mx-auto text-center">
         {/* Heading */}
         <Heading title="More About Travelus" />
-<<<<<<< HEAD
         <p className="mt-8 text-gray-200 text-lg md:text-xl">
-=======
-        <p className="mt-8 text-gray-300 text-lg md:text-xl">
->>>>>>> 92cd2e26e4104ffd0a31c3b5f7251265d1c25f38
           <strong className="text-green-600 opacity-90">Travelus</strong> is a
           modern ride-sharing platform that connects
           <strong> drivers with empty seats</strong> to passengers heading the
@@ -73,11 +69,7 @@ const AboutTravelus = () => {
                 <h3 className="text-lg font-semibold text-white">
                   {step.title}
                 </h3>
-<<<<<<< HEAD
                 <p className="text-gray-200 mt-2">{step.description}</p>
-=======
-                <p className="text-gray-300 mt-2">{step.description}</p>
->>>>>>> 92cd2e26e4104ffd0a31c3b5f7251265d1c25f38
               </div>
             ))}
           </div>

@@ -14,7 +14,6 @@ export default function LandingPage() {
   return (
     <div className="bg-gray-950 text-white min-h-screen w-full overflow-x-hidden">
       <HeroSection />
-
       {/* About section */}
       <AboutTravelus />
 
@@ -31,11 +30,7 @@ export default function LandingPage() {
             className="hidden lg:flex"
           />
           <div className="flex flex-col items-center md:items-start text-center md:text-start">
-<<<<<<< HEAD
             <p className="max-w-xl text-gray-200 text-lg md:text-xl">
-=======
-            <p className="max-w-xl text-gray-300 text-lg md:text-xl">
->>>>>>> 92cd2e26e4104ffd0a31c3b5f7251265d1c25f38
               Through Travelus, passengers explore rides already posted by
               drivers and simply pick the one that fits their journey. The
               platform keeps them updated with timely notifications, ensuring

@@ -45,7 +45,7 @@ export default function MyBookings() {
       >
         <Link
           href="/rider"
-          className="px-8 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold rounded-lg shadow-lg transition-all duration-300"
+          className="px-8 py-3 bg-linear-to-r from-green-500 to-green-600 text-white font-semibold rounded-lg shadow-lg transition-all duration-300"
         >
           Back to Dashboard
         </Link>

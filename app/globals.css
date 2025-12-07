@@ -126,7 +126,7 @@
     @apply text-3xl font-bold text-gray-200;
   }
   button {
-    @apply cursor-pointer opacity-80 bg-green-600 active:scale-95 text-white p-[6px] px-6 rounded-md hover:bg-green-500 transition duration-300;
+    @apply cursor-pointer opacity-80 bg-green-600 active:scale-95 text-white p-1.5 px-6 rounded-md hover:bg-green-500 transition duration-300;
   }
   button:disabled {
     @apply cursor-not-allowed opacity-60 active:scale-100;
@@ -146,7 +146,7 @@
 }
 
 .secondary-btn {
-  @apply bg-white/5 hover:bg-white/10 border-[1px] border-gray-700 hover:border-gray-600 text-gray-100;
+  @apply bg-white/5 hover:bg-white/10 border border-gray-700 hover:border-gray-600 text-gray-100;
 }
 .destructive-btn {
   @apply bg-red-600 text-white p-2 px-6 rounded-md opacity-60 hover:bg-red-500 transition duration-300;
@@ -156,8 +156,8 @@
   @apply bg-gray-900 rounded-lg p-4 transition duration-300;
 }
 .green-indigo_text-gradient {
-  @apply bg-gradient-to-br from-indigo-600 to-green-600 bg-clip-text text-transparent;
+  @apply bg-linear-to-br from-indigo-600 to-green-600 bg-clip-text text-transparent;
 }
 .gray-gradient {
-  @apply bg-gradient-to-tr from-gray-900 to-gray-950;
+  @apply bg-linear-to-tr from-gray-900 to-gray-950;
 }

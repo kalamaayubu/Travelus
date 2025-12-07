@@ -41,11 +41,7 @@ export default function FeedbackSection() {
       >
         <div className="max-w-3xl mx-auto text-center mb-12">
           <Heading title="We Value Your Feedback" />
-<<<<<<< HEAD
           <p className="text-gray-200 mt-2">
-=======
-          <p className="text-gray-300 mt-2">
->>>>>>> 92cd2e26e4104ffd0a31c3b5f7251265d1c25f38
             Help us improve Travelus by sharing your thoughts. 🚀
           </p>
         </div>
@@ -82,21 +78,6 @@ export default function FeedbackSection() {
 
           {/* Feedback Form */}
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-            {/* <motion.input
-              whileFocus={{ scale: 1.02, borderColor: "#22c55e", boxShadow: "0 0 10px #22c55e" }}
-              transition={{ type: "spring", stiffness: 300 }}
-              type="text"
-              placeholder="Your Name (optional)"
-              className={`w-full rounded-lg p-3 bg-gray-700/5 border border-white/10 text-white placeholder-gray-400 focus:outline-none`}
-              {...register('name', {
-                required: "Name is required",
-                minLength: { value: 3, message: 'Name must be at least 3 characters long'}
-              })}
-            />
-            { errors?.name?.message && (
-              <p className="text-sm text-red-500 -translate-y-5">{errors?.name?.message}</p>
-            )} */}
-
             <motion.input
               whileFocus={{
                 scale: 1.02,

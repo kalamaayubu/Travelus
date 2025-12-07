@@ -107,19 +107,12 @@ export default function Hero() {
 
       <div className="">
         {/* Tag/brief catch description of what travelus is */}
-<<<<<<< HEAD
         <p className="mt-6 max-w-xl font-bold text-gray-200 text-3xl relative z-10">
-=======
-        <p className="mt-6 max-w-xl font-bold text-gray-300 text-3xl relative z-10">
->>>>>>> 92cd2e26e4104ffd0a31c3b5f7251265d1c25f38
           Connecting drivers with empty seats to passengers going the
           <span className="green-indigo_text-gradient font-bold">
             {" "}
             same way
           </span>
-          {/* Seamless<span className="green-indigo_text-gradient font-bold italic"> connection </span>
-            between drivers/vehicle owners and passengers in real time, making daily travels
-            faster and more reliable. */}
         </p>
 
         <button
@@ -131,7 +124,7 @@ export default function Hero() {
           }
           className="px-10 py-3 mt-6 rounded-lg font-semibold animate-pulse hover:animate-none transition-all duration-300 text-white hover:shadow-[0_0_40px_rgba(22,163,74,0.9)] shadow-[0_0_30px_rgba(22,163,74,0.8)]"
         >
-          Be Part of the Network
+          Available Rides
         </button>
       </div>
     </section>

@@ -7,9 +7,11 @@ import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const NavBar = () => {
   const pathname = usePathname();
+  const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   // Hide navbar on these routes
@@ -26,7 +28,6 @@ const NavBar = () => {
       <nav className="md:flex hidden items-center justify-between space-x-6">
         <Logo />
         <ul className="space-x-4 flex">
-          {/* <li><LogInOutBtn /></li> */}
           <Link
             onClick={() => setIsMenuOpen(false)}
             href={"/#faqs"}
@@ -40,7 +41,7 @@ const NavBar = () => {
             className="mx-4 text-gray-200 hover:text-green-600"
           >
             About Us
-          </Link>
+          </Link>{" "}
           <Link
             onClick={() => setIsMenuOpen(false)}
             href={"/#feedback"}
@@ -48,13 +49,21 @@ const NavBar = () => {
           >
             Feedback
           </Link>
-          <Link
+          <li
+            onClick={() => {
+              setIsMenuOpen(false);
+              router.push("/auth/login");
+            }}
+          >
+            <LogInOutBtn />
+          </li>
+          {/* <Link
             onClick={() => setIsMenuOpen(false)}
             href={"/#waitlist"}
             className="mx-4 text-gray-200 hover:text-green-600"
           >
             Join waitlist
-          </Link>
+          </Link> */}
         </ul>
       </nav>
 
@@ -116,21 +125,21 @@ const NavBar = () => {
                 <Link onClick={() => setIsMenuOpen(false)} href={"/#feedback"}>
                   Feedback
                 </Link>
-                <Link
+                {/* <Link
                   onClick={() => setIsMenuOpen(false)}
                   href={"/#waitlist"}
                   className=""
                 >
                   Join waitlist
-                </Link>
-                {/* <LogInOutBtn />
-                <Link 
-                  className="primary-btn w-full" 
+                </Link> */}
+                <Link
+                  className=""
                   onClick={() => setIsMenuOpen(false)}
                   href={"/available-rides"}
                 >
                   Available rides
-                </Link> */}
+                </Link>
+                <LogInOutBtn />
               </ul>
             </motion.div>
           )}

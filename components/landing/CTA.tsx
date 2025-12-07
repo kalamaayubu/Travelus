@@ -2,7 +2,7 @@ import Heading from "../Heading";
 
 export default function CTA() {
   return (
-    <section className="relative py-20 bg-gradient-to-br from-indigo-600/20 from-5% via-gray-950/10 via-40% to-green-600/10 to-100%">
+    <section className="relative py-20 bg-linear-to-br from-indigo-600/20 from-5% via-gray-950/10 via-40% to-green-600/10 to-100%">
       {/* Background glow effects */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-purple-600/30 rounded-full blur-3xl animate-pulse" />
@@ -11,11 +11,7 @@ export default function CTA() {
 
       <div className="max-w-3xl mx-auto text-center px-6">
         <Heading title="Here we go!" />
-<<<<<<< HEAD
         <p className="text-3xl font-bold text-gray-200 mb-10 mt-6">
-=======
-        <p className="text-3xl font-bold text-gray-300 mb-10 mt-6">
->>>>>>> 92cd2e26e4104ffd0a31c3b5f7251265d1c25f38
           A better way to travel, where
           <span className="font-semibold text-indigo-500"> empty seats </span>
           turn into shared journeys.

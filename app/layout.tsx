@@ -4,6 +4,8 @@ import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 import { Toaster } from "sonner";
 import ReduxProvider from "@/components/providers/ReduxProvider";
+import AIAssistantBtn from "@/components/AIAssistantBtn";
+import RnDPanel from "@/components/ResizeAndDrag";
 
 export const metadata: Metadata = {
   title: {
@@ -91,6 +93,10 @@ export default function RootLayout({
           <NavBar />
           {children}
           <Toaster richColors position="top-right" duration={6000} />
+
+          {/* AI assistant */}
+          <AIAssistantBtn />
+          <RnDPanel />
           <Footer />
         </ReduxProvider>
       </body>

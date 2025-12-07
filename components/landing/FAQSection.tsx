@@ -65,15 +65,9 @@ export default function FAQSection() {
                 />
               </button>
               {openIndex === index && (
-<<<<<<< HEAD
                 <div className="p-5 pt-0 flex items-center text-gray-200/10 relative">
                   <div className="border-l-4 border-gray-400/20 pl-4 mt-1">
                     <p className="text-gray-300">{faq.answer}</p>
-=======
-                <div className="p-5 pt-0 flex items-center text-gray-300/10 relative">
-                  <div className="border-l-4 border-gray-400/20 pl-4 mt-1">
-                    <p className="text-gray-400">{faq.answer}</p>
->>>>>>> 92cd2e26e4104ffd0a31c3b5f7251265d1c25f38
                   </div>
                 </div>
               )}
