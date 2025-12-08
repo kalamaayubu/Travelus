@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { togglePanel } from "@/redux/slices/resizeAndDrag";
+import { togglePanel } from "@/redux/slices/travelusAISlice";
 import { useDispatch } from "react-redux";
 import { Bot, X } from "lucide-react"; // Icon
 
@@ -18,7 +18,7 @@ export default function AIAssistantBtn() {
             onClick={() => setShowTip(false)}
             className="absolute w-fit p-1 -top-3 -right-3 bg-white opacity-100 text-black rounded-full"
           >
-            <X className="text-black w-3 h-3 font-bold" />
+            <X className="text-black animate-pulse w-3 h-3 font-bold" />
           </button>
           Travelus agent is here! Tap to chat with him
         </div>

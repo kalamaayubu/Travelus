@@ -1,0 +1,177 @@
+"use client";
+
+import { sendMessageToAI } from "@/actions/assistant.action";
+import { closePanel } from "@/redux/slices/travelusAISlice";
+import { RootState } from "@/redux/store";
+import { ArrowLeftRight, ArrowUp, PhoneMissed, Radio, X } from "lucide-react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+
+type FormData = { chatInput: string };
+
+const AIAssistant = () => {
+  const dispatch = useDispatch();
+  const [audioChatOpen, setAudioChatOpen] = useState(false);
+  const [isChatView, setIsChatView] = useState(true);
+  const { register, handleSubmit, reset, watch } = useForm<FormData>({
+    defaultValues: { chatInput: "" },
+  });
+
+  const chatInputValue = watch("chatInput");
+
+  const [messages, setMessages] = useState<
+    { role: "user" | "assistant"; content: string }[]
+  >([
+    {
+      role: "assistant",
+      content: "Hello! How can I help you?",
+    },
+  ]);
+
+  const isOpen = useSelector(
+    (state: RootState) => state.travelusAI.isPanelOpen
+  );
+
+  /** ---------- AI SEND HANDLER ----------- **/
+  const onSubmit = async (data: FormData) => {
+    const userMessage = data.chatInput.trim();
+    if (!userMessage) return;
+
+    reset(); // clears input
+
+    // add user message
+    setMessages((prev) => [...prev, { role: "user", content: userMessage }]);
+
+    try {
+      const { success, reply } = await sendMessageToAI(userMessage);
+
+      console.log("AI reply:", reply);
+
+      if (success) {
+        setMessages((prev) => [...prev, { role: "assistant", content: reply }]);
+      }
+    } catch (err) {
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "assistant",
+          content:
+            "⚠️ Something went wrong, Please check you network connection and try again.",
+        },
+      ]);
+    }
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="bg-gray-800 -top-2  z-40 p-2 sm:p-4 lg:p-6 xl:p-8 border fixed bottom-0 left-0 right-0">
+      <div className="relative p-3 flex flex-col w-full h-full overflow-hidden">
+        {/* header */}
+        <div className=" px-4 py-2 font-semibold flex justify-between items-center">
+          <span className="font-bold text-3xl">Travelus Agent</span>
+          <button
+            onClick={() => dispatch(closePanel())}
+            className="rounded-full absolute right-1 p-2 bg-gray-100 hover:bg-white transition"
+          >
+            <X size={24} className="text-black" />
+          </button>
+        </div>
+
+        {/* text chat area */}
+        {isChatView && (
+          <div className="flex mx-auto relative flex-col p-4 text-white w-full h-full">
+            {/* Chat area */}
+            <div className="flex-1 overflow-y-auto px-3 float-right max-w-[800px] mx-auto mb-24 pb-10 flex flex-col space-y-2">
+              {messages.map((msg, i) => (
+                <div
+                  key={i}
+                  className={`p-2 rounded-lg max-w-[80%] ${
+                    msg.role === "user"
+                      ? "bg-blue-600/50 self-end ml-auto rounded-br-none"
+                      : "bg-gray-700/50 self-start rounded-bl-none"
+                  }`}
+                >
+                  {msg.content}
+                </div>
+              ))}
+            </div>
+
+            {/* Travelus AI text chat form */}
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="flex justify-between py-1.5 mb-3 fixed bottom-1 md:bottom-2 left-1/2 -translate-x-1/2 w-3/4 max-w-[800px] items-center border rounded-full px-3 bg-gray-700/80 backdrop-blur-sm"
+            >
+              <Radio
+                onClick={() => setIsChatView(false)}
+                size={20}
+                className={`ml-1 cursor-pointer ${
+                  audioChatOpen ? "text-green-400" : "text-white"
+                }`}
+              />
+
+              <input
+                {...register("chatInput")}
+                type="text"
+                disabled={audioChatOpen}
+                placeholder={
+                  audioChatOpen
+                    ? "Speak out, am listening..."
+                    : "Type your message..."
+                }
+                className="flex-1 bg-transparent outline-none border-0 px-3 py-2 text-white placeholder:text-gray-400"
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    e.currentTarget.form?.requestSubmit();
+                  }
+                }}
+              />
+
+              <button
+                type="submit"
+                className="p-2 rounded-full flex justify-center cursor-pointer transition-all duration-300 bg-white/95 hover:bg-white items-center"
+              >
+                {chatInputValue ? (
+                  <ArrowUp className="size-4 text-black" />
+                ) : (
+                  <ArrowLeftRight
+                    onClick={() => setAudioChatOpen(false)}
+                    className="size-4 text-black"
+                  />
+                )}
+              </button>
+            </form>
+          </div>
+        )}
+
+        {!isChatView && (
+          <div className="flex relative mx-auto flex-col items-center p-4 text-white w-full h-full">
+            {/* The voice chat response area */}
+            <div className="h-80">{/* Output to appear heare */}</div>
+            <div className="flex absolute bottom-0 gap-4 items-center justify-between bg-gray-600 rounded-full py-3 px-6">
+              <button className="rounded-full p-4 bg-red-500">
+                <PhoneMissed className="text-black " />
+              </button>
+              <div className="relative z-10 text-black flex items-center justify-center h-16 w-16 bg-white rounded-full">
+                <span className="animate-pulse"></span>
+                <div className="absolute size-20 z-0 animate-ping bg-gray-700 rounded-full" />
+              </div>
+              <div>
+                <button
+                  onClick={() => setIsChatView(true)}
+                  className="rounded-full py-3"
+                >
+                  Return to chat
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default AIAssistant;

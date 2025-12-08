@@ -7,6 +7,7 @@ const client = new OpenAI({
   baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/",
 });
 
+// Sends a text message to the AI and returns the response
 export async function sendMessageToAI(message: string) {
   const completion = await client.chat.completions.create({
     model: "gemini-2.5-flash", // or another available Gemini model

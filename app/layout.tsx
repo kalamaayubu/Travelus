@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 import { Toaster } from "sonner";
 import ReduxProvider from "@/components/providers/ReduxProvider";
 import AIAssistantBtn from "@/components/AIAssistantBtn";
-import RnDPanel from "@/components/ResizeAndDrag";
+import AIAssistant from "@/components/AIAssistant";
 
 export const metadata: Metadata = {
   title: {
@@ -96,7 +96,7 @@ export default function RootLayout({
 
           {/* AI assistant */}
           <AIAssistantBtn />
-          <RnDPanel />
+          <AIAssistant />
           <Footer />
         </ReduxProvider>
       </body>

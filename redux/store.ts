@@ -2,14 +2,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import vehicleTypesReducer from "./slices/vehicleTypesSlice";
 import authStateReducer from "./slices/authSlice";
 import bookingInfoReducer from "./slices/bookingInfoSlice";
-import resizeAndDragReducer from "./slices/resizeAndDrag";
+import travelusAIReducer from "./slices/travelusAISlice";
 
 export const store = configureStore({
   reducer: {
     vehicleTypes: vehicleTypesReducer,
     auth: authStateReducer,
     bookingInfo: bookingInfoReducer,
-    rnd: resizeAndDragReducer,
+    travelusAI: travelusAIReducer,
   },
 });
 

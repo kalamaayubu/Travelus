@@ -8,8 +8,8 @@ const initialState: RnDState = {
   isPanelOpen: false,
 };
 
-const resizeAndDrag = createSlice({
-  name: "rnd",
+const travelusAI = createSlice({
+  name: "travelusAI",
   initialState,
   reducers: {
     togglePanel: (state) => {
@@ -24,5 +24,5 @@ const resizeAndDrag = createSlice({
   },
 });
 
-export const { togglePanel, openPanel, closePanel } = resizeAndDrag.actions;
-export default resizeAndDrag.reducer;
+export const { togglePanel, openPanel, closePanel } = travelusAI.actions;
+export default travelusAI.reducer;
