@@ -1,7 +1,6 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
-import supabaseAdmin from "@/lib/supabase/supabaseAdmin";
 import { LoginFormData, SignupFormData } from "@/types";
 import { cookies } from "next/headers";
 

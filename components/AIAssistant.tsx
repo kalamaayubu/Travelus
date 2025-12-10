@@ -4,6 +4,7 @@ import { sendMessageToAI } from "@/actions/assistant.action";
 import { closePanel } from "@/redux/slices/travelusAISlice";
 import { RootState } from "@/redux/store";
 import { ArrowLeftRight, ArrowUp, PhoneMissed, Radio, X } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,15 +12,6 @@ import { useDispatch, useSelector } from "react-redux";
 type FormData = { chatInput: string };
 
 const AIAssistant = () => {
-  const dispatch = useDispatch();
-  const [audioChatOpen, setAudioChatOpen] = useState(false);
-  const [isChatView, setIsChatView] = useState(true);
-  const { register, handleSubmit, reset, watch } = useForm<FormData>({
-    defaultValues: { chatInput: "" },
-  });
-
-  const chatInputValue = watch("chatInput");
-
   const [messages, setMessages] = useState<
     { role: "user" | "assistant"; content: string }[]
   >([
@@ -32,6 +24,21 @@ const AIAssistant = () => {
   const isOpen = useSelector(
     (state: RootState) => state.travelusAI.isPanelOpen
   );
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const [audioChatOpen, setAudioChatOpen] = useState(false);
+  const [isChatView, setIsChatView] = useState(true);
+  const {
+    register,
+    formState: { isSubmitting },
+    handleSubmit,
+    reset,
+    watch,
+  } = useForm<FormData>({
+    defaultValues: { chatInput: "" },
+  });
+
+  const chatInputValue = watch("chatInput");
 
   /** ---------- AI SEND HANDLER ----------- **/
   const onSubmit = async (data: FormData) => {
@@ -39,17 +46,32 @@ const AIAssistant = () => {
     if (!userMessage) return;
 
     reset(); // clears input
-
-    // add user message
-    setMessages((prev) => [...prev, { role: "user", content: userMessage }]);
+    setMessages((prev) => [...prev, { role: "user", content: userMessage }]); // add user message
 
     try {
-      const { success, reply } = await sendMessageToAI(userMessage);
+      const { success, reply, action } = await sendMessageToAI(userMessage);
 
       console.log("AI reply:", reply);
+      console.log("AI action:", action);
 
       if (success) {
-        setMessages((prev) => [...prev, { role: "assistant", content: reply }]);
+        // If reply contains action result.
+        if (action?.action === "navigate") {
+          router.push(action.page);
+          setMessages((prev) => [
+            ...prev,
+            { role: "assistant", content: `Navigating to ${action.page}...` },
+          ]);
+        } else {
+          // Just display the result
+          setMessages((prev) => [
+            ...prev,
+            {
+              role: "assistant",
+              content: reply,
+            },
+          ]);
+        }
       }
     } catch (err) {
       setMessages((prev) => [
@@ -66,7 +88,7 @@ const AIAssistant = () => {
   if (!isOpen) return null;
 
   return (
-    <div className="bg-gray-800 -top-2  z-40 p-2 sm:p-4 lg:p-6 xl:p-8 border fixed bottom-0 left-0 right-0">
+    <div className="bg-gray-900 -top-2  z-40 p-2 sm:p-4 lg:p-6 xl:p-8 border fixed bottom-0 left-0 right-0">
       <div className="relative p-3 flex flex-col w-full h-full overflow-hidden">
         {/* header */}
         <div className=" px-4 py-2 font-semibold flex justify-between items-center">
@@ -89,8 +111,8 @@ const AIAssistant = () => {
                   key={i}
                   className={`p-2 rounded-lg max-w-[80%] ${
                     msg.role === "user"
-                      ? "bg-blue-600/50 self-end ml-auto rounded-br-none"
-                      : "bg-gray-700/50 self-start rounded-bl-none"
+                      ? "bg-green-600/50 self-end ml-auto rounded-br-none"
+                      : "bg-gray-800/50 self-start rounded-bl-none"
                   }`}
                 >
                   {msg.content}
@@ -101,7 +123,7 @@ const AIAssistant = () => {
             {/* Travelus AI text chat form */}
             <form
               onSubmit={handleSubmit(onSubmit)}
-              className="flex justify-between py-1.5 mb-3 fixed bottom-1 md:bottom-2 left-1/2 -translate-x-1/2 w-3/4 max-w-[800px] items-center border rounded-full px-3 bg-gray-700/80 backdrop-blur-sm"
+              className="flex justify-between py-1.5 mb-3 fixed bottom-1 md:bottom-2 left-1/2 -translate-x-1/2 w-3/4 max-w-[800px] items-center border rounded-full px-3 bg-gray-700/40 backdrop-blur-sm"
             >
               <Radio
                 onClick={() => setIsChatView(false)}
@@ -131,15 +153,13 @@ const AIAssistant = () => {
 
               <button
                 type="submit"
-                className="p-2 rounded-full flex justify-center cursor-pointer transition-all duration-300 bg-white/95 hover:bg-white items-center"
+                disabled={isSubmitting}
+                className={`p-2 rounded-full flex justify-center cursor-pointer transition-all duration-300 ${isSubmitting ? "bg-white/10" : ""} ${chatInputValue ? " bg-white/95 hover:bg-white" : "bg-white/15"}  items-center`}
               >
-                {chatInputValue ? (
-                  <ArrowUp className="size-4 text-black" />
+                {isSubmitting ? (
+                  <div className={`w-5 h-5 bg-white animate-pulse`} />
                 ) : (
-                  <ArrowLeftRight
-                    onClick={() => setAudioChatOpen(false)}
-                    className="size-4 text-black"
-                  />
+                  <ArrowUp className={`size-5 text-black`} />
                 )}
               </button>
             </form>
@@ -156,7 +176,7 @@ const AIAssistant = () => {
               </button>
               <div className="relative z-10 text-black flex items-center justify-center h-16 w-16 bg-white rounded-full">
                 <span className="animate-pulse"></span>
-                <div className="absolute size-20 z-0 animate-ping bg-gray-700 rounded-full" />
+                <div className="absolute size-14 animate-ping z-0 bg-green-700 rounded-full" />
               </div>
               <div>
                 <button

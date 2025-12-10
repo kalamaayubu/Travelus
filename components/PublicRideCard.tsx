@@ -14,7 +14,7 @@ export default function PublicRideCard({
   onViewDetails,
 }: PublicRideCardProps) {
   return (
-    <Card className="w-full group max-w-md mx-auto bg-gradient-to-br from-gray-800 to-gray-900 text-gray-50 rounded-lg">
+    <Card className="w-full group max-w-md mx-auto bg-linear-to-br from-gray-800 to-gray-900 text-gray-50 rounded-lg">
       <CardHeader className="pb-2">
         <CardTitle className="text-xl text-gray-0 font-semibold text-center flex items-center justify-center gap-2">
           <MapPin className="w-5 h-5 text-purple-400" />

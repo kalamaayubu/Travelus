@@ -246,3 +246,14 @@ export interface NotificationProps {
   body: string;
   recipients: NotificationRecipient[];
 }
+
+export interface AIAction {
+  action: string;
+  [key: string]: any;
+}
+
+export interface AIResponse {
+  success: boolean;
+  reply: string;
+  action: AIAction | null;
+}
