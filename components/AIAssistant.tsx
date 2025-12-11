@@ -8,15 +8,22 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
+import PublicRideCard from "./PublicRideCard";
 
 type FormData = { chatInput: string };
 
 const AIAssistant = () => {
   const [messages, setMessages] = useState<
-    { role: "user" | "assistant"; content: string }[]
+    {
+      role: "user" | "assistant";
+      content?: string;
+      type: "text" | "rides";
+      rides?: any[];
+    }[]
   >([
     {
       role: "assistant",
+      type: "text",
       content: "Hello! How can I help you?",
     },
   ]);
@@ -46,10 +53,16 @@ const AIAssistant = () => {
     if (!userMessage) return;
 
     reset(); // clears input
-    setMessages((prev) => [...prev, { role: "user", content: userMessage }]); // add user message
+    setMessages((prev) => [
+      ...prev,
+      { role: "user", content: userMessage, type: "text" },
+    ]); // add user message
 
     try {
-      const { success, reply, action } = await sendMessageToAI(userMessage);
+      const { success, reply, action } = await sendMessageToAI(
+        userMessage,
+        messages || []
+      );
 
       console.log("AI reply:", reply);
       console.log("AI action:", action);
@@ -60,17 +73,34 @@ const AIAssistant = () => {
           router.push(action.page);
           setMessages((prev) => [
             ...prev,
-            { role: "assistant", content: `Navigating to ${action.page}...` },
-          ]);
-        } else {
-          // Just display the result
-          setMessages((prev) => [
-            ...prev,
             {
               role: "assistant",
-              content: reply,
+              type: "text",
+              content: `Navigating to ${action.page}...`,
             },
           ]);
+        } else {
+          // 🎯 Detect ride search result and render ride cards
+          if (reply === "found_rides" && action?.rides) {
+            setMessages((prev) => [
+              ...prev,
+              {
+                role: "assistant",
+                type: "rides",
+                rides: action.rides,
+              },
+            ]);
+          } else {
+            // Normal text reply
+            setMessages((prev) => [
+              ...prev,
+              {
+                role: "assistant",
+                type: "text",
+                content: reply,
+              },
+            ]);
+          }
         }
       }
     } catch (err) {
@@ -78,6 +108,7 @@ const AIAssistant = () => {
         ...prev,
         {
           role: "assistant",
+          type: "text",
           content:
             "⚠️ Something went wrong, Please check you network connection and try again.",
         },
@@ -108,15 +139,38 @@ const AIAssistant = () => {
             {/* Chat area */}
             <div className="flex-1 overflow-y-auto px-3 float-right max-w-[800px] mx-auto mb-24 pb-10 flex flex-col space-y-2">
               {messages.map((msg, i) => (
-                <div
-                  key={i}
-                  className={`p-2 rounded-lg max-w-[80%] ${
-                    msg.role === "user"
-                      ? "bg-green-600/50 self-end ml-auto rounded-br-none"
-                      : "bg-white/10 self-start rounded-bl-none"
-                  }`}
-                >
-                  {msg.content}
+                <div key={i} className="w-full">
+                  {msg.type === "text" && (
+                    <div
+                      className={`p-2 rounded-lg max-w-[80%] ${
+                        msg.role === "user"
+                          ? "bg-green-600/50 self-end ml-auto rounded-br-none"
+                          : "bg-white/10 self-start rounded-bl-none"
+                      }`}
+                    >
+                      {msg.content}
+                    </div>
+                  )}
+
+                  {msg.type === "rides" && (
+                    <div className="space-y-4 self-start">
+                      {msg.rides?.map((r) => (
+                        <PublicRideCard
+                          key={r.id}
+                          departure={r.departureLocation}
+                          destination={r.destinationLocation}
+                          date={r.departureTime}
+                          vehicle={r.vehicle || "Unspecified Vehicle"}
+                          availableSeats={r.availableSeats}
+                          price={r.pricePerSeat}
+                          onViewDetails={() => {
+                            dispatch(closePanel());
+                            router.push(`/available-rides/${r.id}`);
+                          }}
+                        />
+                      ))}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>

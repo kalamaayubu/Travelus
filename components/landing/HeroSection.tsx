@@ -3,12 +3,14 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function Hero() {
   const imgRef = useRef<HTMLImageElement | null>(null);
   const textRef = useRef<HTMLHeadingElement | null>(null);
   const btnRef = useRef<HTMLButtonElement | null>(null);
   const beamRef = useRef<SVGPolygonElement | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     // Intro animations
@@ -117,11 +119,9 @@ export default function Hero() {
 
         <button
           ref={btnRef}
-          onClick={() =>
-            document
-              .getElementById("waitlist")
-              ?.scrollIntoView({ behavior: "smooth" })
-          }
+          onClick={() => {
+            router.push("/available-rides");
+          }}
           className="px-10 py-3 mt-6 rounded-lg font-semibold animate-pulse hover:animate-none transition-all duration-300 text-white hover:shadow-[0_0_40px_rgba(22,163,74,0.9)] shadow-[0_0_30px_rgba(22,163,74,0.8)]"
         >
           Available Rides

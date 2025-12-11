@@ -10,7 +10,7 @@ export default function TopNav() {
   return (
     <header className="h-16 md:flex text-gray-100 items-center justify-between py-3 pb-0">
       {/* Left section */}
-      <div className="items-center gap-6 hidden md:flex">
+      <div className="items-center gap-6 md:flex hidden">
         <p className=" text-gray font-bold text-3xl rounded-md whitespace-nowrap">
           {pathname === "/driver" && (
             <span>
@@ -52,11 +52,11 @@ export default function TopNav() {
       </div>
 
       {/* Right section */}
-      <div className="md:flex hidden items-center gap-6 justify-end flex-1">
+      <div className="hidden md:flex items-center gap-6 justify-end flex-1">
         {/* Notifications */}
         <div className="relative cursor-pointer text-gray-200 hover:text-white transition-colors py-2 px-6 bg-gray-500/40 rounded-md">
           <Bell className="w-5 h-5" />
-          <span className="absolute top-[6px] right-6 block w-2 h-2 bg-green-500 rounded-full" />
+          <span className="absolute top-1.5 right-6 block w-2 h-2 bg-green-500 rounded-full" />
         </div>
 
         {/* Add a ride button */}

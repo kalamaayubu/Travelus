@@ -256,4 +256,5 @@ export interface AIResponse {
   success: boolean;
   reply: string;
   action: AIAction | null;
+  rides?: any[];
 }

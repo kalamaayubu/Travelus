@@ -1,18 +1,20 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { getSession, logout } from '@/actions/auth.action';  // Import Server Action
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { toast } from 'sonner';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '@/redux/store';
-import { clearUser } from '@/redux/slices/authSlice';
+import { useEffect, useState } from "react";
+import { getSession, logout } from "@/actions/auth.action"; // Import Server Action
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+import { clearUser } from "@/redux/slices/authSlice";
 
 export default function LogInOutBtn() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const router = useRouter();
-  const isLoggedIn = useSelector((state: RootState) => state.auth.isAuthenticated)
+  const isLoggedIn = useSelector(
+    (state: RootState) => state.auth.isAuthenticated
+  );
 
   const handleLogout = async () => {
     const res = await logout();
@@ -22,8 +24,8 @@ export default function LogInOutBtn() {
     }
 
     // Clear auth from store and redirect
-    dispatch(clearUser())
-    router.replace('/');
+    dispatch(clearUser());
+    router.push("/");
     toast.success(res.message);
   };
 
@@ -36,7 +38,10 @@ export default function LogInOutBtn() {
   }
 
   return (
-    <Link href="/auth/login" className="primary-btn w-full text-center text-white">
+    <Link
+      href="/auth/login"
+      className="primary-btn w-full text-center text-white"
+    >
       Login
     </Link>
   );

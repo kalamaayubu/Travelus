@@ -54,6 +54,7 @@ export async function searchRides(origin: string, destination: string) {
     };
   });
 
+  console.log("RIDES FOUND:", transformed);
   return { success: true, rides: transformed };
 }
 
