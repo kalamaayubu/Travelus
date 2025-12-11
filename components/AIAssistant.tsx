@@ -3,7 +3,7 @@
 import { sendMessageToAI } from "@/actions/assistant.action";
 import { closePanel } from "@/redux/slices/travelusAISlice";
 import { RootState } from "@/redux/store";
-import { ArrowLeftRight, ArrowUp, PhoneMissed, Radio, X } from "lucide-react";
+import { ArrowUp, PhoneMissed, Radio, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -21,7 +21,7 @@ const AIAssistant = () => {
     },
   ]);
 
-  const isOpen = useSelector(
+  const isAgentOpen = useSelector(
     (state: RootState) => state.travelusAI.isPanelOpen
   );
   const dispatch = useDispatch();
@@ -85,23 +85,24 @@ const AIAssistant = () => {
     }
   };
 
-  if (!isOpen) return null;
+  if (!isAgentOpen) return null;
 
   return (
     <div className="bg-gray-900 -top-2  z-40 p-2 sm:p-4 lg:p-6 xl:p-8 border fixed bottom-0 left-0 right-0">
       <div className="relative p-3 flex flex-col w-full h-full overflow-hidden">
-        {/* header */}
+        {/* Agent heading */}
         <div className=" px-4 py-2 font-semibold flex justify-between items-center">
           <span className="font-bold text-3xl">Travelus Agent</span>
+
           <button
             onClick={() => dispatch(closePanel())}
-            className="rounded-full absolute right-1 p-2 bg-gray-100 hover:bg-white transition"
+            className="rounded-full absolute right-1 p-3 bg-white/10 group hover:bg-white transition"
           >
-            <X size={24} className="text-black" />
+            <X size={24} className="text-white/80 group-hover:text-gray-900" />
           </button>
         </div>
 
-        {/* text chat area */}
+        {/* Text chat view */}
         {isChatView && (
           <div className="flex mx-auto relative flex-col p-4 text-white w-full h-full">
             {/* Chat area */}
@@ -112,7 +113,7 @@ const AIAssistant = () => {
                   className={`p-2 rounded-lg max-w-[80%] ${
                     msg.role === "user"
                       ? "bg-green-600/50 self-end ml-auto rounded-br-none"
-                      : "bg-gray-800/50 self-start rounded-bl-none"
+                      : "bg-white/10 self-start rounded-bl-none"
                   }`}
                 >
                   {msg.content}
@@ -166,6 +167,7 @@ const AIAssistant = () => {
           </div>
         )}
 
+        {/* Voice chat view */}
         {!isChatView && (
           <div className="flex relative mx-auto flex-col items-center p-4 text-white w-full h-full">
             {/* The voice chat response area */}

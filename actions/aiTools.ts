@@ -3,61 +3,61 @@
 
 import { createClient } from "@/lib/supabase/server";
 
-export const AITools = {
-  async searchRides(origin: string, destination: string) {
-    const supabase = await createClient();
+// ✓ Export server action 1
+export async function searchRides(origin: string, destination: string) {
+  const supabase = await createClient();
 
-    const { data, error } = await supabase
-      .from("ride_posts")
-      .select(
-        `
-        id,
-        departureLocation,
-        destinationLocation,
-        departureTime,
-        pricePerSeat,
-        status,
-        vehicle_types (
-          type_name,
-          capacity
-        ),
-        bookings (
-          count
-        )
+  const { data, error } = await supabase
+    .from("ride_posts")
+    .select(
       `
+      id,
+      departureLocation,
+      destinationLocation,
+      departureTime,
+      pricePerSeat,
+      status,
+      vehicle_types (
+        type_name,
+        capacity
+      ),
+      bookings (
+        count
       )
-      .ilike("departureLocation", `%${origin}%`)
-      .ilike("destinationLocation", `%${destination}%`)
-      .eq("status", "Active")
-      .order("departureTime", { ascending: true });
+    `
+    )
+    .ilike("departureLocation", `%${origin}%`)
+    .ilike("destinationLocation", `%${destination}%`)
+    .eq("status", "Active")
+    .order("departureTime", { ascending: true });
 
-    if (error) {
-      console.error("Error searching rides:", error.message);
-      return { success: false, error: error.message };
-    }
+  if (error) {
+    console.error("Error searching rides:", error.message);
+    return { success: false, error: error.message };
+  }
 
-    const transformedData = data?.map((ride) => {
-      const bookedSeats =
-        ride.bookings?.reduce((total, b) => total + (b.count || 0), 0) || 0;
-      const vehicleCapacity = ride.vehicle_types?.capacity || 0;
-      const availableSeats = vehicleCapacity - bookedSeats;
+  const transformed = data?.map((ride) => {
+    const booked = ride.bookings?.reduce((t, b) => t + (b.count || 0), 0) || 0;
 
-      return {
-        id: ride.id,
-        departureLocation: ride.departureLocation,
-        destinationLocation: ride.destinationLocation,
-        departureTime: ride.departureTime,
-        vehicle: ride.vehicle_types?.type_name,
-        pricePerSeat: ride.pricePerSeat,
-        availableSeats: availableSeats > 0 ? availableSeats : 0,
-        status: ride.status,
-      };
-    });
+    const capacity = ride.vehicle_types?.capacity || 0;
+    const available = capacity - booked;
 
-    return { success: true, rides: transformedData };
-  },
+    return {
+      id: ride.id,
+      departureLocation: ride.departureLocation,
+      destinationLocation: ride.destinationLocation,
+      departureTime: ride.departureTime,
+      vehicle: ride.vehicle_types?.type_name,
+      pricePerSeat: ride.pricePerSeat,
+      availableSeats: Math.max(available, 0),
+      status: ride.status,
+    };
+  });
 
-  navigateTo(page: string) {
-    return { action: "navigate", page };
-  },
-};
+  return { success: true, rides: transformed };
+}
+
+// ✓ Export server action 2
+export async function navigateTo(page: string) {
+  return { action: "navigate", page };
+}

@@ -1,26 +1,20 @@
 "use server";
 
-import OpenAI from "openai";
-import { AITools } from "./aiTools";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 import { AIResponse } from "@/types";
 import { TRAVELUS_SYSTEM_PROMPT } from "@/utils/prompts/systemPrompt";
+import { searchRides } from "./aiTools";
 
-const client = new OpenAI({
-  apiKey: process.env.GEMINI_API_KEY!,
-  baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/",
-});
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
+const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
 export async function sendMessageToAI(message: string): Promise<AIResponse> {
   // STEP 1: Send user message to AI
-  const completion = await client.chat.completions.create({
-    model: "gemini-2.5-flash",
-    messages: [
-      { role: "system", content: TRAVELUS_SYSTEM_PROMPT },
-      { role: "user", content: message },
-    ],
-  });
+  const prompt = `SYSTEM: ${TRAVELUS_SYSTEM_PROMPT} USER: ${message}`;
 
-  const reply = completion.choices[0].message.content?.trim() ?? "";
+  const res = await model.generateContent(prompt);
+  const reply = res.response?.text().trim();
+
   console.log("Raw AI reply:", reply);
 
   // STEP 2: Try to parse JSON
@@ -52,7 +46,7 @@ export async function sendMessageToAI(message: string): Promise<AIResponse> {
     const { origin, destination } = parameters;
 
     console.log(`AI requested ride search from ${origin} to ${destination}`);
-    const result = await AITools.searchRides(origin, destination);
+    const result = await searchRides(origin, destination);
 
     if (!result.success) {
       return {
