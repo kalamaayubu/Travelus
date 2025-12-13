@@ -12,7 +12,6 @@ import BookingSummary from "@/components/BookingSummary";
 import RiderDialogs from "@/components/RiderDialogs";
 import { createClient } from "@/lib/supabase/client";
 import { toast } from "sonner";
-import initializePayments from "@/actions/payments.action";
 
 const RideDetailsPage = () => {
   const [ride, setRide] = useState<RideDetailsProps | null>(null);
@@ -80,7 +79,7 @@ const RideDetailsPage = () => {
   }, [router, rideId, supabase]);
 
   if (loading) {
-    return <CustomLoader message="Loading trip details" />;
+    return <CustomLoader />;
   }
 
   if (!ride) {
@@ -151,22 +150,25 @@ const RideDetailsPage = () => {
     setIsInitializingPush(true);
 
     try {
-      const res = await initializePayments(bookingInfo);
-      console.log(`IS INITIALIZING PUSH:`, isInitializingPush);
-      console.log(res);
+      const res = await fetch("/api/payments/mpesa", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          phoneNumber: "0795753289",
+          amount: 1500,
+        }),
+      });
 
-      if (res.success) {
-        toast.success(res.message);
+      const data = await res.json();
+
+      if (data.success) {
+        toast.success("STK sent. Please confirm payment on your phone");
         setShowPaymentInitializationDialog(false);
-
-        // Send a success notification to the user
-
-        setShowSuccessPayDialog(true);
       } else {
-        toast.error(res.message || "Payment failed");
+        toast.error(data.message || "Payment failed");
       }
-    } catch (error: any) {
-      toast.error(`Payment failed: ${error.message || error}`);
+    } catch {
+      toast.error("Payment failed");
     } finally {
       setIsInitializingPush(false);
     }

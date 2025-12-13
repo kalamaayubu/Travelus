@@ -19,6 +19,10 @@
 /.next/
 /out/
 
+/actions/aiServer.action.ts
+/actions/aiTools.action.ts
+/components/ui/AIAssistantUI.tsx
+
 # production
 /build
 

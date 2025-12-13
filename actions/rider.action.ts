@@ -174,3 +174,35 @@ export async function reserveSeats(data: BookingInfoProps) {
 
   return { success: true, message: "Phone number recorder successfully." };
 }
+
+// Get my bookings
+export async function getMyBookings(userId: string) {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from("bookings")
+    .select(
+      `
+        id,
+        ride,
+        reserved_at,
+        status,
+        count,
+        ride_post (
+          departureLocation,
+          destinationLocation,
+          departureTime,
+          pricePerSeat
+        )
+    `
+    )
+    .eq("user_id", userId)
+    .order("booking_time", { ascending: false });
+
+  if (error) {
+    console.error("Error fetching my bookings:", error.message);
+    return [];
+  }
+
+  return data || [];
+}

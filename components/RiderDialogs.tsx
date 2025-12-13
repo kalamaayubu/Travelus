@@ -10,7 +10,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { setBookingInfo } from "@/redux/slices/bookingInfoSlice";
 import { useRouter } from "next/navigation";
-import React from "react";
 
 interface RiderDialogsProps {
   showLoginDialog: boolean;
@@ -177,7 +176,7 @@ const RiderDialogs = ({
         open={showLoginAsPassangerDialog}
         onOpenChange={setShowLoginAsPassangerDialog}
         title="Could not proceed"
-        description="You are not logged in as a passenger. Please log in with a passenger account to continue booking."
+        description="Please log in with a passenger account to continue booking."
         icon={<X className="w-8 h-8 text-red-500" />}
         actions={[
           {
@@ -229,13 +228,12 @@ const RiderDialogs = ({
       <AlertDialog
         open={showSuccessPayDialog}
         onOpenChange={setShowSuccessPayDialog}
-        title="Payment Successful 🎉"
-        description="Thank you! Your payment has been received and confirmed."
+        title="Waiting for payment confirmation"
+        description="Please complete the payment on your phone. This may take a few seconds."
         icon={<Check className="w-8 h-8 text-green-500" />}
         actionLabel="Okay"
         onAction={() => {
           setShowSuccessPayDialog(false);
-          router.push("/available-rides");
         }}
       />
     </>

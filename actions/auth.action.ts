@@ -86,7 +86,7 @@ export async function login(formData: LoginFormData, from: string) {
   // Role based redirection
   const role = profileData.role;
   let redirectUrl: string = "/";
-  if (role === "rider") redirectUrl = "/rider";
+  if (role === "rider") redirectUrl = "/rider/bookings";
   if (role === "driver") redirectUrl = "/driver/rides";
   if (role === "admin") redirectUrl = "/admin/dashboard";
 

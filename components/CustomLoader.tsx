@@ -1,16 +1,16 @@
-import { Loader } from "lucide-react";
+import { Loader, Loader2 } from "lucide-react";
 
 interface CustomLoaderProps {
-  message: string;
+  message?: string;
 }
 
 const CustomLoader = ({ message }: CustomLoaderProps) => {
   return (
     <div className="flex flex-col gap-2 items-center justify-center h-svh">
-      <Loader className="animate-spin text-gray-100" />
-      <p className="text-gray-300 font-semibold flex items-center text-xl">
+      <Loader2 className="animate-spin text-gray-100 w-12 h-12" />
+      <p className="text-gray-300 flex items-center text-xl">
         <span>{message}</span>
-        <span className="animate-pulse"> ...</span>
+        <span className="animate-pulse"></span>
       </p>
     </div>
   );
