@@ -20,14 +20,13 @@ export async function initiateMpesaSTKPush({
 
     const payload = {
       BusinessShortCode: 174379,
-      Password:
-        "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMjUxMjEzMTQzMjIz",
+      Password: password,
       Timestamp: timestamp,
       TransactionType: "CustomerPayBillOnline",
       Amount: amount,
-      PartyA: phoneNumber,
+      PartyA: "254" + phoneNumber.slice(-9),
       PartyB: 174379,
-      PhoneNumber: phoneNumber,
+      PhoneNumber: "254" + phoneNumber.slice(-9),
       CallBackURL:
         "https://tend-reduce-shore-cultures.trycloudflare.com/api/mpesa/callback",
       AccountReference: "Test",
@@ -45,6 +44,7 @@ export async function initiateMpesaSTKPush({
       }
     );
 
+    console.log("STK PUSH RESPONSE:::", response.data);
     return {
       success: true,
       data: response.data,

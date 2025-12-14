@@ -32,6 +32,7 @@ interface RiderDialogsProps {
   pricePerSeat: number;
   createdBy: string;
   rideId: string;
+  bookingId?: string;
   onStartPayment: () => void;
 }
 
@@ -53,6 +54,7 @@ const RiderDialogs = ({
   pricePerSeat,
   createdBy,
   rideId,
+  bookingId,
   onStartPayment,
 }: RiderDialogsProps) => {
   const {
@@ -82,8 +84,15 @@ const RiderDialogs = ({
       return;
     }
 
-    // Save booking info in Redux
-    dispatch(setBookingInfo(bookingInfoPayload));
+    // ✅ Attach bookingId to payload
+    const bookingInfoWithId = {
+      ...bookingInfoPayload,
+      bookingId: res.bookingId,
+    };
+
+    // ✅ Save booking info in Redux
+    dispatch(setBookingInfo(bookingInfoWithId));
+
     reset();
     setShowRiderFormDialog(false);
 
@@ -228,12 +237,13 @@ const RiderDialogs = ({
       <AlertDialog
         open={showSuccessPayDialog}
         onOpenChange={setShowSuccessPayDialog}
-        title="Waiting for payment confirmation"
-        description="Please complete the payment on your phone. This may take a few seconds."
+        title="Payment successful"
+        description="Confirmed, your payment has been received successfully."
         icon={<Check className="w-8 h-8 text-green-500" />}
         actionLabel="Okay"
         onAction={() => {
           setShowSuccessPayDialog(false);
+          window.location.reload();
         }}
       />
     </>

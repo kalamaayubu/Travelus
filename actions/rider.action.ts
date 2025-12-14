@@ -137,42 +137,69 @@ export async function reserveSeats(data: BookingInfoProps) {
 
   const supabase = await createClient();
 
-  const { error } = await supabase
+  // 1️⃣ Create booking (RESERVED)
+  const { data: booking, error: bookingError } = await supabase
+    .from("bookings")
+    .insert({
+      user_id: data.passangerId,
+      ride: data.rideId,
+      count: data.selectedSeats.length,
+      seatNumber: data.selectedSeats.join(","),
+      status: "RESERVED",
+      user_type: "rider",
+      reserved_at: new Date().toISOString(),
+    })
+    .select("id")
+    .single();
+
+  if (bookingError || !booking) {
+    console.error("Booking creation failed:", bookingError);
+    return { success: false, error: bookingError?.message };
+  }
+
+  const bookingId = booking.id;
+
+  // 2️⃣ Save phone number (profile update)
+  const { error: profileError } = await supabase
     .from("profiles")
     .update({
       phone: data.passangerPhone,
-      booking_info: data,
     })
     .eq("id", data.passangerId);
 
-  if (error) {
-    console.log("Error recording phone number:", error);
-    return { success: false, error: error.message };
+  if (profileError) {
+    console.error("Profile update failed:", profileError);
+    return { success: false, error: profileError.message };
   }
 
   // Get the user's fcm_token for notification
-  const { data: fcmUserData, error: fcmUserError } = await supabase
-    .from("notification_subscriptions")
-    .select("fcm_token");
-  // .eq('user', userId)
+  // const { data: fcmUserData, error: fcmUserError } = await supabase
+  //   .from("notification_subscriptions")
+  //   .select("fcm_token");
+  // // .eq('user', userId)
 
-  if (fcmUserError) {
-    console.error("Error FCM userData", fcmUserError);
-    return;
-  }
+  // if (fcmUserError) {
+  //   console.error("Error FCM userData", fcmUserError);
+  //   return;
+  // }
 
-  // Send the notification
-  await sendNotification({
-    title: "Booked successful",
-    body: "Congratulations, you  have successfully booked a seat with Travelus. Stay in tune with your schedule. Haev a blessed journey",
-    recipients: fcmUserData?.fcm_token,
-  });
+  // // Send the notification
+  // await sendNotification({
+  //   title: "Booked successful",
+  //   body: "Congratulations, you  have successfully booked a seat with Travelus. Stay in tune with your schedule. Haev a blessed journey",
+  //   recipients: fcmUserData?.fcm_token,
+  // });
 
   // ✅ Revalidate paths affected by booking
   revalidatePath("/available-rides"); // available rides page
   revalidatePath(`/rides/${data.rideId}`); // ride details page (dynamic)
+  revalidatePath("/my-bookings");
 
-  return { success: true, message: "Phone number recorder successfully." };
+  // ✅ RETURN bookingId (THIS is the important part)
+  return {
+    success: true,
+    bookingId,
+  };
 }
 
 // Get my bookings
@@ -183,12 +210,12 @@ export async function getMyBookings(userId: string) {
     .from("bookings")
     .select(
       `
-        id,
+        id, 
         ride,
         reserved_at,
         status,
         count,
-        ride_post (
+        ride (
           departureLocation,
           destinationLocation,
           departureTime,
@@ -197,7 +224,7 @@ export async function getMyBookings(userId: string) {
     `
     )
     .eq("user_id", userId)
-    .order("booking_time", { ascending: false });
+    .order("reserved_at", { ascending: false });
 
   if (error) {
     console.error("Error fetching my bookings:", error.message);
@@ -205,4 +232,53 @@ export async function getMyBookings(userId: string) {
   }
 
   return data || [];
+}
+
+// Complete booking (mark as completed)
+export async function completeBooking(bookingId: string) {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from("bookings")
+    .update({
+      status: "COMPLETED",
+    })
+    .eq("id", bookingId)
+    .select();
+
+  if (error) {
+    console.error("Complete booking error:", error);
+    return null;
+  }
+
+  console.log("Completed booking:", data);
+  return data;
+}
+
+/**
+ * Simulate booking payment confirmation
+ * Marks the booking as BOOKED
+ */
+export async function seatBooked(bookingId: string) {
+  const supabase = await createClient();
+
+  try {
+    const { data, error } = await supabase
+      .from("bookings")
+      .update({ status: "BOOKED" })
+      .eq("id", bookingId)
+      .select();
+
+    if (error) {
+      console.error("Error updating booking to BOOKED:", error);
+      return { success: false, error };
+    }
+
+    console.log("Booking marked as BOOKED:", data);
+
+    return { success: true, data };
+  } catch (err) {
+    console.error("seatBooked error:", err);
+    return { success: false, error: err };
+  }
 }

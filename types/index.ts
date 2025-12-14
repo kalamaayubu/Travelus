@@ -167,6 +167,7 @@ export interface FeedbackFormData {
 }
 
 export interface BookingInfoProps {
+  bookingId?: string;
   rideId: string;
   selectedSeats: string[];
   totalCost: number;

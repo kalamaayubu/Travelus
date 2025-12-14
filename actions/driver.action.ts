@@ -32,7 +32,6 @@ export async function postRide(data: PostRideFormData) {
     return { success: false, error: error.message };
   }
 
-  console.log("Ride post created successfully:", ridePostData);
   return { success: true, message: "Ride post created successfully" };
 }
 
@@ -74,7 +73,6 @@ export async function fetchDriverRides() {
     return { success: false, error: error.message };
   }
 
-  console.log("DRIVER RIDES DATA:", rides);
   return { success: true, rides };
 }
 
@@ -91,7 +89,6 @@ export async function getVehicleTypes() {
     return [];
   }
 
-  console.log("Vehicle types fetched:", data);
   return data;
 }
 

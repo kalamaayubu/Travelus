@@ -2,12 +2,16 @@
 
 import { usePathname } from "next/navigation";
 import Logo from "./Logo";
-import LogInOutBtn from "./LogInOutBtn";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
+
+const LogInOutBtn = dynamic(() => import("./LogInOutBtn"), {
+  ssr: false,
+});
 
 const NavBar = () => {
   const pathname = usePathname();
@@ -28,42 +32,37 @@ const NavBar = () => {
       <nav className="md:flex hidden items-center justify-between space-x-6">
         <Logo />
         <ul className="space-x-4 flex">
-          <Link
-            onClick={() => setIsMenuOpen(false)}
-            href={"/#faqs"}
-            className="mx-4 text-gray-200 hover:text-green-600"
-          >
-            FAQs
-          </Link>
-          <Link
-            onClick={() => setIsMenuOpen(false)}
-            href={"/#about"}
-            className="mx-4 text-gray-200 hover:text-green-600"
-          >
-            About Us
-          </Link>{" "}
-          <Link
-            onClick={() => setIsMenuOpen(false)}
-            href={"/#feedback"}
-            className="mx-4 text-gray-200 hover:text-green-600"
-          >
-            Feedback
-          </Link>
-          <li
-            onClick={() => {
-              setIsMenuOpen(false);
-              router.push("/auth/login");
-            }}
-          >
+          <li>
+            <Link
+              onClick={() => setIsMenuOpen(false)}
+              href={"/#faqs"}
+              className="mx-4 text-gray-200 hover:text-green-600"
+            >
+              FAQs
+            </Link>
+          </li>
+          <li>
+            <Link
+              onClick={() => setIsMenuOpen(false)}
+              href={"/#about"}
+              className="mx-4 text-gray-200 hover:text-green-600"
+            >
+              About Us
+            </Link>
+          </li>
+          <li>
+            <Link
+              onClick={() => setIsMenuOpen(false)}
+              href={"/#feedback"}
+              className="mx-4 text-gray-200 hover:text-green-600"
+            >
+              Feedback
+            </Link>
+          </li>
+
+          <li onClick={() => setIsMenuOpen(false)}>
             <LogInOutBtn />
           </li>
-          {/* <Link
-            onClick={() => setIsMenuOpen(false)}
-            href={"/#waitlist"}
-            className="mx-4 text-gray-200 hover:text-green-600"
-          >
-            Join waitlist
-          </Link> */}
         </ul>
       </nav>
 

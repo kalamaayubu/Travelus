@@ -4,19 +4,17 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { CheckCircle, X } from "lucide-react";
 import AlertDialog from "../reusable/AlertDialog";
+import { completeBooking } from "@/actions/rider.action";
 
-const RideConfirmationDialog = ({ notif, onClose, onConfirmed }) => {
+const RideConfirmationDialog = ({ booking, onClose, onConfirmed }) => {
   const [holdProgress, setHoldProgress] = useState(0);
   const [isHolding, setIsHolding] = useState(false);
   const [status, setStatus] = useState("idle"); // idle | confirming | success | error
   const [showErrorDialog, setShowErrorDialog] = useState(false);
 
-  // ✅ Reset state on close
   useEffect(() => {
-    if (!notif) {
-      resetState();
-    }
-  }, [notif]);
+    if (!booking) resetState();
+  }, [booking]);
 
   const resetState = () => {
     setHoldProgress(0);
@@ -25,7 +23,7 @@ const RideConfirmationDialog = ({ notif, onClose, onConfirmed }) => {
     setShowErrorDialog(false);
   };
 
-  // --- Hold logic ---
+  // Hold logic
   useEffect(() => {
     let interval;
     if (isHolding && status === "idle") {
@@ -34,38 +32,43 @@ const RideConfirmationDialog = ({ notif, onClose, onConfirmed }) => {
           if (prev >= 100) {
             clearInterval(interval);
             setIsHolding(false);
-            simulateConfirm();
+            confirmBooking();
             return 100;
           }
-          return prev + 5;
+          return prev + 3;
         });
       }, 100);
     }
     return () => clearInterval(interval);
   }, [isHolding, status]);
 
-  const simulateConfirm = () => {
+  const confirmBooking = async () => {
+    if (!booking?.id) {
+      console.error("Booking ID is missing!", booking);
+      setStatus("error");
+      setShowErrorDialog(true);
+      return;
+    }
+
     setStatus("confirming");
-    setTimeout(() => {
-      const success = Math.random() > 0.5;
-      if (success) {
-        setStatus("success");
-        onConfirmed?.();
-      } else {
-        setStatus("error");
-        setShowErrorDialog(true);
-      }
-    }, 5000);
+    try {
+      await completeBooking(booking.id);
+      setStatus("success");
+      onConfirmed?.();
+    } catch (err) {
+      console.error(err);
+      setStatus("error");
+      setShowErrorDialog(true);
+    }
   };
 
   return (
     <>
-      {/* ✅ Confirmation dialog */}
       <AlertDialog
-        open={!!notif && status !== "success"}
+        open={!!booking && status !== "success"}
         onOpenChange={onClose}
         title="Confirm Ride Boarding"
-        description="Press and hold the button below to confirm that you have boarded this ride."
+        description="Press and hold the button below to confirm that you have got the ride."
         icon={<CheckCircle className="text-orange-500" size={28} />}
       >
         <motion.div
@@ -100,7 +103,7 @@ const RideConfirmationDialog = ({ notif, onClose, onConfirmed }) => {
         )}
       </AlertDialog>
 
-      {/* ✅ Success dialog */}
+      {/* Success dialog */}
       <AlertDialog
         open={status === "success"}
         onOpenChange={(open) => {
@@ -119,7 +122,7 @@ const RideConfirmationDialog = ({ notif, onClose, onConfirmed }) => {
         icon={<CheckCircle className="text-green-500" size={28} />}
       />
 
-      {/* ✅ Error dialog */}
+      {/* Error dialog */}
       <AlertDialog
         open={showErrorDialog}
         onOpenChange={() => setShowErrorDialog(false)}

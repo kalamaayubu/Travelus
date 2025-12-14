@@ -17,6 +17,7 @@ export async function POST(req: Request) {
       amount,
     });
 
+    console.log("STK API result:::", result);
     return NextResponse.json(result);
   } catch (error) {
     console.error("STK API error:", error);

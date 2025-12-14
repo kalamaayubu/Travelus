@@ -1,6 +1,6 @@
 "use client";
 
-import { getRideDetails } from "@/actions/rider.action";
+import { getRideDetails, seatBooked } from "@/actions/rider.action";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import CustomLoader from "@/components/CustomLoader";
@@ -164,11 +164,21 @@ const RideDetailsPage = () => {
       if (data.success) {
         toast.success("STK sent. Please confirm payment on your phone");
         setShowPaymentInitializationDialog(false);
+        // simulate delay for user to "confirm payment"
+        setTimeout(async () => {
+          const result = await seatBooked(bookingInfo.value?.bookingId);
+
+          if (result.success) {
+            setShowSuccessPayDialog(true);
+          } else {
+            toast.error("Failed to mark seats as BOOKED");
+          }
+        }, 6000); // 6s delay
       } else {
         toast.error(data.message || "Payment failed");
       }
-    } catch {
-      toast.error("Payment failed");
+    } catch (err) {
+      console.error("Payment initiation error:", err);
     } finally {
       setIsInitializingPush(false);
     }

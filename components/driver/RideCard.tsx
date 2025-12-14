@@ -1,9 +1,25 @@
 "use client";
 
 import { Card, CardContent } from "@/components/ui/card";
-import { MapPin, Calendar, Bus, MoreHorizontal, Users } from "lucide-react";
+import {
+  MapPin,
+  Calendar,
+  Bus,
+  MoreHorizontal,
+  Users,
+  Clock,
+} from "lucide-react";
 import { RideCardProps } from "@/types";
 import { useEffect, useRef, useState } from "react";
+
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+import localizedFormat from "dayjs/plugin/localizedFormat";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.extend(localizedFormat);
 
 export default function RideCard({
   ride,
@@ -33,6 +49,13 @@ export default function RideCard({
     };
   }, [showRidePostActions]);
 
+  console.log("Raw departureTime:", ride.departureTime);
+  console.log("Parsed UTC:", dayjs(ride.departureTime).utc().format());
+  console.log(
+    "Parsed Nairobi:",
+    dayjs(ride.departureTime).tz("Africa/Nairobi").format()
+  );
+
   return (
     <div className="relative">
       <Card className="w-full border border-white/10 max-w-md mx-auto text-gray-200 rounded-lg bg-gray-700/40 transition-colors duration-300">
@@ -51,9 +74,26 @@ export default function RideCard({
 
           {/* Date & Vehicle */}
           <div className="grid grid-cols-2 gap-4 text-sm mt-4">
-            <div className="flex items-center gap-2 whitespace-nowrap">
-              <Calendar className="min-w-4 min-h-4 max-w-4 max-h-4 text-blue-500" />
-              <span>{new Date(ride.departureTime).toLocaleString()}</span>
+            <div className="flex items-center gap-4 whitespace-nowrap">
+              {/* Date */}
+              <div className="flex items-center gap-2">
+                <Calendar className="w-4 h-4 text-blue-500" />
+                <span>
+                  {dayjs(ride.departureTime.replace(/(\+00:00|Z)$/, "")).format(
+                    "ddd, MMM D"
+                  )}
+                </span>
+              </div>
+
+              {/* Time */}
+              <div className="flex items-center gap-1">
+                <Clock className="w-4 h-4 text-green-500" />
+                <span>
+                  {dayjs(ride.departureTime.replace(/(\+00:00|Z)$/, "")).format(
+                    "HH:mm A"
+                  )}
+                </span>
+              </div>
             </div>
           </div>
 
@@ -99,7 +139,7 @@ export default function RideCard({
       {showRidePostActions && (
         <div
           ref={actionsRef}
-          className="flex flex-col overflow-hidden text-sm absolute bottom-2 right-12 bg-gray-700/100 border rounded-sm"
+          className="flex flex-col overflow-hidden text-sm absolute bottom-2 right-12 bg-gray-700 border rounded-sm"
         >
           <p
             className="border-b border-white/5 py-2 px-6 cursor-pointer active:scale-110 hover:bg-white/5 hover:text-gray-50 transition-all duration-300"

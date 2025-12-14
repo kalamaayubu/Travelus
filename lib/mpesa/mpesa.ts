@@ -9,7 +9,7 @@ const BASE_URL = "https://sandbox.safaricom.co.ke";
  */
 export async function getMpesaAccessToken(): Promise<string> {
   const auth = Buffer.from(
-    `${process.env.MPESA_CONSUMER_KEY}:${process.env.MPESA_CONSUMER_SECRET}`
+    `${process.env.MPESA_CUSTOMER_KEY}:${process.env.MPESA_CUSTOMER_SECRET}`
   ).toString("base64");
 
   const response = await axios.get(
