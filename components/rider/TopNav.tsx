@@ -4,42 +4,31 @@ import { Bell, HelpCircle } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+function getRiderTitle(pathname: string) {
+  if (pathname === "/rider") return "Dashboard";
+  if (pathname.startsWith("/rider/rides")) return "Available Rides";
+  if (pathname.startsWith("/rider/bookings")) return "My Bookings";
+  if (pathname.startsWith("/rider/payments")) return "Payments";
+  if (pathname.startsWith("/rider/support")) return "Support";
+  if (pathname.startsWith("/rider/notifications")) return "Notifications";
+  // Fallback for any other rider route
+  if (pathname.startsWith("/rider")) return "Dashboard";
+  return "";
+}
+
 export default function TopNav() {
   const pathname = usePathname();
+  const title = getRiderTitle(pathname || "");
 
   return (
     <header className="h-16 md:flex text-gray-100 items-center justify-between py-3 pb-0">
       {/* Left section - dynamic page title */}
       <div className="items-center gap-6 hidden md:flex">
         <p className="text-gray font-bold text-2xl rounded-md whitespace-nowrap">
-          {pathname === "/rider" && (
+          {title && (
             <span>
-              Dashboard<span className="text-green-500 text-xl">.</span>
-            </span>
-          )}
-          {pathname === "/rider/rides" && (
-            <span>
-              Available Rides<span className="text-green-500 text-xl">.</span>
-            </span>
-          )}
-          {pathname === "/rider/bookings" && (
-            <span>
-              My Bookings<span className="text-green-500 text-xl">.</span>
-            </span>
-          )}
-          {pathname === "/rider/payments" && (
-            <span>
-              Payments<span className="text-green-500 text-xl">.</span>
-            </span>
-          )}
-          {pathname === "/rider/support" && (
-            <span>
-              Support<span className="text-green-500 text-xl">.</span>
-            </span>
-          )}
-          {pathname === "/rider/notifications" && (
-            <span>
-              Notifications<span className="text-green-500 text-xl">.</span>
+              {title}
+              <span className="text-green-500 text-xl">.</span>
             </span>
           )}
         </p>
@@ -65,34 +54,10 @@ export default function TopNav() {
 
       {/* Header for small screens */}
       <p className="text-2xl py-2 pb-0 md:hidden text-center font-bold">
-        {pathname === "/rider" && (
+        {title && (
           <span>
-            Dashboard<span className="text-green-500 text-xl">.</span>
-          </span>
-        )}
-        {pathname === "/rider/rides" && (
-          <span>
-            Available Rides<span className="text-green-500 text-xl">.</span>
-          </span>
-        )}
-        {pathname === "/rider/bookings" && (
-          <span>
-            My Bookings<span className="text-green-500 text-xl">.</span>
-          </span>
-        )}
-        {pathname === "/rider/payments" && (
-          <span>
-            Payments<span className="text-green-500 text-xl">.</span>
-          </span>
-        )}
-        {pathname === "/rider/support" && (
-          <span>
-            Support<span className="text-green-500 text-xl">.</span>
-          </span>
-        )}
-        {pathname === "/rider/notifications" && (
-          <span>
-            Notifications<span className="text-green-500 text-xl">.</span>
+            {title}
+            <span className="text-green-500 text-xl">.</span>
           </span>
         )}
       </p>
