@@ -93,8 +93,31 @@ const RideDetailsPage = () => {
   // ✅ Compute seatsByStatus from bookings
   const seatsByStatus: SeatsByStatus = ride.bookings.reduce(
     (acc: SeatsByStatus, booking: Booking) => {
-      const seats = booking.seatNumber.split(",").map((s) => s.trim());
-      acc[booking.status] = [...acc[booking.status], ...seats];
+      // Guard against missing / empty seat numbers
+      if (!booking.seatNumber) return acc;
+
+      const seats = booking.seatNumber
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean);
+
+      // Some bookings can be marked as COMPLETED – treat them as BOOKED for seat map purposes
+      const rawStatus = (booking as any).status as string | undefined;
+      const normalizedStatus =
+        rawStatus === "COMPLETED" ? "BOOKED" : rawStatus;
+
+      if (
+        !normalizedStatus ||
+        !["BOOKED", "RESERVED", "BLOCKED", "CANCELLED", "AVAILABLE"].includes(
+          normalizedStatus
+        )
+      ) {
+        // Ignore any unexpected status so we don't crash the UI
+        return acc;
+      }
+
+      const key = normalizedStatus as keyof SeatsByStatus;
+      acc[key] = [...acc[key], ...seats];
       return acc;
     },
     {
