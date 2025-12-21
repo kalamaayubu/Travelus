@@ -1,6 +1,6 @@
 "use client";
 
-import { getRideDetails, seatBooked } from "@/actions/rider.action";
+import { seatBooked } from "@/actions/rider.action";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import CustomLoader from "@/components/CustomLoader";
@@ -40,8 +40,10 @@ const RideDetailsPage = () => {
 
   // Helper function to fetch ride details
   const fetchRideDetails = async () => {
-    const res = await getRideDetails(rideId);
-    setRide(res);
+    const res = await fetch(`/api/rider/get-ride-details/${rideId}`);
+    const data = await res.json();
+
+    setRide(data);
     setLoading(false);
   };
 
@@ -103,8 +105,7 @@ const RideDetailsPage = () => {
 
       // Some bookings can be marked as COMPLETED – treat them as BOOKED for seat map purposes
       const rawStatus = (booking as any).status as string | undefined;
-      const normalizedStatus =
-        rawStatus === "COMPLETED" ? "BOOKED" : rawStatus;
+      const normalizedStatus = rawStatus === "COMPLETED" ? "BOOKED" : rawStatus;
 
       if (
         !normalizedStatus ||

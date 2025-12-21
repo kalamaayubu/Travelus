@@ -10,8 +10,8 @@ import { useSelector } from "react-redux";
 import dayjs from "dayjs";
 
 export default function MyBookings() {
-  const [selectedBooking, setSelectedBooking] = useState(null);
-  const [bookings, setBookings] = useState([]);
+  const [selectedBooking, setSelectedBooking] = useState<any | null>(null);
+  const [bookings, setBookings] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const userId = useSelector((state: RootState) => state.auth.user?.id);
 
@@ -66,7 +66,7 @@ export default function MyBookings() {
 
         {/* Loaded bookings */}
         {!isLoading &&
-          bookings.map((booking, index) => (
+          bookings.map((booking: any, index: number) => (
             <motion.div
               key={booking.id}
               initial={{ opacity: 0, y: 20 }}
@@ -143,7 +143,10 @@ export default function MyBookings() {
             onConfirmed={async () => {
               // Refresh bookings after confirmation
               const data = await getMyBookings(userId);
-              setBookings(data);
+              const uniqueById = Array.from(
+                new Map((data || []).map((b: any) => [b.id, b])).values()
+              );
+              setBookings(uniqueById as any[]);
               setSelectedBooking(null);
             }}
           />
