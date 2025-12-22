@@ -95,8 +95,8 @@ export default function RootLayout({
           <Toaster richColors position="top-right" duration={6000} />
 
           {/* AI assistant */}
-          <AIAssistantBtn />
-          <AIAssistant />
+          {/* <AIAssistantBtn />
+          <AIAssistant /> */}
           <Footer />
         </ReduxProvider>
       </body>

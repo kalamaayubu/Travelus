@@ -62,6 +62,74 @@ export async function getPublicRides() {
   return transformedData || [];
 }
 
+// Ride details fetching function
+export async function getRideDetails(rideId: string) {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from("ride_posts")
+    .select(
+      `
+            id,
+            createdBy,
+            departureLocation,
+            destinationLocation,
+            departureTime,
+            pricePerSeat,
+            status,
+            vehicle_types (
+                id,
+                type_name,
+                capacity,
+                seats_layout
+            ),
+            bookings (
+                id,
+                count,
+                user_id,
+                seatNumber,
+                status
+            )
+        `
+    )
+    .eq("id", rideId)
+    .single();
+
+  if (error) {
+    console.error("Error fetching ride details:", error.message);
+    return null;
+  }
+
+  if (!data) return null;
+
+  // calculate booked & available seats
+  const bookedSeats =
+    data.bookings?.reduce(
+      (total, booking) => total + (booking.count || 0),
+      0
+    ) || 0;
+
+  const vehicleCapacity = data.vehicle_types?.[0]?.capacity || 0;
+  const availableSeats = vehicleCapacity - bookedSeats;
+
+  // transform object
+  const transformedData = {
+    id: data.id || "",
+    createdBy: data.createdBy,
+    departureLocation: data.departureLocation,
+    destinationLocation: data.destinationLocation,
+    departureTime: data.departureTime,
+    pricePerSeat: data.pricePerSeat,
+    vehicle: data.vehicle_types,
+    availableSeats: availableSeats > 0 ? availableSeats : 0,
+    status: data.status,
+    bookings: data.bookings || [],
+  };
+
+  console.log("BOOKINGS:", transformedData.bookings);
+  return transformedData;
+}
+
 // Collect passanger's phone number(to be used for payments)
 export async function reserveSeats(data: BookingInfoProps) {
   console.log("PHONE:", data.passangerPhone);
