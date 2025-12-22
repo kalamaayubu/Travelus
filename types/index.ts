@@ -90,6 +90,7 @@ export type AvailableRidesListProps = {
     pricePerSeat: number;
     status?: string;
   }[];
+  showHeading?: boolean;
 };
 
 export type Booking = {

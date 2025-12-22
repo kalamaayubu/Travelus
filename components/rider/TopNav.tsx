@@ -11,6 +11,8 @@ function getRiderTitle(pathname: string) {
   if (pathname.startsWith("/rider/payments")) return "Payments";
   if (pathname.startsWith("/rider/support")) return "Support";
   if (pathname.startsWith("/rider/notifications")) return "Notifications";
+  if (pathname.startsWith("/rider/find-rides")) return "Available Rides";
+
   // Fallback for any other rider route
   if (pathname.startsWith("/rider")) return "Dashboard";
   return "";
@@ -28,7 +30,7 @@ export default function TopNav() {
           {title && (
             <span>
               {title}
-              <span className="text-green-500 text-xl">.</span>
+              <span className="text-green-500 text-xl"> •</span>
             </span>
           )}
         </p>
@@ -42,7 +44,7 @@ export default function TopNav() {
           className="relative cursor-pointer text-gray-200 hover:text-white transition-colors py-2 px-6 bg-gray-500/40 rounded-md"
         >
           <Bell className="w-5 h-5" />
-          <span className="absolute top-[6px] right-6 block w-2 h-2 bg-green-500 rounded-full" />
+          <span className="absolute top-1.5 right-6 block w-2 h-2 bg-green-500 rounded-full" />
         </Link>
 
         {/* Help / Support shortcut */}
@@ -57,7 +59,7 @@ export default function TopNav() {
         {title && (
           <span>
             {title}
-            <span className="text-green-500 text-xl">.</span>
+            <span className="text-green-500 text-xl"> •</span>
           </span>
         )}
       </p>

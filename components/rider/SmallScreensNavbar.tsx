@@ -57,7 +57,7 @@ const RiderSmallScreensNavbar = () => {
 
         {/* Find Ride */}
         <NavLink
-          href="/available-rides"
+          href="/rider/find-rides"
           icon={<Search className="w-4 h-4" />}
           label="Find Ride"
         />

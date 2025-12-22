@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Search, ClipboardList, Bell, Heart } from "lucide-react";
@@ -8,7 +7,7 @@ import { Search, ClipboardList, Bell, Heart } from "lucide-react";
 const RiderHomePage = () => {
   const quickActions = [
     {
-      href: "/available-rides",
+      href: "/rider/find-rides",
       icon: <Search className="w-6 h-6 mb-2" />,
       label: "Find Ride",
       gradient: "from-green-400 to-green-600",
@@ -53,7 +52,7 @@ const RiderHomePage = () => {
           >
             <Link href={action.href}>
               <div
-                className={`bg-gradient-to-r ${action.gradient} text-white rounded-2xl shadow-lg hover:scale-105 transform transition-all cursor-pointer p-6 flex flex-col items-center`}
+                className={`bg-linear-to-r ${action.gradient} text-white rounded-2xl shadow-lg hover:scale-105 transform transition-all cursor-pointer p-6 flex flex-col items-center`}
               >
                 {action.icon}
                 <span className="font-semibold text-sm">{action.label}</span>
@@ -75,7 +74,7 @@ const RiderHomePage = () => {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: idx * 0.1 }}
-              className="p-4 bg-gradient-to-r from-gray-100 to-gray-200 dark:from-gray-800/20 dark:to-gray-900/30 rounded-2xl shadow-md hover:shadow-lg transition-all cursor-pointer flex justify-between items-center"
+              className="p-4 bg-linear-to-r from-gray-100 to-gray-200 dark:from-gray-800/20 dark:to-gray-900/30 rounded-2xl shadow-md hover:shadow-lg transition-all cursor-pointer flex justify-between items-center"
             >
               <span className="font-medium">{ride.route}</span>
               <span className="text-sm text-gray-00">{ride.date}</span>

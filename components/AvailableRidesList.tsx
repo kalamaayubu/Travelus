@@ -11,7 +11,10 @@ import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 dayjs.extend(customParseFormat);
 
-export default function AvailableRidesList({ rides }: AvailableRidesListProps) {
+export default function AvailableRidesList({
+  rides,
+  showHeading = true,
+}: AvailableRidesListProps) {
   const router = useRouter();
 
   // RHF setup
@@ -65,9 +68,12 @@ export default function AvailableRidesList({ rides }: AvailableRidesListProps) {
   return (
     <>
       <div className="space-y-6 p-8 relative">
-        <h2 className="text-xl md:text-2xl font-bold backdrop-blur-3xl z-30 text-gray-0">
-          Available Rides
-        </h2>
+        {/* Heading */}
+        {showHeading && (
+          <h2 className="text-xl md:text-2xl font-bold backdrop-blur-3xl z-30 text-gray-0">
+            Available Rides
+          </h2>
+        )}
 
         {/* Ride filtering form */}
         <form className="grid md:grid-cols-4 gap-4 bg-gray-900 p-4 rounded-lg backdrop:blur-xl sticky top-0 z-20">

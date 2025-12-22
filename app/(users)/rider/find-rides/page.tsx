@@ -1,4 +1,4 @@
-// Public view of the available rides
+// Rider finding rides just in their dashboard
 
 import AvailableRidesSection from "@/components/AvailableRidesSection";
 import ScrollToTopOnMount from "@/components/ScrollToTopOnMount";
@@ -8,7 +8,7 @@ export default function AvailableRidesPage() {
   return (
     <div className="relative flex flex-col min-h-screen">
       <ScrollToTopOnMount />
-      <AvailableRidesSection showHeading />
+      <AvailableRidesSection showHeading={false} />
       <NotificationPermission />
     </div>
   );

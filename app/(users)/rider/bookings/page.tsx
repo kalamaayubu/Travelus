@@ -8,6 +8,7 @@ import { Calendar, MapPin, Car, Clock } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import dayjs from "dayjs";
+import Link from "next/link";
 
 export default function MyBookings() {
   const [selectedBooking, setSelectedBooking] = useState<any | null>(null);
@@ -155,14 +156,17 @@ export default function MyBookings() {
 
       {!isLoading && bookings.length === 0 && (
         <div className="mt-24 flex flex-col items-center text-center text-gray-300">
-          <div className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-full bg-gray-800 border border-gray-700">
-            <Car className="w-8 h-8 text-gray-500" />
+          <div className="mb-6 inline-flex h-32 w-32 items-center justify-center rounded-full bg-gray-800 border border-gray-700">
+            <Car className="w-16 h-16 text-gray-500" />
           </div>
-          <h2 className="text-xl font-semibold mb-2">No bookings yet</h2>
-          <p className="text-sm text-gray-400 max-w-md">
+          <h2 className="text-3xl font-semibold mb-2">No bookings yet</h2>
+          <p className=" text-gray-400 max-w-md">
             You haven&apos;t reserved any seats so far. Once you book a ride, it
-            will appear here so you can easily review and manage it.
+            will appear here.
           </p>
+          <Link href="/rider/find-rides">
+            <button className="mt-4 py-2 px-6 rounded-lg">Find a ride</button>
+          </Link>
         </div>
       )}
     </div>

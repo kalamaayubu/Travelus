@@ -31,7 +31,7 @@ export default function TopNav() {
           {title && (
             <span>
               {title}
-              <span className="text-green-500 text-xl">.</span>
+              <span className="text-green-500 text-xl">•</span>
             </span>
           )}
         </p>
@@ -54,7 +54,7 @@ export default function TopNav() {
         {title && (
           <span>
             {title}
-            <span className="text-green-500 text-xl">.</span>
+            <span className="text-green-500 text-xl">•</span>
           </span>
         )}
       </p>

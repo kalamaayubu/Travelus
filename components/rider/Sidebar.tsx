@@ -41,7 +41,7 @@ const Sidebar = () => {
   const navItems = [
     { label: "Dashboard", href: "/rider", icon: LayoutDashboard },
     { label: "My Bookings", href: "/rider/bookings", icon: ClipboardList },
-    { label: "Find Ride", href: "/available-rides", icon: Car },
+    { label: "Find Ride", href: "/rider/find-rides", icon: Car },
     { label: "Payments", href: "/rider/payments", icon: CreditCard },
     { label: "Support", href: "/rider/support", icon: HelpCircle },
   ];
